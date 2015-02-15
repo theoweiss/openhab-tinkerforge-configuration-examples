@@ -1,2 +1,2 @@
-# openhab-tinkerforge-configuration-examples
-configuration examples for the openHAB TinkerForge binding 
+# Configuration examples for the openHAB TinkerForge binding 
+not yet ready!
