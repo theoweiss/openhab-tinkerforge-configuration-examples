@@ -1,0 +1,8 @@
+sitemap tf_weather label="Brick Servo"
+{
+  Frame {
+	Text item=XPostion
+	Text item=YPostion
+	Text item=JoystickButton
+	}
+}

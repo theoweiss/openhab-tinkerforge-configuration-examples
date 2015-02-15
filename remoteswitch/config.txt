@@ -1,0 +1,52 @@
+#tinkerforge:hosts=192.168.1.104 127.0.0.1
+#tinkerforge:hosts=proliant.local
+tinkerforge:hosts=localhost
+tinkerforge:refresh=100000
+
+tinkerforge:rs1.uid=jKw
+tinkerforge:rs1.type=bricklet_remote_switch
+tinkerforge:rs1.typeADevices=rslr1 rslr2
+tinkerforge:rs1.typeBDevices=kitchen
+tinkerforge:rs1.typeCDevices=floor
+
+tinkerforge:rs_living_room.uid=jKw
+tinkerforge:rs_living_room.subid=rslr1
+tinkerforge:rs_living_room.type=remote_switch_a
+tinkerforge:rs_living_room.houseCode=31
+tinkerforge:rs_living_room.receiverCode=8
+
+tinkerforge:rs_living_room2.uid=jKw
+tinkerforge:rs_living_room2.subid=rslr2
+tinkerforge:rs_living_room2.type=remote_switch_a
+tinkerforge:rs_living_room2.houseCode=31
+tinkerforge:rs_living_room2.receiverCode=4
+
+tinkerforge:rs_kitchen.uid=jKw
+tinkerforge:rs_kitchen.subid=kitchen
+tinkerforge:rs_kitchen.type=remote_switch_b
+tinkerforge:rs_kitchen.address=344
+tinkerforge:rs_kitchen.unit=9
+
+tinkerforge:rs_floor.uid=jKw
+tinkerforge:rs_floor.subid=floor
+tinkerforge:rs_floor.type=remote_switch_c
+tinkerforge:rs_floor.systemCode=A
+tinkerforge:rs_floor.deviceCode=8
+
+
+items:
+Switch r0           {tinkerforge="uid=jKw, subid=rslr1"}
+Switch r1           {tinkerforge="uid=jKw, subid=rslr2"}
+Switch rb           {tinkerforge="uid=jKw, subid=kitchen"}
+Switch rc           {tinkerforge="uid=jKw, subid=floor"}
+
+sitemap:
+sitemap remoteswitch label="Main Menu"
+{
+	Frame {
+		Switch item=r0
+		Switch item=r1
+		Switch item=rb
+		Switch item=rc
+	}
+}

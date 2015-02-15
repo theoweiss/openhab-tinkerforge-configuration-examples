@@ -1,0 +1,30 @@
+import org.openhab.core.library.types.*
+
+rule "percentdimmer"
+    when 
+        Item RULEDIMMER received command INCREASE
+    then
+       sendCommand(DIMMERPERCENT, new PercentType(100))
+end
+
+rule "percentdimmerdecrease"
+    when 
+        Item RULEDIMMER received command DECREASE
+    then
+       sendCommand(DIMMERPERCENT, new PercentType(25))
+end
+
+
+//rule "Test Rollershutter STOP"
+//    when 
+//        Item TF_ROLLER_RULE received command OFF
+//    then
+//       sendCommand(TF_ROLLER, STOP)
+//end
+//rule "Test Rollershutter MOVE"
+//    when 
+//        Item TF_ROLLER_RULE received command ON
+//    then
+//       sendCommand(TF_ROLLER, MOVE)
+//end
+//

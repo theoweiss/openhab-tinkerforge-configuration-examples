@@ -1,0 +1,6 @@
+sitemap tf_weather label="RemoteSwitch"
+{
+  Frame {
+             Slider item=rb
+        }
+}

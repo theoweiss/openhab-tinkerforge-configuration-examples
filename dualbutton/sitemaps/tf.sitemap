@@ -1,0 +1,9 @@
+sitemap tf_weather label="Linear Poti"
+{
+  Frame {
+	Text item=LeftButton
+	Text item=RightButton
+	Switch item=LeftLed
+	Switch item=RightLed
+	}
+}

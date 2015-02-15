@@ -1,0 +1,17 @@
+Dimmer Servo0              "Servo0" { tinkerforge="uid=6Crt5W, subid=servo0, max=9000, min=-9000, step=500, acceleration=3000, velocity=3000" }
+Dimmer Servo0Percent              "Servo0Percent" { tinkerforge="uid=6Crt5W, subid=servo0, max=9000, min=-9000, step=500, acceleration=3000, velocity=3000" }
+Rollershutter Servo0Rollershutter              "Servo0Rollershutter" { tinkerforge="uid=6Crt5W, subid=servo0, max=9000, min=-9000, leftposition=3000, rightposition=-3000, acceleration=3000, velocity=3000" }
+Switch Servo0Switch              "Servo0Switch" { tinkerforge="uid=6Crt5W, subid=servo0, max=9000, min=-9000, position=3000, acceleration=3000, velocity=3000" }
+Number Servo0Postion              "Servo0Postion [%.0f]" { tinkerforge="uid=6Crt5W, subid=servo0, max=9000, min=-9000, step=500, acceleration=3000, velocity=3000" }
+Dimmer Servo0Rule "Servo0Rule"
+
+Switch Servo1              "Servo1" { tinkerforge="uid=6Crt5W, subid=servo1" }
+Switch Servo2              "Servo2" { tinkerforge="uid=6Crt5W, subid=servo2" }
+Switch Servo3              "Servo3" { tinkerforge="uid=6Crt5W, subid=servo3" }
+Switch Servo4              "Servo4" { tinkerforge="uid=6Crt5W, subid=servo4" }
+Switch Servo5              "Servo5" { tinkerforge="uid=6Crt5W, subid=servo5" }
+Switch Servo6              "Servo6" { tinkerforge="uid=6Crt5W, subid=servo6" }
+
+Switch ClearLCD            "ClearLCD"
+
+Switch MoveServo "MoveServo" {autoupdate="false"}

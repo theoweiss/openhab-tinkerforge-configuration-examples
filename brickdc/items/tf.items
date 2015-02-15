@@ -1,0 +1,6 @@
+Dimmer  DCDIMMER  "Dimmer" {tinkerforge="uid=62Zduj, max=20000, min=-15000, acceleration=10000, drivemode=brake, step=2500"}
+Dimmer  DIMMERPERCENT  "Dimmerpercent" {tinkerforge="uid=62Zduj, max=20000, min=0, acceleration=10000, drivemode=brake, step=2500"}
+Rollershutter TF_ROLLER "Roller" {tinkerforge="uid=62Zduj, leftspeed=10000, rightspeed=-10000, acceleration=10000, drivemode=brake"}
+Switch DCSWITCH "DC Switch" {tinkerforge="uid=62Zduj, speed=14000"}
+Number DCSPEED "DC Speed [%.0f]"  {tinkerforge="uid=62Zduj, max=20000, min=-15000, step=1000, leftspeed=10000, rightspeed=-10000, acceleration=10000, drivemode=brake"}
+Dimmer  RULEDIMMER  "RuleDimmer" 

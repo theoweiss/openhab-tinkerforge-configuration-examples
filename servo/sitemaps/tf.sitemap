@@ -1,0 +1,21 @@
+sitemap tf_weather label="Brick Servo"
+{
+  Frame {
+	Slider item=Servo0
+	Switch item=Servo0Rollershutter
+	Switch item=Servo0Switch 
+	Text item=Servo0Postion
+	Setpoint item=Servo0Postion minValue=-9000 maxValue=6000 step=2000
+	Slider item=Servo0Rule
+
+	Switch item=ClearLCD
+	Switch item=MoveServo
+
+	Switch item=Servo1
+	Switch item=Servo2
+	Switch item=Servo3
+	Switch item=Servo4
+	Switch item=Servo5
+	Switch item=Servo6
+	}
+}
