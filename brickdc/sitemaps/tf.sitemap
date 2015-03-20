@@ -3,6 +3,7 @@ sitemap tf_weather label="Brick DC"
   Frame {
         Switch item=TF_ROLLER
         Switch item=DCSWITCH
+        Switch item=DCMOVE
         Slider item=DCDIMMER
         Text item=DCSPEED
         Setpoint item=DCSPEED minValue=-1500 maxValue=25000 step=1000

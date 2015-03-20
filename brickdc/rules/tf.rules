@@ -15,16 +15,17 @@ rule "percentdimmerdecrease"
 end
 
 
-//rule "Test Rollershutter STOP"
-//    when 
-//        Item TF_ROLLER_RULE received command OFF
-//    then
-//       sendCommand(TF_ROLLER, STOP)
-//end
-//rule "Test Rollershutter MOVE"
-//    when 
-//        Item TF_ROLLER_RULE received command ON
-//    then
-//       sendCommand(TF_ROLLER, MOVE)
-//end
-//
+rule "move motor"
+    when 
+        Item DCMOVE received command ON
+    then
+       var Integer acceleration = 10000
+       var Short speed = 15000
+       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       Thread::sleep(1000)
+       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       Thread::sleep(1000)
+       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       Thread::sleep(1000)
+       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+end
