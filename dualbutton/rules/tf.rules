@@ -1,32 +1,12 @@
 import org.openhab.core.library.types.*
 
-// rule "percentdimmer"
-//     when 
-//         Item Servo0Rule received command INCREASE
-//     then
-//        sendCommand(Servo0Percent, new PercentType(100))
-// end
-
-// rule "percentdimmerdecrease"
-//     when 
-//         Item Servo0Rule received command DECREASE
-//     then
-//        sendCommand(Servo0Percent, new PercentType(25))
-// end
-
-// rule "clear lcd"
-//     when 
-//         Item ClearLCD received command ON
-//     then
-//        tfClearLCD("d4j")
-// end
-// rule "move servo"
-//     when 
-//         Item MoveServo received command ON
-//     then
-//        tfServoSetposition("6Crt5W", "servo0", "0", "65535", "65535")
-//        Thread::sleep(1000)
-//        tfServoSetposition("6Crt5W", "servo0", "-9000", "65535", "65535")
-//        Thread::sleep(1000)
-//       tfServoSetposition("6Crt5W", "servo0", "9000", "65535", "65535")
-// end
+rule "toggleright"
+	when 
+		Item RightButton changed
+	then
+		logDebug("dualbutton", "{}", RightButton.state)
+		if (RightButton.state == OPEN)
+			sendCommand(RightLed, ON)
+		else
+			sendCommand(RightLed, OFF)
+end

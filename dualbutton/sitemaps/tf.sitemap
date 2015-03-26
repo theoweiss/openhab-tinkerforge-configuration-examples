@@ -1,4 +1,4 @@
-sitemap tf_weather label="Linear Poti"
+sitemap tf label="DualButton"
 {
   Frame {
 	Text item=LeftButton
