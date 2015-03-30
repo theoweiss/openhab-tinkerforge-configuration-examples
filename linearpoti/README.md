@@ -9,9 +9,9 @@ Example
 openhab.cfg
 ===========
 ```
-tinkerforge:joystick.uid=egW
-tinkerforge:joystick.type=bricklet_linear_poti
-tinkerforge:joystick.callbackPeriod=1000
+tinkerforge:linearpoti.uid=egW
+tinkerforge:linearpoti.type=bricklet_linear_poti
+tinkerforge:linearpoti.callbackPeriod=1000
 ```
 Item
 ====
@@ -21,7 +21,7 @@ Number Poti              "Poti [%.0f]" { tinkerforge="uid=egW"}
 Sitemap
 =======
 ```
-sitemap tf_weather label="Linear Poti"
+sitemap tflabel="Linear Poti"
 {
   Frame {
 	Text item=Poti

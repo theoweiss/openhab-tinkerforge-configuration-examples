@@ -1,4 +1,4 @@
-sitemap tf_weather label="Brick Servo"
+sitemap tf label="Linear Poti"
 {
   Frame {
 	Text item=Poti
