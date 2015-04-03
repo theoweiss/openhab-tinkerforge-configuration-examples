@@ -1,4 +1,4 @@
 Contact LeftButton              "LeftButton" { tinkerforge="uid=mN2, subid=dualbutton_leftbutton"}
 Contact RightButton             "RightButton" { tinkerforge="uid=mN2, subid=dualbutton_rightbutton"}
-Switch LeftLed					"LeftLed" { tinkerforge="uid=mN2, subid=dualbutton_leftled"}
-Switch RightLed					"RightLed" { tinkerforge="uid=mN2, subid=dualbutton_rightled"}
+Switch LeftLed                  "LeftLed" { tinkerforge="uid=mN2, subid=dualbutton_leftled"}
+Switch RightLed                 "RightLed" { tinkerforge="uid=mN2, subid=dualbutton_rightled"}

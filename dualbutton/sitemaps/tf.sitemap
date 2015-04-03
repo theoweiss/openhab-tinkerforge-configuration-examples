@@ -1,9 +1,9 @@
 sitemap tf label="DualButton"
 {
   Frame {
-	Text item=LeftButton
-	Text item=RightButton
-	Switch item=LeftLed
-	Switch item=RightLed
-	}
+    Text item=LeftButton
+    Text item=RightButton
+    Switch item=LeftLed
+    Switch item=RightLed
+    }
 }
