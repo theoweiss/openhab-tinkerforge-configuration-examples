@@ -1,0 +1,2 @@
+Color  tfled1   {tinkerforge="uid=jGu, leds=0-6, colorMapping=rbg"}
+Color  tfled2   {tinkerforge="uid=jGu, leds=7-14, colorMapping=rbg"}

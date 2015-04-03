@@ -1,34 +1,28 @@
-Linear Poti Bricklet
+Dual Button Bricklet
 ====================
-There is on device called bricklet_linear_poti. You can expect values from 0 - 100.
-The default callback period is 10 millis, you can change this with openhab.cfg.
+The Dual Button Bricklet has four sub devices: two leds and two buttons. 
+The subids are: 
+ * dualbutton_leftled
+ * dualbutton_rightled
+ * dualbutton_leftbutton
+ * dualbutton_rightbutton
 
-
-Example
-========
-openhab.cfg
-===========
-```
-tinkerforge:joystick.uid=egW
-tinkerforge:joystick.type=bricklet_linear_poti
-tinkerforge:joystick.callbackPeriod=1000
-```
-Item
+Leds
 ====
-```
-Number Poti              "Poti [%.0f]" { tinkerforge="uid=egW"}
-```
-Sitemap
+There are two operating modes for the leds: with the autotoggle=True the leds are
+automatically toggled whenever the corresponding button is pressed. With the autotoggle=False
+mode the leds are fully controlled with openHAB UIs or rules. The default autotoggle mode is 
+autotoggle=False. The autotoggle mode can be configured using openhab.cfg.
+
+Buttons
 =======
-```
-sitemap tf_weather label="Linear Poti"
-{
-  Frame {
-	Text item=Poti
-	}
-}
-```
-Rules
-=====
-```
-```
+There are also two operating modes for the buttons. The buttons can behave like a switch or 
+like a tactile switch.  
+* Switch mode
+The switch mode operates like this: pressing the button toggles the
+switch state, if state was ON it goes to OFF and vice versa. Releasing the button doesn't 
+change anything, only the next button press will change the state.
+* Tactile switch mode
+Pressing the button changes the switch state to ON and releasing the button changes the
+state back to OFF again.
+
