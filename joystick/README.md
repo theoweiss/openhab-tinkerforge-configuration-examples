@@ -5,38 +5,20 @@ Callback period for xy position defaults to 10 milli seconds. CallbackPeriod mus
 on bricklet_joystick device, because x and y position can not have
 different callback periods.
 
-The joystick_button has a value of HighLowValue.LOW when pressed, else the value is HighLowValue.HIGH.
-
-Example
-========
-openhab.cfg
-===========
-```
-tinkerforge:joystick.uid=aVp
-tinkerforge:joystick.type=bricklet_joystick
-tinkerforge:joystick.callbackPeriod=1000
-```
-Item
-====
-```
-Number XPostion              "XPostion [%.0f]" { tinkerforge="uid=aVp, subid=joystick_xposition"}
-Number YPostion              "YPostion [%.0f]" { tinkerforge="uid=aVp, subid=joystick_yposition"}
-Contact JoystickButton       "Button" { tinkerforge="uid=aVp, subid=joystick_button"}
-```
-Sitemap
+Button
 =======
-```
-sitemap tf_weather label="Joystick"
-{
-  Frame {
-    Text item=XPostion
-    Text item=YPostion
-    Text item=JoystickButton
-    }
-}
+Two operating modes for the button. The button can behave like a switch or 
+like a tactile switch.  
+* Switch mode
+The switch mode operates like this: pressing the button toggles the
+switch state, if state was ON it goes to OFF and vice versa. Releasing the button doesn't 
+change anything, only the next button press will change the state.
+* Tactile switch mode
+Pressing the button changes the switch state to ON and releasing the button changes the
+state back to OFF again.
 
+Switch Mode is the default mode you can change the mode to tactile by adding a line like this
+to your openhab.cfg:
 ```
-Rules
-=====
-```
+tinkerforge:joystickbutton.tactile=True
 ```
