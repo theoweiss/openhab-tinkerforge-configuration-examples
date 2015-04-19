@@ -1,2 +1,10 @@
-Color  tfled1   {tinkerforge="uid=jGu, leds=0-6, colorMapping=rbg"}
-Color  tfled2   {tinkerforge="uid=jGu, leds=7-14, colorMapping=rbg"}
+//Color  tfled1   <slider> {tinkerforge="uid=jGu, leds=0-6, colorMapping=rbg"}
+//Color  tfled2   {tinkerforge="uid=jGu, leds=7-14, colorMapping=rbg"}
+Color  tfled1   <slider> {tinkerforge="uid=jGu, subid=ledgroup1"}
+Color  tfled2   <slider> {tinkerforge="uid=jGu, leds=7-14, colorMapping=rbg"}
+Contact brickd1connected {tinkerforge="uid=127.0.0.1:4223, subid=isconnected"}
+Number brickd1counter "Brickd1 [%d]" {tinkerforge="uid=127.0.0.1:4223, subid=connected_counter"}
+
+//Switch A1 { tinkerforge="uid=jKw, subid=switch1" }
+//
+//Switch A2 { tinkerforge="uid=jKw, subid=switch2" }

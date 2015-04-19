@@ -1,0 +1,2 @@
+Number temperature0 "Temperature0 [%.2f]" {tinkerforge="uid=s6t, subid=sensor0"}
+Number temperature1 "Temperature1 [%.2f]" {tinkerforge="uid=s6t, subid=sensor1"}

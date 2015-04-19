@@ -1,0 +1,7 @@
+sitemap led label="TinkerForge 020"
+{
+    Frame label="PTC" {
+        Text item=temperature0
+        Text item=temperature1
+    }
+}

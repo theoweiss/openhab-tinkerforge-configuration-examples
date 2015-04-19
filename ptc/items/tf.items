@@ -1,0 +1,3 @@
+Contact connected {tinkerforge="uid=xxx, subid=ptc_connected"}
+Number temperature "Temperature [%.2f]" {tinkerforge="uid=rjC, subid=ptc_temperature"}
+Number resistance "Resistance [%.0f]" {tinkerforge="uid=rjC, subid=ptc_resistance"}
