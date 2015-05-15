@@ -1,0 +1,7 @@
+sitemap led label="TinkerForge Brickd"
+{
+    Frame label="Brickd" {
+        Text item=brickd1connected
+        Text item=brickd1counter
+    }
+}

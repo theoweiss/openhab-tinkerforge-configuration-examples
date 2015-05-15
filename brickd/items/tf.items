@@ -1,0 +1,2 @@
+Contact brickd1connected {tinkerforge="uid=127.0.0.1:4223, subid=connected"}
+Number brickd1counter "Brickd1 [%d]" {tinkerforge="uid=127.0.0.1:4223, subid=connected_counter"}

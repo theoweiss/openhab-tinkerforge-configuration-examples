@@ -1,0 +1,12 @@
+import org.openhab.core.library.types.*
+
+rule "toggleright"
+    when 
+        Item RightButton changed
+    then
+        logDebug("dualbutton", "{}", RightButton.state)
+        if (RightButton.state == OPEN)
+            sendCommand(RightLed, ON)
+        else
+            sendCommand(RightLed, OFF)
+end

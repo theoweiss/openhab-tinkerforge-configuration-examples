@@ -1,0 +1,4 @@
+Switch QR1                      "QR1" {tinkerforge="uid=eQj, subid=relay0"}
+Switch QR2                      "QR2" {tinkerforge="uid=eQj, subid=relay1"}
+Switch QR3                      "QR3" {tinkerforge="name=relay2"}
+Switch QR4                      "QR4" {tinkerforge="name=relay3"}

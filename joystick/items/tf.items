@@ -1,3 +1,3 @@
 Number XPostion              "XPostion [%.0f]" { tinkerforge="uid=aXJ, subid=joystick_xposition"}
-Number YPostion              "YPostion [%.0f]" { tinkerforge="uid=aXJ, subid=joystick_yposition"}
+Number YPostion              "YPostion [%.0f]" { tinkerforge="name=yposition"}
 Contact JoystickButton       "Button" { tinkerforge="uid=aXJ, subid=joystick_button"}

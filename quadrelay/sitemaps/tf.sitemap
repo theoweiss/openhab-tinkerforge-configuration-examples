@@ -1,0 +1,9 @@
+sitemap tf label="QuadRelay"
+{
+  Frame {
+            Switch item=QR1
+            Switch item=QR2
+            Switch item=QR3
+            Switch item=QR4    
+        }
+}

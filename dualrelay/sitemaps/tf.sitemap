@@ -1,0 +1,7 @@
+sitemap tf label="DualRelay"
+{
+  Frame {
+        Switch item=DualRelay1
+        Switch item=DualRelay2
+    }
+}
