@@ -9,3 +9,13 @@ then
     else 
         sendCommand(relay, ON)
 end
+
+rule "Relay Status"
+when
+    Item relay changed
+then
+    if (relay.state == ON)
+    postUpdate(relaystatus, CLOSED)
+    else
+    postUpdate(relaystatus, OPEN)
+end

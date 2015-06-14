@@ -1,1 +1,2 @@
 Switch relay "Relay" {tinkerforge="uid=oHY"}
+Contact relaystatus "Relay Status"

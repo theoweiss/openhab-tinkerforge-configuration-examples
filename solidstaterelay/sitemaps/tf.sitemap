@@ -2,5 +2,6 @@ sitemap led label="TinkerForge SolidStateRelay"
 {
     Frame label="Relay" {
         Switch item=relay
+        Text item=relaystatus
     }
 }
