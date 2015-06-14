@@ -1,2 +1,11 @@
 import org.openhab.core.library.types.*
 
+rule "change every 5 seconds"
+when
+    Time cron "0/1 * * * * ?"
+then
+    if(relay.state == ON)
+        sendCommand(relay, OFF)
+    else 
+        sendCommand(relay, ON)
+end
