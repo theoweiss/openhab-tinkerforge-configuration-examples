@@ -1,0 +1,16 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.types.*
+import java.util.Date
+import java.text.SimpleDateFormat
+
+rule "Clock"
+    when
+	        Time cron "0 0/1 * * * ?"
+    then
+            var SimpleDateFormat df = new SimpleDateFormat( "HH:mm" )
+            var String timestamp = df.format( new Date() )
+
+            sendCommand(TF_LCD, String::format("TFNUM<30>%6s",
+                                timestamp
+		    ))
+end

@@ -1,0 +1,10 @@
+sitemap tf_clock label="Tinkerforge Clock"
+{
+	  Frame {
+				Switch item=TF_LCDBacklight
+				Switch item=TF_Button0
+				Switch item=TF_Button1
+				Switch item=TF_Button2
+				Switch item=TF_Button3
+			}
+}
