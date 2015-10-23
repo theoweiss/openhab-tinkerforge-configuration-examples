@@ -1,0 +1,6 @@
+sitemap led label="TinkerForge Temperature"
+{
+    Frame label="Temperature" {
+        Text item=temperature
+    }
+}
