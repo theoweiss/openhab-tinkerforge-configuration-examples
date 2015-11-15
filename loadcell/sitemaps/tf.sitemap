@@ -1,0 +1,6 @@
+sitemap tf label="Load Cell"
+{
+  Frame {
+	Text item=Weight
+	}
+}

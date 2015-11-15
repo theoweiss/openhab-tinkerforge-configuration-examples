@@ -37,7 +37,7 @@
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
     <logger name="org.openhab.action.tinkerforge.internal" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal" level="DEBUG" />
-    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickletLinearPotiImpl" level="TRACE" />
+    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickletLoadCellImpl" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickdImpl" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal.config.ConfigurationHandler" level="TRACE" />
     <logger name="org.openhab.persistence.influxdb" level="DEBUG" />

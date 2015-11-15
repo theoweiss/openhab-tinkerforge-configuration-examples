@@ -1,0 +1,6 @@
+sitemap tf label="Dust Detector"
+{
+  Frame {
+	Text item=Dust
+	}
+}

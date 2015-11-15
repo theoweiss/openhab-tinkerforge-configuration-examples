@@ -1,0 +1,6 @@
+sitemap led label="TinkerForge AmbientLightV2"
+{
+    Frame label="PTC" {
+        Text item=illuminance
+    }
+}

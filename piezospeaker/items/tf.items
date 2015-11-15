@@ -1,0 +1,2 @@
+Switch Beep      "Beep" { autoupdate="false", tinkerforge="uid=s1c, mode=beep, durations=500|100, frequencies=10|10000, repeat=2" }
+Switch Morse      "Morse" { autoupdate="false", tinkerforge="uid=s1c, mode=morse, morsecodes=...---...|---, frequencies=10|10000, repeat=2" }

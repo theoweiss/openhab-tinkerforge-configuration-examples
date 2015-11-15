@@ -1,0 +1,7 @@
+sitemap tf label="RotaryEncoder"
+{
+  Frame {
+	Text item=Counter
+	Text item=Button
+	}
+}

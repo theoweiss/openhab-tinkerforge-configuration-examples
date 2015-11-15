@@ -1,0 +1,7 @@
+sitemap tf label="PiezoSpeaker"
+{
+  Frame {
+    Switch item=Beep
+    Switch item=Morse
+    }
+}
