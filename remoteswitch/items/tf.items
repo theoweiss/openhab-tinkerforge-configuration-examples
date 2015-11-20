@@ -1,1 +1,12 @@
-Dimmer rb           {tinkerforge="uid=jKw, subid=kitchen, step=1"}
+//Dimmer rb           {tinkerforge="uid=jKw, subid=kitchen, step=1"}
+//Switch r0    "r0" <socket> (Lights)       {tinkerforge="uid=jKw, subid=rslr1, repeats=100"}
+//Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=jKw, subid=rslr2, repeats=100"}
+//Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=jKw, subid=kitchen, repeats=100"}
+//Switch rc    "rc" <socket> (Lights)      {tinkerforge="uid=jKw, subid=floor, repeats=100"}
+
+Switch r0    "r0" <socket> (Lights)       {tinkerforge="uid=jKw, subid=rslr1"}
+Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=jKw, subid=rslr2"}
+Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=jKw, subid=kitchen"}
+Switch rc    "rc" <socket> (Lights)      {tinkerforge="uid=jKw, subid=floor"}
+
+Group:Switch:OR(ON,OFF)	Lights	"All Lights [(%d)]"

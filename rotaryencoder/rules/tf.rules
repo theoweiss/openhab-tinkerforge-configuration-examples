@@ -1,2 +1,7 @@
 import org.openhab.core.library.types.*
 
+rule "Clear"
+when Item Clear changed
+then 
+	tfRotaryEncoderClear("kHv")
+end

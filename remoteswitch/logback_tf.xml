@@ -35,9 +35,12 @@
 
 	<!-- this class gives an irrelevant warning at startup -->
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
-    <logger name="org.openhab.binding.tinkerforge" level="TRACE" />
-    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickDCImpl" level="TRACE" />
-    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickdImpl" level="TRACE" />
+    <logger name="org.openhab.binding.tinkerforge" level="INFO" />
+    <logger name="org.openhab.binding.tinkerforge.internal.config.ConfigurationHandler" level="DEBUG" />
+    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickletRemoteSwitchImpl" level="TRACE" />
+    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.RemoteSwitchAImpl" level="TRACE" />
+    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.RemoteSwitchBImpl" level="TRACE" />
+    <logger name="org.openhab.binding.tinkerforge.internal.model.impl.RemoteSwitchCImpl" level="TRACE" />
     <logger name="org.openhab.persistence.influxdb" level="DEBUG" />
     <logger name="org.openhab.core.persistence.internal" level="ERROR" />
     <!-- logger name="org.openhab.core.persistence.internal" level="TRACE" / -->

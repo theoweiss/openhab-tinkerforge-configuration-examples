@@ -1,2 +1,3 @@
 Number Counter             "Counter [%d]" { tinkerforge="uid=kHv, subid=encoder"}
 Contact Button       "Button" { tinkerforge="uid=kHv, subid=button"}
+Switch Clear         "Clear"

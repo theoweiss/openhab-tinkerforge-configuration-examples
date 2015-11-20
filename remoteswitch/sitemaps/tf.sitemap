@@ -1,6 +1,16 @@
-sitemap tf_weather label="RemoteSwitch"
+sitemap tf label="RemoteSwitch"
 {
+	Frame label="Group" {
+		         Text label="Group Demo" icon="1stfloor" {
+                Switch item=Lights mappings=[OFF="All Off",ON="All On"]
+         }
+		
+	}
   Frame {
-             Slider item=rb
+            //Slider item=rb
+			Switch item=r0
+			Switch item=r1
+			Switch item=rb
+			Switch item=rc
         }
 }
