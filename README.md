@@ -21,11 +21,11 @@ Documentation of the TinkerForge binding bundle
   - [Humidity Bricklet](#humidity-bricklet)
   - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
   - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
-  - [Industrial Dual 0-20mA Bricklet](#industrial-dual-020mA-bricklet)
+  - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20mA-bricklet)
   - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
   - [IO 16 Bricklet](#io-16-bricklet)
   - [Joystick Bricklet](#joystick-bricklet)
-  - [LCD 20×4 Bricklet](#lcd-20x4-bricklet)
+  - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
   - [LED Strip Bricklet](#led-strip-bricklet)
   - [Linear Poti Bricklet](#linear-poti-bricklet)
   - [Load Cell Bricklet](#load-cell-bricklet)
@@ -37,16 +37,16 @@ Documentation of the TinkerForge binding bundle
   - [Remote Switch Bricklet](#remote-switch-bricklet)
   - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
   - [Segment Display 4x7 Bricklet](#segment-display-4x7-bricklet)
-  - [Solid State Relay Bricklet](#solid-state-relay-bricklete)
+  - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
   - [Sound Intensity Bricklet](#sound-intensity-bricklet)
   - [Temperature Bricklet](#temperature-bricklet)
   - [Temperature IR Bricklet](#temperature-ir-bricklet)
   - [Tilt Bricklet](#tilt-bricklet)
-  - [Voltage/Current Bricklet](#voltage/current-bricklet)
+  - [Voltage/Current Bricklet](#voltagecurrent-bricklet)
 - Kits
   - [Weatherstation Kit](#weatherstation-kit)
 - Deamon
-  - [Brick Daemon](#brick-daemon/)
+  - [Brick Daemon](#brick-daemon)
 
 - [Generic Item Binding Configuration](#generic-item-binding-configuration)  
  - [Basic Configuration](#basic-configuration)
@@ -92,8 +92,7 @@ the binding, please see Wiki page [[Bindings]].
 https://bintray.com/artifact/download/theoweiss/generic/org.openhab.binding.tinkerforge-1.7.0-SNAPSHOT.jar
 The binding will work with 1.6.x versions of openHAB.
 
-Incompatible changes
-====================
+#### Incompatible changes
 * DriveMode now is one of "brake" or "coast" instead of "0" or "1"
 ```
 tinkerforge:dc_garage.driveMode=brake
@@ -108,8 +107,7 @@ Switch DCSWITCH "DC Switch" {tinkerforge="uid=62Zduj, speed=14000"}
 ```
 
 
-Whats new?
-==========
+#### Whats new?
 Support for Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
 
@@ -120,8 +118,7 @@ documentation about callback listeners at the official openHAB TinkerForgeBindig
 * callbackPeriod: milliseconds
 * threshold: numeric value
 
-New item configuration options
-==============================
+#### New item configuration options
 * speed: the target speed (Switch)
 * max: the maximum speed (Dimmer, Rollershutter)
 * min: the minimum speed (Dimmer, Rollershutter)
@@ -131,10 +128,9 @@ New item configuration options
 * acceleration: acceleration overrides value from openhab.cfg
 * drivemode: drivemode  overrides value from openhab.cfg
 
-Example
-========
+#### Example
 openhab.cfg
-===========
+
 ```
 tinkerforge:dc_garage.uid=62Zduj
 tinkerforge:dc_garage.type=brick_dc
@@ -143,8 +139,7 @@ tinkerforge:dc_garage.driveMode=break
 tinkerforge:dc_garage.acceleration=10000
 tinkerforge:dc_garage.callbackPeriod=100
 ```
-Item
-====
+#### Item
 ```
 Dimmer  DCDIMMER  "Dimmer" {tinkerforge="uid=62Zduj, max=20000, min=-15000, acceleration=10000, drivemode=brake, step=2500"}
 Dimmer  DIMMERPERCENT  "Dimmerpercent" {tinkerforge="uid=62Zduj, max=20000, min=0, acceleration=10000, drivemode=brake, step=2500"}
@@ -153,8 +148,7 @@ Switch DCSWITCH "DC Switch" {tinkerforge="uid=62Zduj, speed=14000"}
 Number DCSPEED "DC Speed [%.0f]"  {tinkerforge="uid=62Zduj, max=20000, min=-15000, step=1000, leftspeed=10000, rightspeed=-10000, acceleration=10000, drivemode=brake"}
 Dimmer  RULEDIMMER  "RuleDimmer"
 ```
-Sitemap
-=======
+#### Sitemap
 ```
 sitemap tf_weather label="Brick DC"
 {
@@ -168,8 +162,7 @@ sitemap tf_weather label="Brick DC"
         }
 }
 ```
-Rules
-=====
+#### Rules
 ```
 import org.openhab.core.library.types.*
 
@@ -255,7 +248,7 @@ can be set using a percent value.
 
 Number items will show the current position.
 
-##### New item configuration options
+#### New item configuration options
 * velocity: the velocity used to reach the new position
 * max: the maximum position (Dimmer, Rollershutter)
 * min: the minimum position (Dimmer, Rollershutter)
@@ -264,7 +257,7 @@ Number items will show the current position.
 * rightposition: the target position to reach when the right rollershutter controller is pressed or command "UP" was send
 * acceleration: the acceleration
 
-##### TinkerForge Action
+#### TinkerForge Action
 The new openHAB action TinkerForgeAction comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 #### Example
@@ -423,8 +416,8 @@ automatically toggled whenever the corresponding button is pressed. With the aut
 mode the leds are fully controlled with openHAB UIs or rules. The default autotoggle mode is
 autotoggle=False. The autotoggle mode can be configured using openhab.cfg.
 
-Buttons
-=======
+#### Buttons
+
 There are also two operating modes for the buttons. The buttons can behave like a switch or
 like a tactile switch.  
 * Switch mode
@@ -554,7 +547,7 @@ sitemap file entry (e.g tinkerforge.sitemap):
     Text item=ID4
 
 
-### Industrial Digital 4 Out Bricklet
+### Industrial Digital Out 4 Bricklet
 
 output port sub devices:
 
@@ -591,8 +584,8 @@ Switch item=di4out3
  * device type sensors: industrial020ma_sensor
  * sensor values are reported as milli ampere
 
-openhab.cfg configuration options for the Bricklet
-==================================================
+#### openhab.cfg configuration options for the Bricklet
+
 sampleRate: possible values 0, 1, 2, 3. Setting the sample rate is optional
 it defaults to 3 (4 samples per second).
  * 0 means: 240 samples per second
@@ -600,8 +593,7 @@ it defaults to 3 (4 samples per second).
  * 2 means: 15 samples per second
  * 3 means: 4 samples per second
 
-openhab.cfg configuration options for the sensors
-=================================================
+#### openhab.cfg configuration options for the sensors
 callbackPeriod: Setting the callback period is optional, the default is 1000 milli seconds.
 threshold:
 
@@ -714,8 +706,7 @@ Callback period for xy position defaults to 10 milli seconds. CallbackPeriod mus
 on bricklet_joystick device, because x and y position can not have
 different callback periods.
 
-Button
-=======
+#### Button
 Two operating modes for the button. The button can behave like a switch or
 like a tactile switch.  
 * Switch mode
@@ -888,7 +879,7 @@ sitemap file entry (e.g tinkerforge.sitemap):
 ```
 Colorpicker item=led1 icon="slider"
 Colorpicker item=led2 icon="slider"
-
+```
 
 ## Linear Poti Bricklet
 
@@ -896,22 +887,19 @@ There is on device called bricklet_linear_poti. You can expect values from 0 - 1
 The default callback period is 10 millis, you can change this with openhab.cfg.
 
 
-Example
-========
+#### Example
 openhab.cfg
-===========
 ```
 tinkerforge:linearpoti.uid=egW
 tinkerforge:linearpoti.type=bricklet_linear_poti
 tinkerforge:linearpoti.callbackPeriod=1000
 ```
-Item
-====
+#### Item
+
 ```
 Number Poti              "Poti [%.0f]" { tinkerforge="uid=egW"}
 ```
-Sitemap
-=======
+#### Sitemap
 ```
 sitemap tflabel="Linear Poti"
 {
@@ -920,8 +908,7 @@ sitemap tflabel="Linear Poti"
 	}
 }
 ```
-Rules
-=====
+#### Rules
 ```
 ```
 ```
@@ -1201,8 +1188,7 @@ There are two sub devices: encoder and button.
 Callback period for encoder defaults to 10 milli seconds. CallbackPeriod can be configured
 for the encoder sub device.
 
-Button
-=======
+#### Button
 Two operating modes for the button. The button can behave like a switch or
 like a tactile switch.  
 * Switch mode
