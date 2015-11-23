@@ -61,10 +61,10 @@ Documentation of the TinkerForge binding bundle
 - [Red Brick](#red-brick)
 - [Tinkerforge Actions](#tinkerforge-actions)  
 - [Upgrading](#upgrading)
-  - [Version 1.3](#upgrading-from-1-3)
-  - [Version 1.4](#upgrading-from-1-4)
-  - [Version 1.7](#upgrading-from-1-7)
-  - [Version 1.8](#upgrading-from-1-8)
+  - [Version 1.3](#upgrading-from-13)
+  - [Version 1.4](#upgrading-from-14)
+  - [Version 1.7](#upgrading-from-17)
+  - [Version 1.8](#upgrading-from-18)
 
 
 ## Introduction
