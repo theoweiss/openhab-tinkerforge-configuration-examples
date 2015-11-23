@@ -21,7 +21,7 @@ Documentation of the TinkerForge binding bundle
   - [Humidity Bricklet](#humidity-bricklet)
   - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
   - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
-  - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20mA-bricklet)
+  - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
   - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
   - [IO 16 Bricklet](#io-16-bricklet)
   - [Joystick Bricklet](#joystick-bricklet)
@@ -577,7 +577,7 @@ Switch item=di4out3
 ```
 
 
-### Industial Dual 0-20mA Bricklet
+### Industrial Dual 0-20mA Bricklet
 
  * two sub devices: sensor0 and sensor1
  * device type bricklet: bricklet_industrialdual020ma
@@ -911,7 +911,7 @@ sitemap tflabel="Linear Poti"
 #### Rules
 ```
 ```
-```
+
 
 ### Load Cell Bricklet
 
