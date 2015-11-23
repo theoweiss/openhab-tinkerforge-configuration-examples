@@ -61,10 +61,10 @@ Documentation of the TinkerForge binding bundle
 - [Red Brick](#red-brick)
 - [Tinkerforge Actions](#tinkerforge-actions)  
 - [Upgrading](#upgrading)
-  - [Version 1.3](#upgrading-from-13)
-  - [Version 1.4](#upgrading-from-14)
-  - [Version 1.7](#upgrading-from-17)
-  - [Version 1.8](#upgrading-from-18)
+  - [from Version 1.3](#upgrading-from-13)
+  - [from Version 1.4](#upgrading-from-14)
+  - [from Version 1.7](#upgrading-from-17)
+  - [from Version 1.8](#upgrading-from-18)
 
 
 ## Introduction
@@ -409,8 +409,7 @@ The subids are:
  * dualbutton_leftbutton
  * dualbutton_rightbutton
 
-Leds
-====
+#### Leds
 There are two operating modes for the leds: with the autotoggle=True the leds are
 automatically toggled whenever the corresponding button is pressed. With the autotoggle=False
 mode the leds are fully controlled with openHAB UIs or rules. The default autotoggle mode is
@@ -1716,3 +1715,4 @@ tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemod
  - [Example configurations](https://github.com/theoweiss/openhab-tinkerforge-configuration-examples) available on github
 
 ### Upgrading from 1.8
+-- content
