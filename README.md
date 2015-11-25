@@ -6,57 +6,55 @@ Documentation of the TinkerForge binding bundle
 ## Table of Contents
 - [Introduction](#introduction)  
 - [Supported Devices](#supported-devices)  
-- Bricks
-  - [DC Brick](#dc-brick)
-  - [Servo Brick](#servo-brick)
-- Bricklets
-  - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
-  - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
-  - [Distance IR Bricklet](#distance-ir-bricklet)
-  - [Distance US Bricklet](#distance-us-bricklet)
-  - [Dual Button Bricklet](#dual-button-bricklet)
-  - [Dual Relay Bricklet](#dual-relay-bricklet)
-  - [Dust Detector Bricklet](#dust-detector-bricklet)
-  - [Hall Effect Bricklet](#hall-effect-bricklet)
-  - [Humidity Bricklet](#humidity-bricklet)
-  - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
-  - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
-  - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
-  - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
-  - [IO 16 Bricklet](#io-16-bricklet)
-  - [Joystick Bricklet](#joystick-bricklet)
-  - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
-  - [LED Strip Bricklet](#led-strip-bricklet)
-  - [Linear Poti Bricklet](#linear-poti-bricklet)
-  - [Load Cell Bricklet](#load-cell-bricklet)
-  - [Motion Detector Bricklet](#motion-detector-bricklet)
-  - [Multi Touch Bricklet](#multi-touch-bricklet)
-  - [Moisture Bricklet](#moisture-bricklet)
-  - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
-  - [PTC Bricklet](#ptc-bricklet)
-  - [Remote Switch Bricklet](#remote-switch-bricklet)
-  - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
-  - [Segment Display 4x7 Bricklet](#segment-display-4x7-bricklet)
-  - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
-  - [Sound Intensity Bricklet](#sound-intensity-bricklet)
-  - [Temperature Bricklet](#temperature-bricklet)
-  - [Temperature IR Bricklet](#temperature-ir-bricklet)
-  - [Tilt Bricklet](#tilt-bricklet)
-  - [Voltage/Current Bricklet](#voltagecurrent-bricklet)
-- Kits
-  - [Weatherstation Kit](#weatherstation-kit)
-- Deamon
-  - [Brick Daemon](#brick-daemon)
-
+  - Bricks
+    - [DC Brick](#dc-brick)
+    - [Servo Brick](#servo-brick)
+  - Bricklets
+    - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+    - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
+    - [Distance IR Bricklet](#distance-ir-bricklet)
+    - [Distance US Bricklet](#distance-us-bricklet)
+    - [Dual Button Bricklet](#dual-button-bricklet)
+    - [Dual Relay Bricklet](#dual-relay-bricklet)
+    - [Dust Detector Bricklet](#dust-detector-bricklet)
+    - [Hall Effect Bricklet](#hall-effect-bricklet)
+    - [Humidity Bricklet](#humidity-bricklet)
+    - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
+    - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
+    - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
+    - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
+    - [IO 16 Bricklet](#io-16-bricklet)
+    - [Joystick Bricklet](#joystick-bricklet)
+    - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
+    - [LED Strip Bricklet](#led-strip-bricklet)
+    - [Linear Poti Bricklet](#linear-poti-bricklet)
+    - [Load Cell Bricklet](#load-cell-bricklet)
+    - [Motion Detector Bricklet](#motion-detector-bricklet)
+    - [Multi Touch Bricklet](#multi-touch-bricklet)
+    - [Moisture Bricklet](#moisture-bricklet)
+    - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
+    - [PTC Bricklet](#ptc-bricklet)
+    - [Remote Switch Bricklet](#remote-switch-bricklet)
+    - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
+    - [Segment Display 4x7 Bricklet](#segment-display-4x7-bricklet)
+    - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
+    - [Sound Intensity Bricklet](#sound-intensity-bricklet)
+    - [Temperature Bricklet](#temperature-bricklet)
+    - [Temperature IR Bricklet](#temperature-ir-bricklet)
+    - [Tilt Bricklet](#tilt-bricklet)
+    - [Voltage/Current Bricklet](#voltagecurrent-bricklet)
+  - Kits
+    - [Weatherstation Kit](#weatherstation-kit)
+  - Deamon
+    - [Brick Daemon](#brick-daemon)
 - [Generic Item Binding Configuration](#generic-item-binding-configuration)  
- - [Basic Configuration](#basic-configuration)
-  - [Item Binding Configuration](#item-binding-configuration)
-  - [Item Types](#item-types)
-  - [Example Configuration](#example-configuration)  
-
+  - [Basic Configuration](#basic-configuration)
+    - [Item Binding Configuration](#item-binding-configuration)
+    - [Item Types](#item-types)
+    - [Example Configuration](#example-configuration)
 - [Advanced Configuration](#advanced-configuration)  
-  - [Overwiew](#overview)
-  - [Callback and threshold](#callback-and-threshold)  
+    - [Overwiew](#overview)
+    - [Callback and threshold](#callback-and-threshold)  
 - [News](#news)  
 - [Red Brick](#red-brick)
 - [Tinkerforge Actions](#tinkerforge-actions)  
@@ -105,8 +103,6 @@ With the benefit that you can have serveral switch items with different speeds.
 ```
 Switch DCSWITCH "DC Switch" {tinkerforge="uid=62Zduj, speed=14000"}
 ```
-
-
 #### Whats new?
 Support for Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
@@ -367,8 +363,8 @@ sitemap file entry (e.g tinkerforge.sitemap):
 
 ### Distance US Bricklet
 
-An entry in openhab.cfg is needed if you want to adjust threshold and / or callbackPeriod, the
-movingAverage or if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
+if you want to use a _symbolic name_.
 
 openhab.cfg:
 
@@ -430,7 +426,8 @@ state back to OFF again.
 
 ### Dual Relay Bricklet
 
-An entry in openhab.cfg is only needed if you want to use a _symbolic name_ in the items file.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
+if you want to use a _symbolic name_.
 
 bricklet:
 
@@ -1716,3 +1713,14 @@ tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemod
 
 ### Upgrading from 1.8
 -- content
+
+
+
+
+
+
+
+
+Footnotes:
+<b id="f1">1</b> openhab.cfg: An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
+if you want to use a _symbolic name_. [↩](#a1)
