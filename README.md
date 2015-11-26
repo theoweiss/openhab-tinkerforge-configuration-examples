@@ -1278,7 +1278,7 @@ tinkerforge:rs_floor.deviceCode=8
 Switch r0           {tinkerforge="uid=<your_uid>, subid=rslr1"}
 Switch r1           {tinkerforge="uid=<your_uid>, subid=rslr2"}
 Switch rb           {tinkerforge="uid=<your_uid>, subid=kitchen"}
-Switch rc           {tinkerforge="uid=<your_uid>, subid=floor"}```
+Switch rc           {tinkerforge="uid=<your_uid>, subid=floor"}
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -1631,7 +1631,7 @@ tinkerforge:vc_power.callbackPeriod=100
 ```
 Number Voltage       "Voltage [%d mV]"  { tinkerforge="uid=<your_uid>, subid=voltageCurrent_voltage" }
 Number Current       "Current [%d mA]"  { tinkerforge="uid=<your_uid>, subid=voltageCurrent_current" }
-Number Power         "Power [%d mW]"  { tinkerforge="uid=<your_uid>, subid=voltageCurrent_power" }```
+Number Power         "Power [%d mW]"  { tinkerforge="uid=<your_uid>, subid=voltageCurrent_power" }
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -1823,6 +1823,7 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
+
 ---
 
 ## News
