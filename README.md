@@ -1748,6 +1748,7 @@ parameters depend on the device type.
 #### Overview
 For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable
 defaults. The only exception is the IO16 Bricklet (see below).
+ 
 <a name="sym_name"></a>
 If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg
 to get a _symbolic name_.
@@ -1805,7 +1806,7 @@ The following table shows the TinkerForge device, its device type, subid and if 
 |Motion Detector Bricklet|motion_detector||||
 ---
 
-<a name="call_thresh">1</a>
+<a name="call_thresh"></a>
 #### Callback and Threshold
 
 The TinkerForge CallbackListeners - if available - are used to observe the sensor values of the
