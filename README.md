@@ -278,7 +278,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thres)</sup> or
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
 if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### Bricklet:
@@ -313,8 +313,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 The temperature sub device does not support callbackPeriod, it will be polled. The polling interval
 can be configured using tinkerforge:refresh property).
@@ -360,8 +360,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### openhab.cfg:
 
@@ -392,8 +392,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### openhab.cfg:
 
@@ -459,8 +459,8 @@ state back to OFF again.
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Dual_Relay.html)
 
 #### Binding properties:
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### Bricklet:
 
@@ -516,8 +516,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Humidity.html)
 
 #### Binding properties:
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### openhab.cfg:
 
@@ -1131,8 +1131,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### openhab.cfg:
 
@@ -1366,8 +1366,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### Bricklet:
 
@@ -1401,8 +1401,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod or
-if you want to use a _symbolic name_.
+An entry in openhab.cfg is only needed if you want to adjust threshold and / or callbackPeriod <sup>[1](#call_thresh)</sup> or
+if you want to use a _symbolic name_ <sup>[2](#sym_name)</sup>.
 
 ##### openhab.cfg:
 
@@ -1748,7 +1748,7 @@ parameters depend on the device type.
 #### Overview
 For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable
 defaults. The only exception is the IO16 Bricklet (see below).
- 
+
 <a name="sym_name"></a>
 If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg
 to get a _symbolic name_.
