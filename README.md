@@ -648,7 +648,9 @@ it defaults to 3 (4 samples per second).
 configuration options for the sensors:
 
 callbackPeriod: Setting the callback period is optional, the default is 1000 milli seconds.
+```
 threshold:
+```
 ---
 
 ### Industrial Quad Relay Bricklet
@@ -709,7 +711,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 | type | openHAB type name | bricklet_io16 |
 | debouncePeriod | debounce time in ms | default=100 |
 
-##### IO-sensor sub device:
+##### IO-Sensor sub device:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -718,7 +720,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 | type | openHAB type name | iosensor |
 | pullUpResistorEnabled | enable the pull-up resistor |  true, false |
 
-##### IO-actor sub device:
+##### IO-Actor sub device:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -1170,6 +1172,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 The Piezo Speaker Bricklet supports two modes:
   * sending morse codes with configurable frequency
   * sending tones with configurable duration and frequency
+
 Configuration is done through item definition. In order to use different tone sequences you need to use one item per tone sequence.
 
 Example:
@@ -1833,6 +1836,7 @@ The threshold controls the amount of  traffic from the binding to the openHAB ev
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/RED_Brick.html#red-brick)
 
 openHAB is preinstalled on the RED Brick image and can be configured with the TinkerForge BrickViewer.
+
 ---
 ## Tinkerforge Actions
 The new openHAB action [[TinkerForgeAction|Actions]] comes up with the actions tfServoSetposition, tfClearLCD and tfDCMotorSetspeed.
@@ -1851,6 +1855,7 @@ tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemod
 - LCDBacklight now is a sub device of LCD20x4 Bricklet (items file has to be changed)
 - LCD20x4Button now posts an update not a command anymore (rules has to be changed)
 - IndustrialQuadRelay sub id numbering now starts from zero (items file has to be changed)
+
 ---
 ### Upgrading from 1.4
 - Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
@@ -1871,6 +1876,7 @@ tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemod
     - Ambient Light Bricklet
        - calculate new threshold values from values of your current configuration: divide 10
        - unity: Lux
+
 ---
 ### Upgrading from 1.7
 - New Devices
