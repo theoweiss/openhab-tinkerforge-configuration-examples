@@ -170,7 +170,7 @@ The following table lists the general available properties.
 |type|the device type|mandatory for all devices|
 |subid|  subid of the device, subid's are used if a brick/bricklet houses more then one device (e.g. the Dual Relay Bricklet)|mandatory for sub devices|
 
-The following table shows the TinkerForge device, its device type, subid and if it is an actuator.
+The following table shows the TinkerForge device, its device type, its subid and if callback is supported.
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
