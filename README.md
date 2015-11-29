@@ -3,6 +3,7 @@
 
 Links:
 [doc/Tinkerforge-Binding.md](doc/Tinkerforge-Binding.md)
+
 [doc/Tinkerforge-Action.md](doc/Tinkerforge-Action.md)
 
 Documentation of the TinkerForge binding bundle
