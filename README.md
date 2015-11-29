@@ -13,48 +13,48 @@ Documentation of the TinkerForge binding bundle
 - [Advanced Configuration](#advanced-configuration)
     - [Overwiew](#overview)
     - [Callback and threshold](#callback-and-threshold)
-    - [Supported Devices](#supported-devices)
-      - Bricks
-        - [DC Brick](#dc-brick)
-        - [Servo Brick](#servo-brick)
-      - Bricklets
-        - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
-        - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
-        - [Distance IR Bricklet](#distance-ir-bricklet)
-        - [Distance US Bricklet](#distance-us-bricklet)
-        - [Dual Button Bricklet](#dual-button-bricklet)
-        - [Dual Relay Bricklet](#dual-relay-bricklet)
-        - [Dust Detector Bricklet](#dust-detector-bricklet)
-        - [Hall Effect Bricklet](#hall-effect-bricklet)
-        - [Humidity Bricklet](#humidity-bricklet)
-        - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
-        - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
-        - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
-        - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
-        - [IO 16 Bricklet](#io-16-bricklet)
-        - [Joystick Bricklet](#joystick-bricklet)
-        - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
-        - [LED Strip Bricklet](#led-strip-bricklet)
-        - [Linear Poti Bricklet](#linear-poti-bricklet)
-        - [Load Cell Bricklet](#load-cell-bricklet)
-        - [Motion Detector Bricklet](#motion-detector-bricklet)
-        - [Multi Touch Bricklet](#multi-touch-bricklet)
-        - [Moisture Bricklet](#moisture-bricklet)
-        - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
-        - [PTC Bricklet](#ptc-bricklet)
-        - [Remote Switch Bricklet](#remote-switch-bricklet)
-        - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
-        - [Segment Display 4x7 Bricklet](#segment-display-4x7-bricklet)
-        - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
-        - [Sound Intensity Bricklet](#sound-intensity-bricklet)
-        - [Temperature Bricklet](#temperature-bricklet)
-        - [Temperature IR Bricklet](#temperature-ir-bricklet)
-        - [Tilt Bricklet](#tilt-bricklet)
-        - [Voltage/Current Bricklet](#voltagecurrent-bricklet)
-      - Kits
-        - [Weatherstation Kit](#weatherstation-kit)
-      - Deamon
-        - [Brick Daemon](#brick-daemon)
+- [Supported Devices](#supported-devices)
+  - Bricks
+    - [DC Brick](#dc-brick)
+    - [Servo Brick](#servo-brick)
+  - Bricklets
+    - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+    - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
+    - [Distance IR Bricklet](#distance-ir-bricklet)
+    - [Distance US Bricklet](#distance-us-bricklet)
+    - [Dual Button Bricklet](#dual-button-bricklet)
+    - [Dual Relay Bricklet](#dual-relay-bricklet)
+    - [Dust Detector Bricklet](#dust-detector-bricklet)
+    - [Hall Effect Bricklet](#hall-effect-bricklet)
+    - [Humidity Bricklet](#humidity-bricklet)
+    - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
+    - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
+    - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
+    - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
+    - [IO 16 Bricklet](#io-16-bricklet)
+    - [Joystick Bricklet](#joystick-bricklet)
+    - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
+    - [LED Strip Bricklet](#led-strip-bricklet)
+    - [Linear Poti Bricklet](#linear-poti-bricklet)
+    - [Load Cell Bricklet](#load-cell-bricklet)
+    - [Motion Detector Bricklet](#motion-detector-bricklet)
+    - [Multi Touch Bricklet](#multi-touch-bricklet)
+    - [Moisture Bricklet](#moisture-bricklet)
+    - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
+    - [PTC Bricklet](#ptc-bricklet)
+    - [Remote Switch Bricklet](#remote-switch-bricklet)
+    - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
+    - [Segment Display 4x7 Bricklet](#segment-display-4x7-bricklet)
+    - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
+    - [Sound Intensity Bricklet](#sound-intensity-bricklet)
+    - [Temperature Bricklet](#temperature-bricklet)
+    - [Temperature IR Bricklet](#temperature-ir-bricklet)
+    - [Tilt Bricklet](#tilt-bricklet)
+    - [Voltage/Current Bricklet](#voltagecurrent-bricklet)
+  - Kits
+    - [Weatherstation Kit](#weatherstation-kit)
+  - Deamon
+    - [Brick Daemon](#brick-daemon)
 - [News](#news)
 - [Red Brick](#red-brick)
 - [Tinkerforge Actions](#tinkerforge-actions)
@@ -376,7 +376,7 @@ Number items will show the current position.
 The new openHAB action TinkerForgeAction comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 
-####### Example
+###### Example
 ```
 tfServoSetposition("6Crt5W", "servo0", "-9000", "65535", "65535")
 ```
@@ -514,7 +514,7 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 
 ##### openhab.cfg:
 ```
-tinkerforge:ambientlightv2.uid=uK9
+tinkerforge:ambientlightv2.uid=<your_uid>
 tinkerforge:ambientlightv2.type=bricklet_ambient_lightv2
 tinkerforge:ambientlightv2.illuminanceRange=10
 tinkerforge:ambientlightv2.integrationTime=10
@@ -692,22 +692,22 @@ state back to OFF again.
 
 ##### openhab.cfg:
 ```
-tinkerforge:led1.uid=mN2
+tinkerforge:led1.uid=<your_uid>
 tinkerforge:led1.subid=dualbutton_leftled
 tinkerforge:led1.type=dualbutton_led
 tinkerforge:led1.autotoggle=True
 
-tinkerforge:led2.uid=mN2
+tinkerforge:led2.uid=<your_uid>
 tinkerforge:led2.subid=dualbutton_rightled
 tinkerforge:led2.type=dualbutton_led
 tinkerforge:led2.autotoggle=False
 
-tinkerforge:button1.uid=mN2
+tinkerforge:button1.uid=<your_uid>
 tinkerforge:button1.subid=dualbutton_leftbutton
 tinkerforge:button1.type=dualbutton_button
 tinkerforge:button1.tactile=False
 
-tinkerforge:button2.uid=mN2
+tinkerforge:button2.uid=<your_uid>
 tinkerforge:button2.subid=dualbutton_rightbutton
 tinkerforge:button2.type=dualbutton_button
 tinkerforge:button2.tactile=True
@@ -780,11 +780,11 @@ The subids are:
 
 ##### openhab.cfg:
 ```
-tinkerforge:relay_coffee_machine.uid=c21
+tinkerforge:relay_coffee_machine.uid=<your_uid>
 tinkerforge:relay_coffee_machine.type=dual_relay
 tinkerforge:relay_coffee_machine.subid=relay1
 
-tinkerforge:relay_garage_door.uid=c21
+tinkerforge:relay_garage_door.uid=<your_uid>
 tinkerforge:relay_garage_door.type=dual_relay
 tinkerforge:relay_garage_door.subid=relay2
 ```
@@ -832,7 +832,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:dust.uid=uBH
+tinkerforge:dust.uid=<your_uid>
 tinkerforge:dust.type=bricklet_dustdetector
 tinkerforge:dust.callbackPeriod=10
 tinkerforge:dust.threshold=0
@@ -864,7 +864,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 ##### openhab.cfg:
 ```
 # really optional settings
-tinkerforge:hall.uid=kp2
+tinkerforge:hall.uid=<your_uid>
 tinkerforge:hall.type=bricklet_halleffect
 tinkerforge:hall.callbackPeriod=1000
 
@@ -1025,15 +1025,15 @@ threshold:
 
 ##### openhab.cfg
 ```
-tinkerforge:brickletid020ma.uid=s6t
+tinkerforge:brickletid020ma.uid=<your_uid>
 tinkerforge:brickletid020ma.type=bricklet_industrialdual020ma
 
-tinkerforge:temperature0.uid=s6t
+tinkerforge:temperature0.uid=<your_uid>
 tinkerforge:temperature0.subid=sensor0
 tinkerforge:temperature0.type=industrial020ma_sensor
 tinkerforge:temperature0.callbackPeriod=100
 
-tinkerforge:temperature1.uid=s6t
+tinkerforge:temperature1.uid=<your_uid>
 tinkerforge:temperature1.subid=sensor1
 tinkerforge:temperature1.type=industrial020ma_sensor
 tinkerforge:temperature1.callbackPeriod=1000
@@ -1087,19 +1087,19 @@ The subids are:
 
 ##### openhab.cfg:
 ```
-tinkerforge:relay0.uid=eQj
+tinkerforge:relay0.uid=<your_uid>
 tinkerforge:relay0.type=quad_relay
 tinkerforge:relay0.subid=relay0
 
-tinkerforge:relay1.uid=eQj
+tinkerforge:relay1.uid=<your_uid>
 tinkerforge:relay1.type=quad_relay
 tinkerforge:relay1.subid=relay1
 
-tinkerforge:relay2.uid=eQj
+tinkerforge:relay2.uid=<your_uid>
 tinkerforge:relay2.type=quad_relay
 tinkerforge:relay2.subid=relay2
 
-tinkerforge:relay3.uid=eQj
+tinkerforge:relay3.uid=<your_uid>
 tinkerforge:relay3.type=quad_relay
 tinkerforge:relay3.subid=relay3
 ```
@@ -1161,85 +1161,85 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:io16.uid=efY
+tinkerforge:io16.uid=<your_uid>
 tinkerforge:io16.type=bricklet_io16
 tinkerforge:io16.debouncePeriod=100
 
-tinkerforge:io16ina0.uid=efY
+tinkerforge:io16ina0.uid=<your_uid>
 tinkerforge:io16ina0.subid=ina0
 tinkerforge:io16ina0.type=iosensor
 tinkerforge:io16ina0.pullUpResistorEnabled=true
 
-tinkerforge:io16ina1.uid=efY
+tinkerforge:io16ina1.uid=<your_uid>
 tinkerforge:io16ina1.subid=ina1
 tinkerforge:io16ina1.type=iosensor
 tinkerforge:io16ina1.pullUpResistorEnabled=true
 
-tinkerforge:io16outa2.uid=efY
+tinkerforge:io16outa2.uid=<your_uid>
 tinkerforge:io16outa2.subid=outa2
 tinkerforge:io16outa2.type=io_actuator
 
-tinkerforge:io16outa3.uid=efY
+tinkerforge:io16outa3.uid=<your_uid>
 tinkerforge:io16outa3.subid=outa3
 tinkerforge:io16outa3.type=io_actuator
 
-tinkerforge:io16ina4.uid=efY
+tinkerforge:io16ina4.uid=<your_uid>
 tinkerforge:io16ina4.subid=ina4
 tinkerforge:io16ina4.type=iosensor
 tinkerforge:io16ina4.pullUpResistorEnabled=true
 
-tinkerforge:io16ina5.uid=efY
+tinkerforge:io16ina5.uid=<your_uid>
 tinkerforge:io16ina5.subid=ina5
 tinkerforge:io16ina5.type=iosensor
 tinkerforge:io16ina5.pullUpResistorEnabled=true
 
-tinkerforge:io16ina6.uid=efY
+tinkerforge:io16ina6.uid=<your_uid>
 tinkerforge:io16ina6.subid=ina6
 tinkerforge:io16ina6.type=iosensor
 tinkerforge:io16ina6.pullUpResistorEnabled=true
 
-tinkerforge:io16ina7.uid=efY
+tinkerforge:io16ina7.uid=<your_uid>
 tinkerforge:io16ina7.subid=ina7
 tinkerforge:io16ina7.type=iosensor
 tinkerforge:io16ina7.pullUpResistorEnabled=true
 
 #### port b
 
-tinkerforge:io16outb0.uid=efY
+tinkerforge:io16outb0.uid=<your_uid>
 tinkerforge:io16outb0.subid=outb0
 tinkerforge:io16outb0.type=io_actuator
 
-tinkerforge:io16inb1.uid=efY
+tinkerforge:io16inb1.uid=<your_uid>
 tinkerforge:io16inb1.subid=inb1
 tinkerforge:io16inb1.type=iosensor
 tinkerforge:io16inb1.pullUpResistorEnabled=true
 
-tinkerforge:io16inb2.uid=efY
+tinkerforge:io16inb2.uid=<your_uid>
 tinkerforge:io16inb2.subid=inb2
 tinkerforge:io16inb2.type=iosensor
 tinkerforge:io16inb2.pullUpResistorEnabled=true
 
-tinkerforge:io16inb3.uid=efY
+tinkerforge:io16inb3.uid=<your_uid>
 tinkerforge:io16inb3.subid=inb3
 tinkerforge:io16inb3.type=iosensor
 tinkerforge:io16inb3.pullUpResistorEnabled=true
 
-tinkerforge:io16inb4.uid=efY
+tinkerforge:io16inb4.uid=<your_uid>
 tinkerforge:io16inb4.subid=inb4
 tinkerforge:io16inb4.type=iosensor
 tinkerforge:io16inb4.pullUpResistorEnabled=true
 
-tinkerforge:io16inb5.uid=efY
+tinkerforge:io16inb5.uid=<your_uid>
 tinkerforge:io16inb5.subid=inb5
 tinkerforge:io16inb5.type=iosensor
 tinkerforge:io16inb5.pullUpResistorEnabled=true
 
-tinkerforge:io16inb6.uid=efY
+tinkerforge:io16inb6.uid=<your_uid>
 tinkerforge:io16inb6.subid=inb6
 tinkerforge:io16inb6.type=iosensor
 tinkerforge:io16inb6.pullUpResistorEnabled=true
 
-tinkerforge:io16inb7.uid=efY
+tinkerforge:io16inb7.uid=<your_uid>
 tinkerforge:io16inb7.subid=inb7
 tinkerforge:io16inb7.type=iosensor
 tinkerforge:io16inb7.pullUpResistorEnabled=true
@@ -1256,7 +1256,7 @@ Contact ina5		"ina5 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina5"}
 Contact ina6		"ina6 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina6"}
 Contact ina7		"ina7 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina7"}
 
-Switch outb0		"outa3" {tinkerforge="uid=efY, subid=outb0"}
+Switch outb0		"outa3" {tinkerforge="uid=<your_uid>, subid=outb0"}
 Contact inb1		"inb1 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb1"}
 Contact inb2		"inb2 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb2"}
 Contact inb3		"inb3 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb3"}
@@ -1323,16 +1323,16 @@ tinkerforge:joystickbutton.tactile=True
 
 ##### openhab.cfg:
 ```
-tinkerforge:joystick.uid=aXJ
+tinkerforge:joystick.uid=<your_uid>
 tinkerforge:joystick.type=bricklet_joystick
 tinkerforge:joystick.callbackPeriod=1000
 
-tinkerforge:joystickbutton.uid=aXJ
+tinkerforge:joystickbutton.uid=<your_uid>
 tinkerforge:joystickbutton.subid=joystick_button
 tinkerforge:joystickbutton.type=joystick_button
 tinkerforge:joystickbutton.tactile=True
 
-tinkerforge:yposition.uid=aXJ
+tinkerforge:yposition.uid=<your_uid>
 tinkerforge:yposition.subid=joystick_yposition
 tinkerforge:yposition.type=joystick_yposition
 ```
@@ -1511,7 +1511,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:ledstrip.uid=jGu
+tinkerforge:ledstrip.uid=<your_uid>
 tinkerforge:ledstrip.type=bricklet_ledstrip
 tinkerforge:ledstrip.frameduration=100
 tinkerforge:ledstrip.chiptype=ws2801
@@ -1519,7 +1519,7 @@ tinkerforge:ledstrip.clockfrequency=1000000
 tinkerforge:ledstrip.colorMapping=rbg
 tinkerforge:ledstrip.subDevices=ledgroup1
 
-tinkerforge:ledgroup1.uid=jGu
+tinkerforge:ledgroup1.uid=<your_uid>
 tinkerforge:ledgroup1.subid=ledgroup1
 tinkerforge:ledgroup1.type=ledgroup
 tinkerforge:ledgroup1.leds=0|1-6
@@ -1555,7 +1555,7 @@ The default callback period is 10 millis, you can change this within openhab.cfg
 
 ##### openhab.cfg:
 ```
-tinkerforge:linearpoti.uid=egW
+tinkerforge:linearpoti.uid=<your_uid>
 tinkerforge:linearpoti.type=bricklet_linear_poti
 tinkerforge:linearpoti.callbackPeriod=1000
 ```
@@ -1584,7 +1584,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:weight.uid=v8V
+tinkerforge:weight.uid=<your_uid>
 tinkerforge:weight.type=bricklet_loadcell
 tinkerforge:weight.callbackPeriod=100
 ```
@@ -1799,11 +1799,11 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:brickletptc.uid=rjC
+tinkerforge:brickletptc.uid=<your_uid>
 tinkerforge:brickletptc.type=bricklet_ptc
 tinkerforge:brickletptc.wiremode=2
 
-tinkerforge:ptctemperature.uid=rjC
+tinkerforge:ptctemperature.uid=<your_uid>
 tinkerforge:ptctemperature.subid=ptc_temperature
 tinkerforge:ptctemperature.type=ptc_temperature
 tinkerforge:ptctemperature.callbackPeriod=1000
@@ -1853,7 +1853,7 @@ on the device type.
 | typeCDevices | sub device names of type C devices  |
 
 ```
-tinkerforge:rs1.uid=jKw
+tinkerforge:rs1.uid=<your_uid>
 tinkerforge:rs1.type=bricklet_remote_switch
 tinkerforge:rs1.typeADevices=rslr1 rslr2
 tinkerforge:rs1.typeBDevices=kitchen
@@ -1871,13 +1871,13 @@ tinkerforge:rs1.typeCDevices=floor
 | repeats | the number of times the code is send | e.g. 5 |
 
 ```
-tinkerforge:rs_living_room.uid=jKw
+tinkerforge:rs_living_room.uid=<your_uid>
 tinkerforge:rs_living_room.subid=rslr1
 tinkerforge:rs_living_room.type=remote_switch_a
 tinkerforge:rs_living_room.houseCode=31
 tinkerforge:rs_living_room.receiverCode=8
 
-tinkerforge:rs_living_room2.uid=jKw
+tinkerforge:rs_living_room2.uid=<your_uid>
 tinkerforge:rs_living_room2.subid=rslr2
 tinkerforge:rs_living_room2.type=remote_switch_a
 tinkerforge:rs_living_room2.houseCode=31
@@ -1895,7 +1895,7 @@ tinkerforge:rs_living_room2.receiverCode=9
 | repeats | the number of times the code is send | e.g. 5 |
 
 ```
-tinkerforge:rs_kitchen.uid=jKw
+tinkerforge:rs_kitchen.uid=<your_uid>
 tinkerforge:rs_kitchen.subid=kitchen
 tinkerforge:rs_kitchen.type=remote_switch_b
 tinkerforge:rs_kitchen.address=344
@@ -1913,7 +1913,7 @@ tinkerforge:rs_kitchen.unit=9
 | repeats | the number of times the code is send | e.g. 5 |
 
 ```
-tinkerforge:rs_floor.uid=jKw
+tinkerforge:rs_floor.uid=<your_uid>
 tinkerforge:rs_floor.subid=floor
 tinkerforge:rs_floor.type=remote_switch_c
 tinkerforge:rs_floor.systemCode=A
@@ -1980,12 +1980,12 @@ tinkerforge:button.tactile=True
 
 ##### openhab.cfg:
 ```
-tinkerforge:encoder.uid=kHv
+tinkerforge:encoder.uid=<your_uid>
 tinkerforge:encoder.subid=encoder
 tinkerforge:encoder.type=rotary_encoder
 tinkerforge:encoder.callbackPeriod=1
 
-tinkerforge:button.uid=kHv
+tinkerforge:button.uid=<your_uid>
 tinkerforge:button.subid=button
 tinkerforge:button.type=rotary_encoder_button
 tinkerforge:button.tactile=False
@@ -2160,7 +2160,7 @@ http://www.tinkerforge.com/en/doc/Software/Bricklets/Temperature_Bricklet_Java.h
 
 ##### openhab.cfg:
 ```
-tinkerforge:temperature.uid=7Dj
+tinkerforge:temperature.uid=<your_uid>
 tinkerforge:temperature.type=bricklet_temperature
 tinkerforge:temperature.slowI2C=False
 ```
@@ -2402,12 +2402,12 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
-tinkerforge:lcdbutton2.uid=d4j
+tinkerforge:lcdbutton2.uid=<your_uid>
 tinkerforge:lcdbutton2.subid=button2
 tinkerforge:lcdbutton2.type=lcd_button
 tinkerforge:lcdbutton2.tactile=True
 
-tinkerforge:lcdbutton3.uid=d4j
+tinkerforge:lcdbutton3.uid=<your_uid>
 tinkerforge:lcdbutton3.subid=button3
 tinkerforge:lcdbutton3.type=lcd_button
 tinkerforge:lcdbutton3.tactile=True
@@ -2650,6 +2650,6 @@ tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemod
 
 ### Upgrading from 1.8
 
--- content
+more to come ...
 
 ---
