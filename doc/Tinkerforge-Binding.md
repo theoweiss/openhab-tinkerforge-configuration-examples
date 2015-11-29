@@ -2572,18 +2572,87 @@ openHAB is preinstalled on the RED Brick image and can be configured with the Ti
 
 ---
 
-## Tinkerforge Actions
-The new openHAB action [[TinkerForgeAction|Actions]] comes up with the actions tfServoSetposition, tfClearLCD and tfDCMotorSetspeed.
-tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the [Servo Brick](#servo-brick).
-tfClearLCD(uid) uid is the uid of the LCD display. A call of tfClearLCD will clear the [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet).
-tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemode) can be used to control a DC motor through the [DC Brick](#dc-brick).
+## TinkerForge Actions
 
-  Example:
+The TinkerForge Action plugin provides direct interaction with some of the TinkerForge devices (since 1.7.0). The action depends on the TinkerForge binding. In order to use these actions you must install the TinkerForge Action bundle and the [TinkerForge Binding](https://github.com/openhab/openhab/wiki/Tinkerforge-Binding) and add at least a hosts configuration value for the binding in openhab.cfg.
+These action functions are available:
 
-  ```
-  tfServoSetposition("6Crt5W", "servo0", "-9000", "65535", "65535")
-  ```
+1. `tfClearLCD(String uid)`
 
+    Clears the display of the LCD with the given uid.
+
+    Example:
+    ```
+    rule "clear lcd"
+        when
+            Item ClearLCD received command ON
+        then
+           tfClearLCD("<your_uid>")
+    end
+    ```
+2. `tfServoSetposition(String uid, String num, String position, String velocity, String acceleration)`
+
+    Sets the position of a TinkerForge servo with the uid $uid and servo number to the position $position using the speed $speed and acceleration $acceleration.
+
+    Example:
+    ```
+    rule "move servo"
+      when
+          Item MoveServo received command ON
+      then
+         tfServoSetposition("<your_uid>", "servo0", "0", "65535", "65535")
+         Thread::sleep(1000)
+         tfServoSetposition("<your_uid>", "servo0", "-9000", "65535", "65535")
+         Thread::sleep(1000)
+        tfServoSetposition("<your_uid>", "servo0", "9000", "65535", "65535")
+    end
+    ```
+3. `tfDCMotorSetspeed(String uid, String speed, String acceleration, String drivemode)`
+
+    Sets the speed of a TinkerForge DC motor with the given uid to $speed using the acceleration $acceleration and the drivemode $drivemode.
+    * speed: value between -32767 - 32767
+    * drivemode is either "break" or "coast"
+
+    Example:
+    ```
+    rule "move motor"
+      when
+          Item DCMOVE received command ON
+      then
+         var String acceleration = "10000"
+         var String speed = "15000"
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+    end
+    ```
+4. `tfDCMotorSetspeed(String uid, Short speed, Integer acceleration, String drivemode)`
+
+    Sets the speed of a TinkerForge DC motor with the given uid to $speed using the acceleration $acceleration and the drivemode $drivemode.
+    * speed: value between -32767 - 32767
+    * drivemode is either "break" or "coast"
+
+    Example:
+    ```
+    rule "move motor"
+      when
+          Item DCMOVE received command ON
+      then
+         var Integer acceleration = 10000
+         var Short speed = 15000
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+         Thread::sleep(1000)
+         tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
+    end
+    ```
 ---
 
 ## Upgrading
