@@ -247,9 +247,8 @@ tinkerforge:dc_garage.driveMode=brake
 * switchOnVelocity in openhab.cfg is no longer needed and has gone.
 It is replaced by per item configuration:
 With the benefit that you can have serveral switch items with different speeds.
-```
 ~~tinkerforge:dc_garage.switchOnVelocity=10000~~
-```
+
 ```
 Switch DCSWITCH "DC Switch" {tinkerforge="uid=<your_uid>, speed=14000"}
 ```
