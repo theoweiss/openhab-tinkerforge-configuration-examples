@@ -238,9 +238,6 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-~~https://bintray.com/artifact/download/theoweiss/generic/org.openhab.binding.tinkerforge-1.7.0-SNAPSHOT.jar
-The binding will work with 1.6.x versions of openHAB.~~
-
 ##### Incompatible changes
 * DriveMode now is one of "brake" or "coast" instead of "0" or "1"
 ```
@@ -250,7 +247,9 @@ tinkerforge:dc_garage.driveMode=brake
 * switchOnVelocity in openhab.cfg is no longer needed and has gone.
 It is replaced by per item configuration:
 With the benefit that you can have serveral switch items with different speeds.
+```
 ~~tinkerforge:dc_garage.switchOnVelocity=10000~~
+```
 ```
 Switch DCSWITCH "DC Switch" {tinkerforge="uid=<your_uid>, speed=14000"}
 ```
@@ -260,8 +259,7 @@ Support for Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
 
 The number items show the current velocity. The values are reported using the VelocityListener.
-"callbackPeriod" and "threshold" for the listener can be configured in openhab.cfg. There is more
-documentation about callback listeners at the official openHAB TinkerForgeBindig wiki page.
+"[callbackPeriod](#call_thresh)" and "[threshold](#call_thresh)" for the listener can be configured in openhab.cfg.
 
 * callbackPeriod: milliseconds
 * threshold: numeric value
@@ -1256,7 +1254,7 @@ Contact ina5		"ina5 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina5"}
 Contact ina6		"ina6 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina6"}
 Contact ina7		"ina7 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=ina7"}
 
-Switch outb0		"outa3" {tinkerforge="uid=<your_uid>, subid=outb0"}
+Switch outb0		"outb0" {tinkerforge="uid=<your_uid>, subid=outb0"}
 Contact inb1		"inb1 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb1"}
 Contact inb2		"inb2 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb2"}
 Contact inb3		"inb3 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=inb3"}
@@ -1287,9 +1285,7 @@ sitemap io16 label="Main Menu"
 		Text item=inb5
 		Text item=inb6
 		Text item=inb7
-		Switch item=r0
-		Switch item=r1
-	}
+	  }
 }
 ```
 ---
