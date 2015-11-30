@@ -2326,7 +2326,7 @@ tinkerforge:voltageCurrent.currentConversionTime=4
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_voltage.uid=<your_uid>
 tinkerforge:vc_voltage.subid=voltageCurrent_voltage
