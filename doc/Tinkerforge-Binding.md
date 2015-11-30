@@ -369,7 +369,7 @@ Number items will show the current position.
 * rightposition: the target position to reach when the right rollershutter controller is pressed or command "UP" was send
 * acceleration: the acceleration
 
-###### TinkerForge Action
+##### TinkerForge Action
 The new openHAB action TinkerForgeAction comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 
@@ -2202,7 +2202,7 @@ if you want to use a [_symbolic name_](#sym_name) or adjust the emissivity of th
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:objIR.uid=<your_uid>
 tinkerforge:objIR.subid=object_temperature
@@ -2221,7 +2221,7 @@ tinkerforge:objIR.threshold=0
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:ambIR.uid=<your_uid>
 tinkerforge:ambIR.subid=ambient_temperature
@@ -2345,7 +2345,7 @@ tinkerforge:vc_voltage.callbackPeriod=100
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_current.uid=<your_uid>
 tinkerforge:vc_current.subid=voltageCurrent_current
@@ -2364,7 +2364,7 @@ tinkerforge:vc_current.callbackPeriod=100
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_power.uid=<your_uid>
 tinkerforge:vc_power.subid=voltageCurrent_power
