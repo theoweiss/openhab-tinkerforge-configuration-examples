@@ -1,1 +1,5 @@
-[doc/Tinkerforge-Binding.md](doc/Tinkerforge-Binding.md)
+
+
+---
+#### You will find the current Tinkerforge Binding Docs [>>> here <<<](doc/Tinkerforge-Binding.md)
+---
