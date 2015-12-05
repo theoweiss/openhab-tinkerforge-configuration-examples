@@ -11,7 +11,7 @@ Documentation of the TinkerForge binding bundle
     - [Item Types](#item-types)
     - [Example Configuration](#example-configuration)
 - [Advanced Configuration](#advanced-configuration)
-    - [Overwiew](#overview)
+    - [Overview](#overview)
     - [Callback and threshold](#callback-and-threshold)
 - [Supported Devices](#supported-devices)
   - Bricks
@@ -75,7 +75,7 @@ measurement as well as for I/O, LCDs and motor control. You will find a complete
 blocks [here](http://www.tinkerforge.com/en/doc/Product_Overview.html).
 
 This binding connects the [TinkerForge](http://tinkerforge.com) devices to the openHAB event bus.
-Sensor values from devices are made available to openHAB and actions on  devices can be triggered by
+Sensor values from devices are made available to openHAB and actions on devices can be triggered by
 openHAB.
 
 The binding supports the connection to several brickd instances.
@@ -96,6 +96,19 @@ The following properties must be configured to define a brickd connection:
 
     tinkerforge:hosts="<IP address>[:port] ..."
 
+<!-- @sihui
+Es wird auch Authentisierung unterstützt. Dazu mit ":" getrennt ein weiteres Feld
+mit dem Passwort einfügen.
+tinkerforge:hosts=<ip>[:<port>][<:password>]
+z.B.
+authenticate with password 1234 and default port
+tinkerforge:hosts=127.0.0.1::1234
+oder mit port
+tinkerforge:hosts=127.0.0.1:4224:1234
+oder mehrere hosts
+tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
+-->
+
 The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
 by square brackets are optional.
 
@@ -106,6 +119,10 @@ by square brackets are optional.
 
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
+<!---
+@sihui
+Hier fehlt eine Überschrift z.B. "Refresh of Sensor Values"
+-->
 Devices which do not support callbacks will be polled with a configurable interval, the default
  is 60000 milliseconds. This value can be changed in openhab.cfg:
 
@@ -116,6 +133,11 @@ Devices which do not support callbacks will be polled with a configurable interv
 In order to bind an item to a device, you need to provide configuration settings. The easiest way
 to do so is to add binding information in your item file (in the folder '${openhab_home}/configurations/items').
 
+<!--
+@sihui
+Mittlerweile gibt es einige Devices die noch mehr Konfiguration haben, dass hier ist also nur noch
+das minimale was man angeben muss.
+-->
 The configuration of the TinkerForge binding item looks like this:
 
     tinkerforge="(uid=<your_id> [, subid=<your_subid>] | name=<your_name>)"
@@ -129,9 +151,17 @@ subid of the device, or - if the device is configured in openhab.cfg - the "symb
 | subid    | optional subid of the device|
 | name     | _symbolic name_ of the device. The name is only available if there is some configuration for the device in openhab.cfg. |
 
+<!--
+@sihui
+Das wuerde ich raus machen, mittlerweile sind es mehr Typen.
+-->
 #### Item Types
 Supported item types are "Switch Item", "Number Item", "Contact Item" and "String Item".
 
+<!--
+@sihui
+das gehoert nach oben zu der Beschreibung der tinkerforge:hosts Eintraege
+-->
 #### Example Configuration
 
 Example for a connection to a single brickd:
@@ -151,6 +181,10 @@ parameters depend on the device type.
 #### Overview
 For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable
 defaults. The only exception is the IO16 Bricklet (see below).
+<!--
+@sihui
+Da gibt es mittlerweile mehr Ausnahmen, nicht nur IO16: "The only exception..." rausnehmen
+-->
 
 <a name="sym_name"></a>
 If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg
@@ -171,6 +205,11 @@ The following table lists the general available properties.
 |subid|  subid of the device, subid's are used if a brick/bricklet houses more then one device (e.g. the Dual Relay Bricklet)|mandatory for sub devices|
 
 The following table shows the TinkerForge device, its device type, its subid and if callback is supported.
+
+<!--
+@sihui
+In der Tabelle fehlen die neuen Devices, oder?
+-->
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
@@ -216,8 +255,7 @@ The following table shows the TinkerForge device, its device type, its subid and
 The TinkerForge CallbackListeners - if available - are used to observe the sensor values of the
 devices. These listeners are configured to update sensor values at a given time period
 (callbackPeriod). The default configuration sets the **callbackPeriod** to 1 second. This value can
-be changed in openhab.cfg. For now this value must be changed for every single device. The values
-must be given in milliseconds.
+be changed in openhab.cfg. The values must be given in milliseconds.
 
 The callbackPeriod controls the amount of traffic from the TF hardware to the binding.
 
@@ -227,6 +265,17 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
+<!--
+@sihui
+Hier hat sich in 1.5 etwas geaendert. Die Aenderung muessen wir nicht hier dokumentieren (wenn ueberhaupt). 
+Es waere aber gut das Verhalten zu dokumentieren. Dazu hatte ich damals mindestens hier https://github.com/theoweiss/openhab/wiki schon
+mal was aufgeschrieben. Das will man an dieser Stelle sicher nicht eins zu eins uebernehmen, aber
+vielleicht hilft es dir als Startpunkt:
+
+"Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
+
+Background: Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal."
+-->
 
 ---
 
@@ -238,6 +287,20 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
+<!--
+@sihui
+Changes und "What's new" sollten nur in den Release Notes sein. Hier sollte nur das aktuelle Verhalten beschrieben werden.
+Denn hier fehlt der zeitliche Bezug (seit wann?), dafür muss man mehr lesen um zu Wissen wie man es machen muss. Neue 
+Benutzer interessiert die Historie nicht.
+
+Anstatt dessen die einzelen Properties erklaeren, also:
+speed, max, min, ...
+Die Werte fuer acceleration, drivemode aus der openhab.cfg sind defaults,
+die durch die Item-Konfiguration acceleration, drivemode ueberschrieben werden koennen.
+
+Vorwarnung: bei max und min Wert kann sich noch was aendern und zwar in Zusammenhang mit dem von
+dir berichteten Remote Switch Device B Problem. Vielleicht muss man diese Settings wieder abschaffen. 
+-->
 ##### Incompatible changes
 * DriveMode now is one of "brake" or "coast" instead of "0" or "1"
 ```
