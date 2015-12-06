@@ -1,4 +1,4 @@
-//Dimmer rb           {tinkerforge="uid=jKw, subid=kitchen, step=1"}
+Dimmer dimmb     "dimmb [%d %%]"      <slider>     {tinkerforge="uid=jKw, subid=kitchen"}
 //Switch r0    "r0" <socket> (Lights)       {tinkerforge="uid=jKw, subid=rslr1, repeats=100"}
 //Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=jKw, subid=rslr2, repeats=100"}
 //Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=jKw, subid=kitchen, repeats=100"}

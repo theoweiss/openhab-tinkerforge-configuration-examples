@@ -6,11 +6,11 @@ sitemap tf label="RemoteSwitch"
          }
 		
 	}
-  Frame {
-            //Slider item=rb
+  Frame label="Remote" {
 			Switch item=r0
 			Switch item=r1
 			Switch item=rb
+			Slider item=dimmb switchSupport
 			Switch item=rc
-        }
+                  }
 }

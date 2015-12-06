@@ -37,6 +37,7 @@
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
     <logger name="org.openhab.binding.tinkerforge" level="INFO" />
     <logger name="org.openhab.binding.tinkerforge.internal.config.ConfigurationHandler" level="DEBUG" />
+    <logger name="org.openhab.binding.tinkerforge.internal.TinkerforgeBinding" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal.model.impl.MBrickletRemoteSwitchImpl" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal.model.impl.RemoteSwitchAImpl" level="TRACE" />
     <logger name="org.openhab.binding.tinkerforge.internal.model.impl.RemoteSwitchBImpl" level="TRACE" />
