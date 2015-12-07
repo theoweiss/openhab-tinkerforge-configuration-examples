@@ -398,13 +398,13 @@ rule "move motor"
     then
        var Integer acceleration = 10000
        var Short speed = 15000
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
 end
 
 ```
