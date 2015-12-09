@@ -1566,6 +1566,11 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/LED_Strip.html)
 
 #### Binding properties:
+<!---@theo
+Erläuterungen hinzugefügt-->
+An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.
+All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.
+The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the right color. 
 
 ##### openhab.cfg:
 ```
@@ -1925,7 +1930,7 @@ tinkerforge:rs1.typeCDevices=floor
 | uid | tinkerforge uid | get value from brickv |
 | subid | must correspond to the device(A,B,C)Devices setting| e.b. kitchen|
 | houseCode | the house code of the switching device | e.g. 31 |
-| receiverCode | the reciever code of the switching device | e.g. 8 |
+| receiverCode | the receiver code of the switching device | e.g. 8 |
 | repeats | the number of times the code is send | e.g. 5 |
 
 ```
@@ -1980,7 +1985,7 @@ tinkerforge:rs_floor.deviceCode=8
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Switch r0    "r0" <socket> (Lights)       {tinkerforge="uid=<your_uid>, subid=rslr1"}
+Switch r0    "r0" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr1"}
 Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr2"}
 Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=kitchen"}
 Switch rc    "rc" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=floor"}
