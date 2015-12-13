@@ -1,0 +1,4 @@
+Color color "Color" {tinkerforge="uid=oRd, subid=color"}
+Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=oRd, subid=temperature"}
+Number illuminance "ColorIlluminance [%.0f]" {tinkerforge="uid=oRd, subid=illuminance"}
+Switch led "Color Led"  {tinkerforge="uid=oRd, subid=led"}

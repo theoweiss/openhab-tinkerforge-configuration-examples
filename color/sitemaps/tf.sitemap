@@ -1,0 +1,9 @@
+sitemap led label="Color"
+{
+    Frame label="Color" {
+    	Colorpicker item=color
+        Text item=temperature
+        Text item=illuminance
+        Switch item=led
+    }
+}
