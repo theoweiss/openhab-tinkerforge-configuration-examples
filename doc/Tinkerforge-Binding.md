@@ -1568,8 +1568,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 #### Binding properties:
 <!---@theo
 Erläuterungen hinzugefügt-->
-An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.
-All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.
+An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.  
+All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.  
 The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the right color. 
 
 ##### openhab.cfg:
