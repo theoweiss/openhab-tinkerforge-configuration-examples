@@ -91,23 +91,34 @@ the binding, please see Wiki page [[Bindings]].
 
 ### Basic Configuration
 In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports in the openhab.cfg file.
+<!-- @sihui-->
+The following properties must be configured to define a brickd connection **without** authentication:
+```
+tinkerforge:hosts=<IP address>[:port]
+```
 
-The following properties must be configured to define a brickd connection without authentication:
+The following properties must be configured to define a brickd connection **with authentication**:  (see also [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Software/Brickd.html#brickd-authentication))
 
-    tinkerforge:hosts="<IP address>[:port] ..."
+```
+tinkerforge:hosts="<IP address>[:port][<:secret>]"
+```
 
-<!-- @sihui
-Es wird auch Authentisierung unterstützt. Dazu mit ":" getrennt ein weiteres Feld
-mit dem Passwort einfügen.
-tinkerforge:hosts=<ip>[:<port>][<:password>]
-z.B.
-authenticate with password 1234 and default port
+Examples:
+
+Authenticate with password 1234 and default port
+```
 tinkerforge:hosts=127.0.0.1::1234
-oder mit port
+```
+
+Authenticate with password 1234 and individual port 4224
+```
 tinkerforge:hosts=127.0.0.1:4224:1234
-oder mehrere hosts
+```
+
+You may also combine hosts with and without authentication
+```
 tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
--->
+```
 
 The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
 by square brackets are optional.
@@ -116,17 +127,17 @@ by square brackets are optional.
 | --------------- | ------------------ |
 | IP address | IP address of the brickd |
 | port | The listening port of of the brickd (optional, default 4223) |
+| secret | password used for authentication |
 
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
-<!---
-@sihui
-Hier fehlt eine Überschrift z.B. "Refresh of Sensor Values"
--->
+#### Refresh of Sensor Values
+
 Devices which do not support callbacks will be polled with a configurable interval, the default
  is 60000 milliseconds. This value can be changed in openhab.cfg:
-
-    tinkerforge.refresh=<value in milliseconds>
+```
+tinkerforge.refresh=<value in milliseconds>
+```
 
 #### Item Binding Configuration
 
@@ -151,27 +162,6 @@ subid of the device, or - if the device is configured in openhab.cfg - the "symb
 | subid    | optional subid of the device|
 | name     | _symbolic name_ of the device. The name is only available if there is some configuration for the device in openhab.cfg. |
 
-<!--
-@sihui
-Das wuerde ich raus machen, mittlerweile sind es mehr Typen.
--->
-#### Item Types
-Supported item types are "Switch Item", "Number Item", "Contact Item" and "String Item".
-
-<!--
-@sihui
-das gehoert nach oben zu der Beschreibung der tinkerforge:hosts Eintraege
--->
-#### Example Configuration
-
-Example for a connection to a single brickd:
-
-    tinkerforge:hosts=127.0.0.1
-
-Example for several brickd connections using different ports:
-
-    tinkerforge:hosts=127.0.0.1:4224 192.168.1.50 192.168.1.104
-
 ---
 
 ### Advanced Configuration
@@ -179,21 +169,15 @@ There are several configuration parameters to control the behavior of the device
 parameters depend on the device type.
 
 #### Overview
-For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable
-defaults. The only exception is the IO16 Bricklet (see below).
-<!--
-@sihui
-Da gibt es mittlerweile mehr Ausnahmen, nicht nur IO16: "The only exception..." rausnehmen
--->
+For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable defaults.
 
 <a name="sym_name"></a>
-If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg
-to get a _symbolic name_.
+If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg to get a _symbolic name_.
 
 A configuration line for a TinkerForge Device looks like this in openhab.cfg:
-
-    tinkerforge:<symbolic name>.<property>=<value>
-
+```
+tinkerforge:<symbolic name>.<property>=<value>
+```
 The *symbolic name* string can be used in the items configuration as an alternative for the uid and subid values.
 
 The following table lists the general available properties.
@@ -213,39 +197,53 @@ In der Tabelle fehlen die neuen Devices, oder?
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
-|Servo Brick sub devices|servo|servo[0-6]||
 |DC Brick|brick_dc|||
-|Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
-|Humidity Bricklet|bricklet_humidity||x|
-|Distance IR Bricklet|bricklet_distance_ir||x|
-|Temperature Bricklet|bricklet_temperature||x|
+|Servo Brick sub devices|servo|servo[0-6]||
+|Ambient Light Bricklet|bricklet_ambient_light||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
-|Ambient Light Bricklet|bricklet_ambient_light||x|
-|LCD20x4 Bricklet|bricklet_LCD20x4|||
-|LCD20x4 backlight|backlight|backlight||
-|LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
-|Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
+|Color Bricklet||||
+|Distance IR Bricklet|bricklet_distance_ir||x|
+|Dual Button Bricklet||||
+|Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
+|Dust Detector Bricklet||||
+|Hall Effect Bricklet||||
+|Humidity Bricklet|bricklet_humidity||x|
 |Industrial Digital In 4 Bricklet|bricklet_industrial_digital_4in|in[0-3]|x|
 |Industrial Digital Out 4 Bricklet sub devices|bricklet_industrial_digital_4out|out[0-3]||
-|IO-16 Bricklet|bricklet_io16|||
-|IO-16 Bricklet sub devices, which should be used as input ports|iosensor|in[ab][0-7]|x|
-|IO-16 Bricklet sub devices, which should be used as output ports|io_actuator|out[ab][0-7]||
+|Industrial Dual 0-20mA Bricklet||||
+|Industrial Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
 |IO-4 Bricklet|bricklet_io4|||
 |IO-4 Bricklet sub devices, which should be used as input ports|io4sensor|in[0-3]|x|
 |IO-4 Bricklet sub devices, which should be used as output ports|io4_actuator|out[0-3]||
+|IO-16 Bricklet|bricklet_io16|||
+|IO-16 Bricklet sub devices, which should be used as input ports|iosensor|in[ab][0-7]|x|
+|IO-16 Bricklet sub devices, which should be used as output ports|io_actuator|out[ab][0-7]||
+|Joystick Bricklet||||
+|LCD20x4 Bricklet|bricklet_LCD20x4|||
+|LCD20x4 backlight|backlight|backlight||
+|LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
+|LED Strip Bricklet||||
+|Linear Poti Bricklet||||
+|Load Cell Bricklet||||
+|Motion Detector Bricklet|motion_detector|||
 |Multi Touch Bricklet|bricklet_multitouch|||
 |Multi Touch Bricklet electrodes|electrode|electrode[0-11}|x|
+|Moisture Bricklet||||
+|Pieco Speaker Bricklet||||
+|PTC Bricklet||||
 |Remote Switch Bricklet|bricklet_remote_switch|configurable||
 |Remote Switch Bricklet sub devices|remote_switch_a or remote_switch_b or remote_switch_c|from configuration||
+|Rotary Encoder Bricklet||||
 |Segment Display 4x7 Bricklet||||
+|Solid State Relay Bricklet||||
 |Sound Intensity Bricklet|bricklet_soundintensity|||
+|Temperature Bricklet|bricklet_temperature||x|
 |TemperatureIR Bricklet|bricklet_temperatureIR|||
-|TemperatureIR Bricklet sub device object temperature|object_temperature|x||
-|TemperatureIR Bricklet sub device ambient temperature|ambient_temperature|x||
+|TemperatureIR Bricklet sub device object temperature|object_temperature||x|
+|TemperatureIR Bricklet sub device ambient temperature|ambient_temperature||x|
 |Tilt Bricklet|bricklet_tilt|||
 |Voltage Current Bricklet|bricklet_voltageCurrent|||
-|Motion Detector Bricklet|motion_detector||||
 
 ---
 
@@ -647,8 +645,8 @@ Text item=Barometer
 ---
 
 ### Color Bricklet
-
-Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Barometer.html)
+<!-- @theo-->
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Color.html)
 
 #### Binding properties:
 
@@ -1699,7 +1697,7 @@ sitemap tflabel="Linear Poti"
 ---
 
 ### Load Cell Bricklet
-
+<!-- @theo-->
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Load_Cell.html)
 
 #### Binding properties:
