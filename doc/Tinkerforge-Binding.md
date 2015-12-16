@@ -20,6 +20,7 @@ Documentation of the TinkerForge binding bundle
   - Bricklets
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
+    - [Color Bricklet](#color-bricklet)
     - [Distance IR Bricklet](#distance-ir-bricklet)
     - [Distance US Bricklet](#distance-us-bricklet)
     - [Dual Button Bricklet](#dual-button-bricklet)
@@ -643,6 +644,65 @@ Number Barometer "Air Pressure [%.1f hPa]"  { tinkerforge="uid=<your_uid>" }
 Text item=Barometer
 ```
 
+---
+
+### Color Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Barometer.html)
+
+#### Binding properties:
+
+
+##### Bricklet:
+
+
+##### openhab.cfg:
+```
+tinkerforge:brickletcolor.uid=<your_uid>
+tinkerforge:brickletcolor.type=bricklet_color
+tinkerforge:brickletcolor.gain=3
+tinkerforge:brickletcolor.integrationTime=3
+
+tinkerforge:color_color.uid=<your_uid>
+tinkerforge:color_color.subid=color
+tinkerforge:color_color.type=color_color
+tinkerforge:color_color.callbackPeriod=1000
+
+tinkerforge:color_temperature.uid=<your_uid>
+tinkerforge:color_temperature.subid=temperature
+tinkerforge:color_temperature.type=color_temperature
+tinkerforge:color_temperature.callbackPeriod=1000
+
+tinkerforge:color_illuminance.uid=<your_uid>
+tinkerforge:color_illuminance.subid=illuminance
+tinkerforge:color_illuminance.type=color_illuminance
+tinkerforge:color_illuminance.callbackPeriod=1000
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Color color "Color" {tinkerforge="uid=<your_uid>, subid=color"}
+Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=<your_uid>, subid=temperature"}
+Number illuminance "ColorIlluminance [%.0f]" {tinkerforge="uid=<your_uid>, subid=illuminance"}
+Switch led "Color Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Color"
+{
+    Frame label="Color" {
+    	Colorpicker item=color
+        Text item=temperature
+        Text item=illuminance
+        Switch item=led
+    }
+}
+```
+##### Rules (e.g tinkerforge.rules):
+```
+
+```
 ---
 
 ### Distance IR Bricklet
@@ -1646,14 +1706,26 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 ##### openhab.cfg:
 ```
+tinkerforge:loadcell.uid=<your_uid>
+tinkerforge:loadcell.type=bricklet_loadcell
+
 tinkerforge:weight.uid=<your_uid>
-tinkerforge:weight.type=bricklet_loadcell
+tinkerforge:weight.subid=weight
+tinkerforge:weight.type=loadcell_weight
 tinkerforge:weight.callbackPeriod=100
+tinkerforge:weight.movingAverage=4
+
+tinkerforge:led.uid=<your_uid>
+tinkerforge:led.subid=led
+tinkerforge:led.type=loadcell_led
 ```
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Number Weight              "Weight [%.0f]" { tinkerforge="uid=<your_uid>"}
+Number Weight "Weight [%.0f]" { tinkerforge="uid=<your_uid>, subid=weight"}
+Switch Led "Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+Switch Tare "Tare"
+Number TareValue "Tare Value [%.0f]"
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -1662,8 +1734,24 @@ sitemap tf label="Load Cell"
 {
   Frame {
 	Text item=Weight
+	Switch item=Led
+	Switch item=Tare
+	Text item=TareValue
 	}
 }
+```
+
+##### Rules (e.g tinkerforge.rules):
+```
+import org.openhab.core.library.types.*
+
+rule "Tare"
+        when 
+                Item Tare changed to ON
+        then
+                postUpdate(TareValue, Weight.state)
+                tfLoadCellTare("<your_uid>")
+end
 ```
 ---
 
