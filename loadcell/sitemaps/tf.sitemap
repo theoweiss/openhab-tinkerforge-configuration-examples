@@ -2,5 +2,8 @@ sitemap tf label="Load Cell"
 {
   Frame {
 	Text item=Weight
+	Switch item=Led
+	Switch item=Tare
+	Text item=TareValue
 	}
 }

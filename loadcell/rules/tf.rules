@@ -1,0 +1,10 @@
+import org.openhab.core.library.types.*
+
+rule "Tare"
+        when 
+                Item Tare changed to ON
+        then
+                postUpdate(TareValue, Weight.state)
+                tfLoadCellTare("v8V")
+end
+

@@ -1,1 +1,4 @@
-Number Weight              "Weight [%.0f]" { tinkerforge="uid=v8V"}
+Number Weight              "Weight [%.0f]" { tinkerforge="uid=v8V, subid=weight"}
+Switch Led "Led"  {tinkerforge="uid=v8V, subid=led"}
+Switch Tare "Tare"
+Number TareValue "Tare Value [%.0f]"
