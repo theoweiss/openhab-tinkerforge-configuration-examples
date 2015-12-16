@@ -89,10 +89,9 @@ the binding, please see Wiki page [[Bindings]].
 ## Generic Item Binding Configuration
 
 ### Basic Configuration
-In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports
-in the openhab.cfg file.
+In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports in the openhab.cfg file.
 
-The following properties must be configured to define a brickd connection:
+The following properties must be configured to define a brickd connection without authentication:
 
     tinkerforge:hosts="<IP address>[:port] ..."
 
