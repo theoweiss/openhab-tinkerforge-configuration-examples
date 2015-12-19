@@ -1,0 +1,7 @@
+sitemap led label="Laser Range Finder"
+{
+    Frame label="Laser Range Finder" {
+        Text item=distance
+        Text item=velocity
+    }
+}

@@ -1,0 +1,6 @@
+sitemap led label="Analog In V2"
+{
+    Frame label="Analog In V2" {
+        Text item=voltage
+    }
+}

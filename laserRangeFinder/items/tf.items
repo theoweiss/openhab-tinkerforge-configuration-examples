@@ -1,0 +1,2 @@
+Number temperature "Distance [%.2f]" {tinkerforge="uid=oRd, subid=distance"}
+Number velocity "Velocity [%.2f]" {tinkerforge="uid=oRd, subid=velocity"}
