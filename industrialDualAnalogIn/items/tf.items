@@ -1,0 +1,2 @@
+Number channel1 "Channel1 [%.2f]" {tinkerforge="uid=oRd, subid=channel1"}
+Number channel2 "Channel2 [%.2f]" {tinkerforge="uid=oRd, subid=channel2"}

@@ -1,0 +1,5 @@
+Number X "X [%.0f]" {tinkerforge="uid=oRd, subid=x"}
+Number Y "Y [%.0f]" {tinkerforge="uid=oRd, subid=y"}
+Number Z "Z [%.0f]" {tinkerforge="uid=oRd, subid=z"}
+Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=oRd, subid=temperature"}
+Switch led "Led"  {tinkerforge="uid=oRd, subid=led"}

@@ -1,0 +1,10 @@
+sitemap led label="Accelerometer"
+{
+    Frame label="Accelerometer" {
+        Text item=X
+        Text item=Y
+        Text item=Z
+        Text item=temperature
+        Switch item=led
+    }
+}
