@@ -1,7 +1,7 @@
 sitemap led label="Industrial Dual Analog In"
 {
     Frame label="Industrial Dual Analog In" {
+        Text item=channel0
         Text item=channel1
-        Text item=channel2
     }
 }
