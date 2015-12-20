@@ -1,0 +1,3 @@
+Bricklet Industrial Dual AnalogIn
+=================================
+

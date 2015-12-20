@@ -1,0 +1,3 @@
+Number distance "Distance [%.0f]" {tinkerforge="uid=vc6, subid=distance"}
+Number velocity "Velocity [%.4f]" {tinkerforge="uid=vc6, subid=velocity"}
+Switch laser "Enable Laser" {tinkerforge="uid=vc6, subid=laser"}
