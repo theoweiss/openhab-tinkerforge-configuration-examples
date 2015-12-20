@@ -202,7 +202,7 @@ In der Tabelle fehlen die neuen Devices, oder?
 |Ambient Light Bricklet|bricklet_ambient_light||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
-|Color Bricklet||||
+|Color Bricklet|bricklet_color|color or ||
 |Distance IR Bricklet|bricklet_distance_ir||x|
 |Dual Button Bricklet||||
 |Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
