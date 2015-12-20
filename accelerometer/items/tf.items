@@ -1,5 +1,5 @@
-Number X "X [%.0f]" {tinkerforge="uid=oRd, subid=x"}
-Number Y "Y [%.0f]" {tinkerforge="uid=oRd, subid=y"}
-Number Z "Z [%.0f]" {tinkerforge="uid=oRd, subid=z"}
-Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=oRd, subid=temperature"}
-Switch led "Led"  {tinkerforge="uid=oRd, subid=led"}
+Number X "X [%.3f]" {tinkerforge="uid=v6d, subid=x"}
+Number Y "Y [%.3f]" {tinkerforge="uid=v6d, subid=y"}
+Number Z "Z [%.3f]" {tinkerforge="uid=v6d, subid=z"}
+Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=v6d, subid=temperature"}
+Switch led "Led"  {tinkerforge="uid=v6d, subid=led"}
