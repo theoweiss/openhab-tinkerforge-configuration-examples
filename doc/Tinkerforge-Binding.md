@@ -91,7 +91,7 @@ the binding, please see Wiki page [[Bindings]].
 
 ### Basic Configuration
 In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports in the openhab.cfg file.
-<!-- @sihui-->
+<!-- @theo-->
 The following properties must be configured to define a brickd connection **without** authentication:
 ```
 tinkerforge:hosts=<IP address>[:port]
@@ -102,6 +102,14 @@ The following properties must be configured to define a brickd connection **with
 ```
 tinkerforge:hosts="<IP address>[:port][<:secret>]"
 ```
+The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
+by square brackets are optional.
+
+| <b>Property</b> | <b>Description</b> |
+| --------------- | ------------------ |
+| IP address | IP address of the brickd |
+| port | The listening port of of the brickd (optional, default 4223) |
+| secret | password used for authentication |
 
 Examples:
 
@@ -115,21 +123,12 @@ Authenticate with password 1234 and individual port 4224
 tinkerforge:hosts=127.0.0.1:4224:1234
 ```
 
-You may also combine hosts with and without authentication
+You may also configure several different hosts:
 ```
 tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
 ```
-
-The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
-by square brackets are optional.
-
-| <b>Property</b> | <b>Description</b> |
-| --------------- | ------------------ |
-| IP address | IP address of the brickd |
-| port | The listening port of of the brickd (optional, default 4223) |
-| secret | password used for authentication |
-
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
+
 
 #### Refresh of Sensor Values
 
@@ -144,15 +143,11 @@ tinkerforge.refresh=<value in milliseconds>
 In order to bind an item to a device, you need to provide configuration settings. The easiest way
 to do so is to add binding information in your item file (in the folder '${openhab_home}/configurations/items').
 
-<!--
-@sihui
-Mittlerweile gibt es einige Devices die noch mehr Konfiguration haben, dass hier ist also nur noch
-das minimale was man angeben muss.
--->
+
 The configuration of the TinkerForge binding item looks like this:
-
-    tinkerforge="(uid=<your_id> [, subid=<your_subid>] | name=<your_name>)"
-
+```
+tinkerforge="(uid=<your_id> [, subid=<your_subid>] | name=<your_name>)"
+```
 The configuration is quite simple. You either have to set a value for the uid and optionally for the
 subid of the device, or - if the device is configured in openhab.cfg - the "symbolic name" of the device.
 
@@ -161,6 +156,9 @@ subid of the device, or - if the device is configured in openhab.cfg - the "symb
 | uid      | TinkerForge uid of the device (Use the Brick Viewer to get this value) |
 | subid    | optional subid of the device|
 | name     | _symbolic name_ of the device. The name is only available if there is some configuration for the device in openhab.cfg. |
+
+<!--@theo-->
+For additional configuration options see the appropriate device section.
 
 ---
 
@@ -190,10 +188,7 @@ The following table lists the general available properties.
 
 The following table shows the TinkerForge device, its device type, its subid and if callback is supported.
 
-<!--
-@sihui
-In der Tabelle fehlen die neuen Devices, oder?
--->
+<!--@theo-->
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
@@ -202,16 +197,24 @@ In der Tabelle fehlen die neuen Devices, oder?
 |Ambient Light Bricklet|bricklet_ambient_light||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
-|Color Bricklet|bricklet_color|color or ||
+|Color Bricklet|bricklet_color|||
+|Color Bricklet subdevice|color|color-color|x|
+|Color Bricklet subdevice|temperature|color_temperature|x|
+|Color Bricklet subdevice|illuminance|color_illuminance|x|
 |Distance IR Bricklet|bricklet_distance_ir||x|
 |Dual Button Bricklet||||
+|Dual Button Bricklet subdevice||dualbutton_leftled|x|
+|Dual Button Bricklet subdevice||dualbutton_rightled|x|
+|Dual Button Bricklet subdevice||dualbutton_leftbutton|x|
+|Dual Button Bricklet subdevice||dualbutton_rightbutton|x|
 |Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
-|Dust Detector Bricklet||||
-|Hall Effect Bricklet||||
+|Dust Detector Bricklet|bricklet_dustdetector||x|
+|Hall Effect Bricklet|bricklet_halleffect||x|
 |Humidity Bricklet|bricklet_humidity||x|
 |Industrial Digital In 4 Bricklet|bricklet_industrial_digital_4in|in[0-3]|x|
 |Industrial Digital Out 4 Bricklet sub devices|bricklet_industrial_digital_4out|out[0-3]||
-|Industrial Dual 0-20mA Bricklet||||
+|Industrial Dual 0-20mA Bricklet|bricklet_industrialdual020ma|||
+|Industrial Dual 0-20mA Bricklet subdevice|industrial020ma_sensor|sensor[0-1]|x|
 |Industrial Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
 |IO-4 Bricklet|bricklet_io4|||
 |IO-4 Bricklet sub devices, which should be used as input ports|io4sensor|in[0-3]|x|
@@ -219,22 +222,33 @@ In der Tabelle fehlen die neuen Devices, oder?
 |IO-16 Bricklet|bricklet_io16|||
 |IO-16 Bricklet sub devices, which should be used as input ports|iosensor|in[ab][0-7]|x|
 |IO-16 Bricklet sub devices, which should be used as output ports|io_actuator|out[ab][0-7]||
-|Joystick Bricklet||||
+|Joystick Bricklet|bricklet_joystick|||
+|Joystick Bricklet subdevice||joystick_xposition|x|
+|Joystick Bricklet subdevice||joystick_yposition|x|
+|Joystick Bricklet subdevice||joystick_button|x|
 |LCD20x4 Bricklet|bricklet_LCD20x4|||
 |LCD20x4 backlight|backlight|backlight||
 |LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
-|LED Strip Bricklet||||
-|Linear Poti Bricklet||||
-|Load Cell Bricklet||||
-|Motion Detector Bricklet|motion_detector|||
+|LED Strip Bricklet|bricklet_ledstrip|||
+|LED Strip Bricklet subdevice|ledgroup|ledgroup[1-x]|x|
+|Linear Poti Bricklet|bricklet_linear_poti||x|
+|Load Cell Bricklet|bricklet_loadcell|||
+|Load Cell Bricklet subdevice|weight|loadcell_weight|x|
+|Load Cell Bricklet subdevice|led|loadcell_led|x|
+|Motion Detector Bricklet|motion_detector||x|
 |Multi Touch Bricklet|bricklet_multitouch|||
-|Multi Touch Bricklet electrodes|electrode|electrode[0-11}|x|
-|Moisture Bricklet||||
+|Multi Touch Bricklet electrodes|electrode|electrode[0-11]|x|
+|Moisture Bricklet|bricklet_moisture||x|
 |Pieco Speaker Bricklet||||
-|PTC Bricklet||||
+|PTC Bricklet|bricklet_ptc|||
+|PTC Bricklet subdevice||ptc_temperature|x|
+|PTC Bricklet subdevice||ptc_connected|x|
+|PTC Bricklet subdevice||ptc_resistance|x|
 |Remote Switch Bricklet|bricklet_remote_switch|configurable||
 |Remote Switch Bricklet sub devices|remote_switch_a or remote_switch_b or remote_switch_c|from configuration||
 |Rotary Encoder Bricklet||||
+|Rotary Encoder Bricklet subdevice|encoder|rotary_encoder|x|
+|Rotary Encoder Bricklet subdevice|button|rotary_encoder_button|x|
 |Segment Display 4x7 Bricklet||||
 |Solid State Relay Bricklet||||
 |Sound Intensity Bricklet|bricklet_soundintensity|||
@@ -263,17 +277,8 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
-<!--
-@sihui
-Hier hat sich in 1.5 etwas geaendert. Die Aenderung muessen wir nicht hier dokumentieren (wenn ueberhaupt). 
-Es waere aber gut das Verhalten zu dokumentieren. Dazu hatte ich damals mindestens hier https://github.com/theoweiss/openhab/wiki schon
-mal was aufgeschrieben. Das will man an dieser Stelle sicher nicht eins zu eins uebernehmen, aber
-vielleicht hilft es dir als Startpunkt:
-
-"Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
-
-Background: Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal."
--->
+<!--@theo-->
+Threshold values have the same unit as sensor values, no conversion is needed.
 
 ---
 
@@ -284,47 +289,17 @@ Background: Some getters for sensor values of the TinkerForge API return higher 
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/DC_Brick.html#dc-brick)
 
 #### Binding properties:
-
-<!--
-@sihui
-Changes und "What's new" sollten nur in den Release Notes sein. Hier sollte nur das aktuelle Verhalten beschrieben werden.
-Denn hier fehlt der zeitliche Bezug (seit wann?), dafür muss man mehr lesen um zu Wissen wie man es machen muss. Neue 
-Benutzer interessiert die Historie nicht.
-
-Anstatt dessen die einzelen Properties erklaeren, also:
-speed, max, min, ...
-Die Werte fuer acceleration, drivemode aus der openhab.cfg sind defaults,
-die durch die Item-Konfiguration acceleration, drivemode ueberschrieben werden koennen.
-
-Vorwarnung: bei max und min Wert kann sich noch was aendern und zwar in Zusammenhang mit dem von
-dir berichteten Remote Switch Device B Problem. Vielleicht muss man diese Settings wieder abschaffen. 
--->
-##### Incompatible changes
-* DriveMode now is one of "brake" or "coast" instead of "0" or "1"
-```
-tinkerforge:dc_garage.driveMode=brake
-```
-
-* switchOnVelocity in openhab.cfg is no longer needed and has gone.
-It is replaced by per item configuration:
-With the benefit that you can have serveral switch items with different speeds.
-~~tinkerforge:dc_garage.switchOnVelocity=10000~~
-
-```
-Switch DCSWITCH "DC Switch" {tinkerforge="uid=<your_uid>, speed=14000"}
-```
-
-##### Whats new?
-Support for Dimmer, Rollershuter and Number items. Besides that the speed
+<!--@theo
+Bitte noch mal max/min checken ob noch relevant oder nicht-->
+The device supports Dimmer, Rollershutter and Number items.  Besides that the speed
 can be set using a percent value.
-
 The number items show the current velocity. The values are reported using the VelocityListener.
 "[callbackPeriod](#call_thresh)" and "[threshold](#call_thresh)" for the listener can be configured in openhab.cfg.
 
 * callbackPeriod: milliseconds
 * threshold: numeric value
 
-##### New item configuration options
+The item configuration options are:
 * speed: the target speed (Switch)
 * max: the maximum speed (Dimmer, Rollershutter)
 * min: the minimum speed (Dimmer, Rollershutter)
@@ -332,11 +307,10 @@ The number items show the current velocity. The values are reported using the Ve
 * leftspeed: the speed when the left rollershutter controller is pressed or command "DOWN" was send
 * rightspeed: the speed when the right rollershutter controller is pressed or command "UP" was send
 * acceleration: acceleration overrides value from openhab.cfg
-* drivemode: drivemode  overrides value from openhab.cfg
-
-#### Example
+* drivemode: drivemode overrides value from openhab.cfg
 
 ##### openhab.cfg:
+Values for acceleration and drivmode are default values and may be overridden by item definition.
 
 ```
 tinkerforge:dc_garage.uid=<your_uid>
@@ -414,14 +388,14 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/Servo_Brick.html#servo-brick)
 
 #### Binding properties:
-
-##### Whats new?
-Support for Dimmer, Rollershuter and Number items. Besides that the speed
+<!--@theo
+Bitte noch mal anschauen, ich habe kein Servo Brick und die Beschreibung klingt irgendwie fast identisch zum DC Brick-->
+The device supports Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
 
 Number items will show the current position.
 
-##### New item configuration options
+The item configuration options are:
 * velocity: the velocity used to reach the new position
 * max: the maximum position (Dimmer, Rollershutter)
 * min: the minimum position (Dimmer, Rollershutter)
@@ -1623,11 +1597,11 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/LED_Strip.html)
 
 #### Binding properties:
-<!---@theo
-Erläuterungen hinzugefügt-->
+<!---@theo-->
+Supported chip types are WS2801, WS2811 and WS2812 (also called "NeoPixel").
 An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.  
 All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.  
-The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the right color. 
+The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the the color of your LED Stripswitch. 
 
 ##### openhab.cfg:
 ```
@@ -2070,6 +2044,7 @@ tinkerforge:rs_floor.deviceCode=8
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
+Dimmer dimmb     "dimmb [%d %%]"      <slider>     {tinkerforge="uid=<your_uid>, subid=kitchen"}
 Switch r0    "r0" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr1"}
 Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr2"}
 Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=kitchen"}
@@ -2086,15 +2061,15 @@ sitemap tf label="RemoteSwitch"
 		         Text label="Group Demo" icon="1stfloor" {
                 Switch item=Lights mappings=[OFF="All Off",ON="All On"]
          }
-
+		
 	}
-  Frame {
-      Slider item=rb
+  Frame label="Remote" {
 			Switch item=r0
 			Switch item=r1
 			Switch item=rb
+			Slider item=dimmb switchSupport
 			Switch item=rc
-        }
+                  }
 }
 
 ```
