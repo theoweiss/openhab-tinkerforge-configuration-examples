@@ -20,6 +20,7 @@ Documentation of the TinkerForge binding bundle
   - Bricklets
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
+    - [Color Bricklet](#color-bricklet)
     - [Distance IR Bricklet](#distance-ir-bricklet)
     - [Distance US Bricklet](#distance-us-bricklet)
     - [Dual Button Bricklet](#dual-button-bricklet)
@@ -89,26 +90,18 @@ the binding, please see Wiki page [[Bindings]].
 ## Generic Item Binding Configuration
 
 ### Basic Configuration
-In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports
-in the openhab.cfg file.
+In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports in the openhab.cfg file.
+<!-- @theo-->
+The following properties must be configured to define a brickd connection **without** authentication:
+```
+tinkerforge:hosts=<IP address>[:port]
+```
 
-The following properties must be configured to define a brickd connection:
+The following properties must be configured to define a brickd connection **with authentication**:  (see also [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Software/Brickd.html#brickd-authentication))
 
-    tinkerforge:hosts="<IP address>[:port] ..."
-
-<!-- @sihui
-Es wird auch Authentisierung unterstützt. Dazu mit ":" getrennt ein weiteres Feld
-mit dem Passwort einfügen.
-tinkerforge:hosts=<ip>[:<port>][<:password>]
-z.B.
-authenticate with password 1234 and default port
-tinkerforge:hosts=127.0.0.1::1234
-oder mit port
-tinkerforge:hosts=127.0.0.1:4224:1234
-oder mehrere hosts
-tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
--->
-
+```
+tinkerforge:hosts="<IP address>[:port][<:secret>]"
+```
 The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
 by square brackets are optional.
 
@@ -116,32 +109,45 @@ by square brackets are optional.
 | --------------- | ------------------ |
 | IP address | IP address of the brickd |
 | port | The listening port of of the brickd (optional, default 4223) |
+| secret | password used for authentication |
 
+Examples:
+
+Authenticate with password 1234 and default port
+```
+tinkerforge:hosts=127.0.0.1::1234
+```
+
+Authenticate with password 1234 and individual port 4224
+```
+tinkerforge:hosts=127.0.0.1:4224:1234
+```
+
+You may also configure several different hosts:
+```
+tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
+```
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
-<!---
-@sihui
-Hier fehlt eine Überschrift z.B. "Refresh of Sensor Values"
--->
+
+#### Refresh of Sensor Values
+
 Devices which do not support callbacks will be polled with a configurable interval, the default
  is 60000 milliseconds. This value can be changed in openhab.cfg:
-
-    tinkerforge.refresh=<value in milliseconds>
+```
+tinkerforge.refresh=<value in milliseconds>
+```
 
 #### Item Binding Configuration
 
 In order to bind an item to a device, you need to provide configuration settings. The easiest way
 to do so is to add binding information in your item file (in the folder '${openhab_home}/configurations/items').
 
-<!--
-@sihui
-Mittlerweile gibt es einige Devices die noch mehr Konfiguration haben, dass hier ist also nur noch
-das minimale was man angeben muss.
--->
+
 The configuration of the TinkerForge binding item looks like this:
-
-    tinkerforge="(uid=<your_id> [, subid=<your_subid>] | name=<your_name>)"
-
+```
+tinkerforge="(uid=<your_id> [, subid=<your_subid>] | name=<your_name>)"
+```
 The configuration is quite simple. You either have to set a value for the uid and optionally for the
 subid of the device, or - if the device is configured in openhab.cfg - the "symbolic name" of the device.
 
@@ -151,26 +157,8 @@ subid of the device, or - if the device is configured in openhab.cfg - the "symb
 | subid    | optional subid of the device|
 | name     | _symbolic name_ of the device. The name is only available if there is some configuration for the device in openhab.cfg. |
 
-<!--
-@sihui
-Das wuerde ich raus machen, mittlerweile sind es mehr Typen.
--->
-#### Item Types
-Supported item types are "Switch Item", "Number Item", "Contact Item" and "String Item".
-
-<!--
-@sihui
-das gehoert nach oben zu der Beschreibung der tinkerforge:hosts Eintraege
--->
-#### Example Configuration
-
-Example for a connection to a single brickd:
-
-    tinkerforge:hosts=127.0.0.1
-
-Example for several brickd connections using different ports:
-
-    tinkerforge:hosts=127.0.0.1:4224 192.168.1.50 192.168.1.104
+<!--@theo-->
+For additional configuration options see the appropriate device section.
 
 ---
 
@@ -179,21 +167,15 @@ There are several configuration parameters to control the behavior of the device
 parameters depend on the device type.
 
 #### Overview
-For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable
-defaults. The only exception is the IO16 Bricklet (see below).
-<!--
-@sihui
-Da gibt es mittlerweile mehr Ausnahmen, nicht nur IO16: "The only exception..." rausnehmen
--->
+For most of the devices **no configuration** is needed in openhab.cfg, they can be used with reasonable defaults.
 
 <a name="sym_name"></a>
-If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg
-to get a _symbolic name_.
+If you want to get rid of _uid_ and _subid_ statements in the items or rule file, you can use openhab.cfg to get a _symbolic name_.
 
 A configuration line for a TinkerForge Device looks like this in openhab.cfg:
-
-    tinkerforge:<symbolic name>.<property>=<value>
-
+```
+tinkerforge:<symbolic name>.<property>=<value>
+```
 The *symbolic name* string can be used in the items configuration as an alternative for the uid and subid values.
 
 The following table lists the general available properties.
@@ -206,46 +188,76 @@ The following table lists the general available properties.
 
 The following table shows the TinkerForge device, its device type, its subid and if callback is supported.
 
-<!--
-@sihui
-In der Tabelle fehlen die neuen Devices, oder?
--->
+<!--@theo-->
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
-|Servo Brick sub devices|servo|servo[0-6]||
 |DC Brick|brick_dc|||
-|Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
-|Humidity Bricklet|bricklet_humidity||x|
-|Distance IR Bricklet|bricklet_distance_ir||x|
-|Temperature Bricklet|bricklet_temperature||x|
+|Servo Brick sub devices|servo|servo[0-6]||
+|Ambient Light Bricklet|bricklet_ambient_light||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
-|Ambient Light Bricklet|bricklet_ambient_light||x|
-|LCD20x4 Bricklet|bricklet_LCD20x4|||
-|LCD20x4 backlight|backlight|backlight||
-|LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
-|Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
+|Color Bricklet|bricklet_color|||
+|Color Bricklet subdevice|color|color-color|x|
+|Color Bricklet subdevice|temperature|color_temperature|x|
+|Color Bricklet subdevice|illuminance|color_illuminance|x|
+|Distance IR Bricklet|bricklet_distance_ir||x|
+|Dual Button Bricklet||||
+|Dual Button Bricklet subdevice||dualbutton_leftled|x|
+|Dual Button Bricklet subdevice||dualbutton_rightled|x|
+|Dual Button Bricklet subdevice||dualbutton_leftbutton|x|
+|Dual Button Bricklet subdevice||dualbutton_rightbutton|x|
+|Dual Relay Bricklet sub devices|dual_relay|relay[1-2]||
+|Dust Detector Bricklet|bricklet_dustdetector||x|
+|Hall Effect Bricklet|bricklet_halleffect||x|
+|Humidity Bricklet|bricklet_humidity||x|
 |Industrial Digital In 4 Bricklet|bricklet_industrial_digital_4in|in[0-3]|x|
 |Industrial Digital Out 4 Bricklet sub devices|bricklet_industrial_digital_4out|out[0-3]||
-|IO-16 Bricklet|bricklet_io16|||
-|IO-16 Bricklet sub devices, which should be used as input ports|iosensor|in[ab][0-7]|x|
-|IO-16 Bricklet sub devices, which should be used as output ports|io_actuator|out[ab][0-7]||
+|Industrial Dual 0-20mA Bricklet|bricklet_industrialdual020ma|||
+|Industrial Dual 0-20mA Bricklet subdevice|industrial020ma_sensor|sensor[0-1]|x|
+|Industrial Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
 |IO-4 Bricklet|bricklet_io4|||
 |IO-4 Bricklet sub devices, which should be used as input ports|io4sensor|in[0-3]|x|
 |IO-4 Bricklet sub devices, which should be used as output ports|io4_actuator|out[0-3]||
+|IO-16 Bricklet|bricklet_io16|||
+|IO-16 Bricklet sub devices, which should be used as input ports|iosensor|in[ab][0-7]|x|
+|IO-16 Bricklet sub devices, which should be used as output ports|io_actuator|out[ab][0-7]||
+|Joystick Bricklet|bricklet_joystick|||
+|Joystick Bricklet subdevice||joystick_xposition|x|
+|Joystick Bricklet subdevice||joystick_yposition|x|
+|Joystick Bricklet subdevice||joystick_button|x|
+|LCD20x4 Bricklet|bricklet_LCD20x4|||
+|LCD20x4 backlight|backlight|backlight||
+|LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
+|LED Strip Bricklet|bricklet_ledstrip|||
+|LED Strip Bricklet subdevice|ledgroup|ledgroup[1-x]|x|
+|Linear Poti Bricklet|bricklet_linear_poti||x|
+|Load Cell Bricklet|bricklet_loadcell|||
+|Load Cell Bricklet subdevice|weight|loadcell_weight|x|
+|Load Cell Bricklet subdevice|led|loadcell_led|x|
+|Motion Detector Bricklet|motion_detector||x|
 |Multi Touch Bricklet|bricklet_multitouch|||
-|Multi Touch Bricklet electrodes|electrode|electrode[0-11}|x|
+|Multi Touch Bricklet electrodes|electrode|electrode[0-11]|x|
+|Moisture Bricklet|bricklet_moisture||x|
+|Pieco Speaker Bricklet||||
+|PTC Bricklet|bricklet_ptc|||
+|PTC Bricklet subdevice||ptc_temperature|x|
+|PTC Bricklet subdevice||ptc_connected|x|
+|PTC Bricklet subdevice||ptc_resistance|x|
 |Remote Switch Bricklet|bricklet_remote_switch|configurable||
 |Remote Switch Bricklet sub devices|remote_switch_a or remote_switch_b or remote_switch_c|from configuration||
+|Rotary Encoder Bricklet||||
+|Rotary Encoder Bricklet subdevice|encoder|rotary_encoder|x|
+|Rotary Encoder Bricklet subdevice|button|rotary_encoder_button|x|
 |Segment Display 4x7 Bricklet||||
+|Solid State Relay Bricklet||||
 |Sound Intensity Bricklet|bricklet_soundintensity|||
+|Temperature Bricklet|bricklet_temperature||x|
 |TemperatureIR Bricklet|bricklet_temperatureIR|||
-|TemperatureIR Bricklet sub device object temperature|object_temperature|x||
-|TemperatureIR Bricklet sub device ambient temperature|ambient_temperature|x||
+|TemperatureIR Bricklet sub device object temperature|object_temperature||x|
+|TemperatureIR Bricklet sub device ambient temperature|ambient_temperature||x|
 |Tilt Bricklet|bricklet_tilt|||
 |Voltage Current Bricklet|bricklet_voltageCurrent|||
-|Motion Detector Bricklet|motion_detector||||
 
 ---
 
@@ -265,17 +277,8 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
-<!--
-@sihui
-Hier hat sich in 1.5 etwas geaendert. Die Aenderung muessen wir nicht hier dokumentieren (wenn ueberhaupt). 
-Es waere aber gut das Verhalten zu dokumentieren. Dazu hatte ich damals mindestens hier https://github.com/theoweiss/openhab/wiki schon
-mal was aufgeschrieben. Das will man an dieser Stelle sicher nicht eins zu eins uebernehmen, aber
-vielleicht hilft es dir als Startpunkt:
-
-"Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
-
-Background: Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal."
--->
+<!--@theo-->
+Threshold values have the same unit as sensor values, no conversion is needed.
 
 ---
 
@@ -286,47 +289,17 @@ Background: Some getters for sensor values of the TinkerForge API return higher 
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/DC_Brick.html#dc-brick)
 
 #### Binding properties:
-
-<!--
-@sihui
-Changes und "What's new" sollten nur in den Release Notes sein. Hier sollte nur das aktuelle Verhalten beschrieben werden.
-Denn hier fehlt der zeitliche Bezug (seit wann?), dafür muss man mehr lesen um zu Wissen wie man es machen muss. Neue 
-Benutzer interessiert die Historie nicht.
-
-Anstatt dessen die einzelen Properties erklaeren, also:
-speed, max, min, ...
-Die Werte fuer acceleration, drivemode aus der openhab.cfg sind defaults,
-die durch die Item-Konfiguration acceleration, drivemode ueberschrieben werden koennen.
-
-Vorwarnung: bei max und min Wert kann sich noch was aendern und zwar in Zusammenhang mit dem von
-dir berichteten Remote Switch Device B Problem. Vielleicht muss man diese Settings wieder abschaffen. 
--->
-##### Incompatible changes
-* DriveMode now is one of "brake" or "coast" instead of "0" or "1"
-```
-tinkerforge:dc_garage.driveMode=brake
-```
-
-* switchOnVelocity in openhab.cfg is no longer needed and has gone.
-It is replaced by per item configuration:
-With the benefit that you can have serveral switch items with different speeds.
-~~tinkerforge:dc_garage.switchOnVelocity=10000~~
-
-```
-Switch DCSWITCH "DC Switch" {tinkerforge="uid=<your_uid>, speed=14000"}
-```
-
-##### Whats new?
-Support for Dimmer, Rollershuter and Number items. Besides that the speed
+<!--@theo
+Bitte noch mal max/min checken ob noch relevant oder nicht-->
+The device supports Dimmer, Rollershutter and Number items.  Besides that the speed
 can be set using a percent value.
-
 The number items show the current velocity. The values are reported using the VelocityListener.
 "[callbackPeriod](#call_thresh)" and "[threshold](#call_thresh)" for the listener can be configured in openhab.cfg.
 
 * callbackPeriod: milliseconds
 * threshold: numeric value
 
-##### New item configuration options
+The item configuration options are:
 * speed: the target speed (Switch)
 * max: the maximum speed (Dimmer, Rollershutter)
 * min: the minimum speed (Dimmer, Rollershutter)
@@ -334,11 +307,10 @@ The number items show the current velocity. The values are reported using the Ve
 * leftspeed: the speed when the left rollershutter controller is pressed or command "DOWN" was send
 * rightspeed: the speed when the right rollershutter controller is pressed or command "UP" was send
 * acceleration: acceleration overrides value from openhab.cfg
-* drivemode: drivemode  overrides value from openhab.cfg
-
-#### Example
+* drivemode: drivemode overrides value from openhab.cfg
 
 ##### openhab.cfg:
+Values for acceleration and drivmode are default values and may be overridden by item definition.
 
 ```
 tinkerforge:dc_garage.uid=<your_uid>
@@ -398,13 +370,13 @@ rule "move motor"
     then
        var Integer acceleration = 10000
        var Short speed = 15000
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
        Thread::sleep(1000)
-       tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
+       tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
 end
 
 ```
@@ -416,14 +388,14 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/Servo_Brick.html#servo-brick)
 
 #### Binding properties:
-
-##### Whats new?
-Support for Dimmer, Rollershuter and Number items. Besides that the speed
+<!--@theo
+Bitte noch mal anschauen, ich habe kein Servo Brick und die Beschreibung klingt irgendwie fast identisch zum DC Brick-->
+The device supports Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
 
 Number items will show the current position.
 
-##### New item configuration options
+The item configuration options are:
 * velocity: the velocity used to reach the new position
 * max: the maximum position (Dimmer, Rollershutter)
 * min: the minimum position (Dimmer, Rollershutter)
@@ -432,7 +404,7 @@ Number items will show the current position.
 * rightposition: the target position to reach when the right rollershutter controller is pressed or command "UP" was send
 * acceleration: the acceleration
 
-###### TinkerForge Action
+##### TinkerForge Action
 The new openHAB action TinkerForgeAction comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 
@@ -644,6 +616,65 @@ Number Barometer "Air Pressure [%.1f hPa]"  { tinkerforge="uid=<your_uid>" }
 Text item=Barometer
 ```
 
+---
+
+### Color Bricklet
+<!-- @theo-->
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Color.html)
+
+#### Binding properties:
+
+
+##### Bricklet:
+
+
+##### openhab.cfg:
+```
+tinkerforge:brickletcolor.uid=<your_uid>
+tinkerforge:brickletcolor.type=bricklet_color
+tinkerforge:brickletcolor.gain=3
+tinkerforge:brickletcolor.integrationTime=3
+
+tinkerforge:color_color.uid=<your_uid>
+tinkerforge:color_color.subid=color
+tinkerforge:color_color.type=color_color
+tinkerforge:color_color.callbackPeriod=1000
+
+tinkerforge:color_temperature.uid=<your_uid>
+tinkerforge:color_temperature.subid=temperature
+tinkerforge:color_temperature.type=color_temperature
+tinkerforge:color_temperature.callbackPeriod=1000
+
+tinkerforge:color_illuminance.uid=<your_uid>
+tinkerforge:color_illuminance.subid=illuminance
+tinkerforge:color_illuminance.type=color_illuminance
+tinkerforge:color_illuminance.callbackPeriod=1000
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Color color "Color" {tinkerforge="uid=<your_uid>, subid=color"}
+Number temperature "ColorTemperature [%.2f]" {tinkerforge="uid=<your_uid>, subid=temperature"}
+Number illuminance "ColorIlluminance [%.0f]" {tinkerforge="uid=<your_uid>, subid=illuminance"}
+Switch led "Color Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Color"
+{
+    Frame label="Color" {
+    	Colorpicker item=color
+        Text item=temperature
+        Text item=illuminance
+        Switch item=led
+    }
+}
+```
+##### Rules (e.g tinkerforge.rules):
+```
+
+```
 ---
 
 ### Distance IR Bricklet
@@ -1566,6 +1597,11 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/LED_Strip.html)
 
 #### Binding properties:
+<!---@theo-->
+Supported chip types are WS2801, WS2811 and WS2812 (also called "NeoPixel").
+An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.  
+All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.  
+The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the the color of your LED Stripswitch. 
 
 ##### openhab.cfg:
 ```
@@ -1635,21 +1671,33 @@ sitemap tflabel="Linear Poti"
 ---
 
 ### Load Cell Bricklet
-
+<!-- @theo-->
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Load_Cell.html)
 
 #### Binding properties:
 
 ##### openhab.cfg:
 ```
+tinkerforge:loadcell.uid=<your_uid>
+tinkerforge:loadcell.type=bricklet_loadcell
+
 tinkerforge:weight.uid=<your_uid>
-tinkerforge:weight.type=bricklet_loadcell
+tinkerforge:weight.subid=weight
+tinkerforge:weight.type=loadcell_weight
 tinkerforge:weight.callbackPeriod=100
+tinkerforge:weight.movingAverage=4
+
+tinkerforge:led.uid=<your_uid>
+tinkerforge:led.subid=led
+tinkerforge:led.type=loadcell_led
 ```
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Number Weight              "Weight [%.0f]" { tinkerforge="uid=<your_uid>"}
+Number Weight "Weight [%.0f]" { tinkerforge="uid=<your_uid>, subid=weight"}
+Switch Led "Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+Switch Tare "Tare"
+Number TareValue "Tare Value [%.0f]"
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -1658,8 +1706,24 @@ sitemap tf label="Load Cell"
 {
   Frame {
 	Text item=Weight
+	Switch item=Led
+	Switch item=Tare
+	Text item=TareValue
 	}
 }
+```
+
+##### Rules (e.g tinkerforge.rules):
+```
+import org.openhab.core.library.types.*
+
+rule "Tare"
+        when 
+                Item Tare changed to ON
+        then
+                postUpdate(TareValue, Weight.state)
+                tfLoadCellTare("<your_uid>")
+end
 ```
 ---
 
@@ -1925,7 +1989,7 @@ tinkerforge:rs1.typeCDevices=floor
 | uid | tinkerforge uid | get value from brickv |
 | subid | must correspond to the device(A,B,C)Devices setting| e.b. kitchen|
 | houseCode | the house code of the switching device | e.g. 31 |
-| receiverCode | the reciever code of the switching device | e.g. 8 |
+| receiverCode | the receiver code of the switching device | e.g. 8 |
 | repeats | the number of times the code is send | e.g. 5 |
 
 ```
@@ -1980,7 +2044,8 @@ tinkerforge:rs_floor.deviceCode=8
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Switch r0    "r0" <socket> (Lights)       {tinkerforge="uid=<your_uid>, subid=rslr1"}
+Dimmer dimmb     "dimmb [%d %%]"      <slider>     {tinkerforge="uid=<your_uid>, subid=kitchen"}
+Switch r0    "r0" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr1"}
 Switch r1    "r1" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=rslr2"}
 Switch rb    "rb" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=kitchen"}
 Switch rc    "rc" <socket> (Lights)      {tinkerforge="uid=<your_uid>, subid=floor"}
@@ -1996,15 +2061,15 @@ sitemap tf label="RemoteSwitch"
 		         Text label="Group Demo" icon="1stfloor" {
                 Switch item=Lights mappings=[OFF="All Off",ON="All On"]
          }
-
+		
 	}
-  Frame {
-      Slider item=rb
+  Frame label="Remote" {
 			Switch item=r0
 			Switch item=r1
 			Switch item=rb
+			Slider item=dimmb switchSupport
 			Switch item=rc
-        }
+                  }
 }
 
 ```
@@ -2265,7 +2330,7 @@ if you want to use a [_symbolic name_](#sym_name) or adjust the emissivity of th
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:objIR.uid=<your_uid>
 tinkerforge:objIR.subid=object_temperature
@@ -2284,7 +2349,7 @@ tinkerforge:objIR.threshold=0
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:ambIR.uid=<your_uid>
 tinkerforge:ambIR.subid=ambient_temperature
@@ -2389,7 +2454,7 @@ tinkerforge:voltageCurrent.currentConversionTime=4
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_voltage.uid=<your_uid>
 tinkerforge:vc_voltage.subid=voltageCurrent_voltage
@@ -2408,7 +2473,7 @@ tinkerforge:vc_voltage.callbackPeriod=100
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_current.uid=<your_uid>
 tinkerforge:vc_current.subid=voltageCurrent_current
@@ -2427,7 +2492,7 @@ tinkerforge:vc_current.callbackPeriod=100
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
-###### openhab.cfg:
+##### openhab.cfg:
 ```
 tinkerforge:vc_power.uid=<your_uid>
 tinkerforge:vc_power.subid=voltageCurrent_power
