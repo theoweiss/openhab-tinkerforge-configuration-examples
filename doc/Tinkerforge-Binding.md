@@ -18,6 +18,7 @@ Documentation of the TinkerForge binding bundle
     - [DC Brick](#dc-brick)
     - [Servo Brick](#servo-brick)
   - Bricklets
+    - [Accelerometer Bricklet](#accelerometer-bricklet)
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
     - [Color Bricklet](#color-bricklet)
@@ -194,6 +195,12 @@ The following table shows the TinkerForge device, its device type, its subid and
 |-------------|----------------|---------------|---------------|
 |DC Brick|brick_dc|||
 |Servo Brick sub devices|servo|servo[0-6]||
+|Accelerometer Bricklet|bricklet_accelerometer|||
+|Accelerometer Bricklet subdevice|accelerometer_direction|x|x|
+|Accelerometer Bricklet subdevice|accelerometer_direction|y|x|
+|Accelerometer Bricklet subdevice|accelerometer_direction|z|x|
+|Accelerometer Bricklet subdevice|accelerometer_temperature|temperature||
+|Accelerometer Bricklet subdevice|accelerometer_led|led||
 |Ambient Light Bricklet|bricklet_ambient_light||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
@@ -528,6 +535,93 @@ sitemap tf_weather label="Brick Servo"
 
 ---
 
+### Accelerometer Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Accelerometer.html)
+
+#### Binding properties:
+
+The bricklet returns the acceleration in x, y and z direction. The values are given in g/1000 (1g = 9.80665m/s²).  
+Bricklet temperature can be measured in degrees Celsius, LED can be turned on to indicate a specific acceleration was reached.  
+Decreasing data rate or full scale range will also decrease the noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_accelerometer |
+| dataRate | sets the data rate, default=6 (100Hz) |0: off, 1: 3hz, 2: 6hz, 3: 12hz, 4: 25hz, 5: 50hz, 6: 100hz, 7: 400hz, 8: 800hz, 9: 1600hz|
+| fullScale | sets the scale rate, default=1 (-4g to +4g) |0: 2g, 1: 4g, 2: 6g, 3: 8g, 4: 16g|
+| filterBandwidth | sets the filter bandwidth, default=2 (200Hz) | 0: 800hz, 1: 400hz, 2: 200hz, 3: 50hz|
+
+##### Accelerometer Bricklet sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| subid | openHAB subid of the device | x, y, z, temperature, led |
+| type | openHAB type name | accelerometer_direction, accelerometer_temperature, accelerometer_led|
+| callbackPeriod | | see "Callback and Threshold" |
+
+
+##### openhab.cfg:
+```
+tinkerforge:accelerometer.uid=<your_uid>
+tinkerforge:accelerometer.type=bricklet_accelerometer
+tinkerforge:accelerometer.dataRate=6
+tinkerforge:accelerometer.fullScale=1
+tinkerforge:accelerometer.filterBandwidth=2
+
+tinkerforge:ax.uid=<your_uid>
+tinkerforge:ax.subid=x
+tinkerforge:ax.type=accelerometer_direction
+tinkerforge:ax.callbackPeriod=10
+
+tinkerforge:ay.uid=<your_uid>
+tinkerforge:ay.subid=y
+tinkerforge:ay.type=accelerometer_direction
+tinkerforge:ay.callbackPeriod=10
+
+tinkerforge:az.uid=<your_uid>
+tinkerforge:az.subid=z
+tinkerforge:az.type=accelerometer_direction
+tinkerforge:az.callbackPeriod=10
+
+tinkerforge:a_temperature.uid=<your_uid>
+tinkerforge:a_temperature.subid=temperature
+tinkerforge:a_temperature.type=accelerometer_temperature
+
+tinkerforge:a_led.uid=<your_uid>
+tinkerforge:a_led.subid=led
+tinkerforge:a_led.type=accelerometer_led
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number X "X [%.3f]" {tinkerforge="uid=<your_uid>, subid=x"}
+Number Y "Y [%.3f]" {tinkerforge="uid=<your_uid>, subid=y"}
+Number Z "Z [%.3f]" {tinkerforge="uid=<your_uid>, subid=z"}
+Number temperature "Temperature [%.2f °C]" {tinkerforge="uid=<your_uid>, subid=temperature"}
+Switch led "Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Accelerometer"
+{
+    Frame label="Accelerometer" {
+        Text item=X
+        Text item=Y
+        Text item=Z
+        Text item=temperature
+        Switch item=led
+    }
+}
+
+```
+---
+
 ### Ambient Light Bricklet V2
 
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Ambient_Light_V2.html)
@@ -755,8 +849,6 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-Dual Button Bricklet
-====================
 The Dual Button Bricklet has four sub devices: two leds and two buttons.
 The subids are:
  * dualbutton_leftled
