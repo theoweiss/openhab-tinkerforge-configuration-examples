@@ -132,14 +132,6 @@ tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
 
-#### Refresh of Sensor Values
-
-Devices which do not support callbacks will be polled with a configurable interval, the default
- is 60000 milliseconds. This value can be changed in openhab.cfg:
-```
-tinkerforge.refresh=<value in milliseconds>
-```
-
 #### Item Binding Configuration
 
 In order to bind an item to a device, you need to provide configuration settings. The easiest way
@@ -286,9 +278,19 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
-<!--@theo-->
+<!--@theo-->  
 Threshold values have the same unit as sensor values, no conversion is needed.
 
+---
+
+#### Refresh of Sensor Values
+
+Devices which do not support callbacks will be polled with a configurable interval, the default
+ is 60000 milliseconds. This value can be changed in openhab.cfg:
+ 
+```
+tinkerforge.refresh=<value in milliseconds>
+```
 ---
 
 ## Supported Devices
