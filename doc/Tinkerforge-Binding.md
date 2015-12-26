@@ -34,6 +34,7 @@ Documentation of the TinkerForge binding bundle
     - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
     - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
     - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
+    - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
     - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
     - [IO 16 Bricklet](#io-16-bricklet)
     - [Joystick Bricklet](#joystick-bricklet)
@@ -218,6 +219,8 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Industrial Digital Out 4 Bricklet sub devices|bricklet_industrial_digital_4out|out[0-3]||
 |Industrial Dual 0-20mA Bricklet|bricklet_industrialdual020ma|||
 |Industrial Dual 0-20mA Bricklet subdevice|industrial020ma_sensor|sensor[0-1]|x|
+|Industrial Dual Analog In Bricklet|bricklet_industrial_dual_analogin|||
+|Industrial Dual Analog In Bricklet subdevice|industrial_dual_analogin_channel|channel[0-1]|x|
 |Industrial Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
 |IO-4 Bricklet|bricklet_io4|||
 |IO-4 Bricklet sub devices, which should be used as input ports|io4sensor|in[0-3]|x|
@@ -1334,6 +1337,67 @@ sitemap led label="TinkerForge 020"
     Frame label="PTC" {
         Text item=temperature0
         Text item=temperature1
+    }
+}
+```
+---
+
+### Industrial Dual Analog In Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Industrial_Dual_Analog_In.html)
+
+#### Binding properties:
+
+The property $sampleRate can be between 1 sample per second (SPS) and 976 samples per second. Decreasing the sample rate will also decrease the noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_industrial_dual_analogin |
+| sampleRate | sets the sample rate, default=6 (2 samples per second) | 0=976 SPS, 1=488 SPS, 2=244 SPS, 3=122 SPS, 4=61 SPS, 5=4 SPS, 6=2 SPS, 7=1 SPS |
+
+##### Sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | channel0, channel1 |
+| type | openHAB type name | industrial_dual_analogin_channel |
+
+##### openhab.cfg:
+```
+tinkerforge:diai.uid=<your_uid>
+tinkerforge:diai.type=bricklet_industrial_dual_analogin
+tinkerforge:diai.sampleRate=6
+
+tinkerforge:channel0.uid=<your_uid>
+tinkerforge:channel0.subid=channel0
+tinkerforge:channel0.type=industrial_dual_analogin_channel
+tinkerforge:channel0.callbackPeriod=1000
+tinkerforge:channel0.threshold=10
+
+tinkerforge:channel1.uid=<your_uid>
+tinkerforge:channel1.subid=channel1
+tinkerforge:channel1.type=industrial_dual_analogin_channel
+tinkerforge:channel1.callbackPeriod=1000
+tinkerforge:channel1.threshold=10
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number channel0 "Channel0 [%.0f mV]" {tinkerforge="uid=<your_uid>, subid=channel0"}
+Number channel1 "Channel1 [%.0f mV]" {tinkerforge="uid=<your_uid>, subid=channel1"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Industrial Dual Analog In"
+{
+    Frame label="Industrial Dual Analog In" {
+        Text item=channel0
+        Text item=channel1
     }
 }
 ```
