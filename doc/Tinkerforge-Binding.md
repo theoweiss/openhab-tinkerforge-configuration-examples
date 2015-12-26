@@ -18,7 +18,10 @@ Documentation of the TinkerForge binding bundle
     - [DC Brick](#dc-brick)
     - [Servo Brick](#servo-brick)
   - Bricklets
+    - [Accelerometer Bricklet](#accelerometer-bricklet)
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+    - [Analog In Bricklet](#analog-in-bricklet)
+    - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
     - [Color Bricklet](#color-bricklet)
     - [Distance IR Bricklet](#distance-ir-bricklet)
@@ -31,9 +34,11 @@ Documentation of the TinkerForge binding bundle
     - [Industrial Digital In 4 Bricklet](#industrial-digital-in-4-bricklet)
     - [Industrial Digital Out 4 Bricklet](#industrial-digital-out-4-bricklet)
     - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
+    - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
     - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
     - [IO 16 Bricklet](#io-16-bricklet)
     - [Joystick Bricklet](#joystick-bricklet)
+    - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
     - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
     - [LED Strip Bricklet](#led-strip-bricklet)
     - [Linear Poti Bricklet](#linear-poti-bricklet)
@@ -130,14 +135,6 @@ tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
 For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
 
-#### Refresh of Sensor Values
-
-Devices which do not support callbacks will be polled with a configurable interval, the default
- is 60000 milliseconds. This value can be changed in openhab.cfg:
-```
-tinkerforge.refresh=<value in milliseconds>
-```
-
 #### Item Binding Configuration
 
 In order to bind an item to a device, you need to provide configuration settings. The easiest way
@@ -194,7 +191,15 @@ The following table shows the TinkerForge device, its device type, its subid and
 |-------------|----------------|---------------|---------------|
 |DC Brick|brick_dc|||
 |Servo Brick sub devices|servo|servo[0-6]||
+|Accelerometer Bricklet|bricklet_accelerometer|||
+|Accelerometer Bricklet subdevice|accelerometer_direction|x|x|
+|Accelerometer Bricklet subdevice|accelerometer_direction|y|x|
+|Accelerometer Bricklet subdevice|accelerometer_direction|z|x|
+|Accelerometer Bricklet subdevice|accelerometer_temperature|temperature||
+|Accelerometer Bricklet subdevice|accelerometer_led|led||
 |Ambient Light Bricklet|bricklet_ambient_light||x|
+|Analog In Bricklet|bricklet_analogin||x|
+|Analog In Bricklet 2.0|bricklet_analoginv2||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
 |Color Bricklet|bricklet_color|||
@@ -215,6 +220,8 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Industrial Digital Out 4 Bricklet sub devices|bricklet_industrial_digital_4out|out[0-3]||
 |Industrial Dual 0-20mA Bricklet|bricklet_industrialdual020ma|||
 |Industrial Dual 0-20mA Bricklet subdevice|industrial020ma_sensor|sensor[0-1]|x|
+|Industrial Dual Analog In Bricklet|bricklet_industrial_dual_analogin|||
+|Industrial Dual Analog In Bricklet subdevice|industrial_dual_analogin_channel|channel[0-1]|x|
 |Industrial Quad Relay Bricklet|industrial_quad_relay|relay[0-3]||
 |IO-4 Bricklet|bricklet_io4|||
 |IO-4 Bricklet sub devices, which should be used as input ports|io4sensor|in[0-3]|x|
@@ -226,6 +233,10 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Joystick Bricklet subdevice||joystick_xposition|x|
 |Joystick Bricklet subdevice||joystick_yposition|x|
 |Joystick Bricklet subdevice||joystick_button|x|
+|Laser Range Finder Bricklet||bricklet_laser_range_finder||
+|Laser Range Finder Bricklet subdevice|laser_range_finder_distance|distance|x|
+|Laser Range Finder Bricklet subdevice|laser_range_finder_velocity|velocity|x|
+|Laser Range Finder Bricklet subdevice|laser_range_finder_laser|laser||
 |LCD20x4 Bricklet|bricklet_LCD20x4|||
 |LCD20x4 backlight|backlight|backlight||
 |LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
@@ -277,9 +288,19 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
-<!--@theo-->
+<!--@theo-->  
 Threshold values have the same unit as sensor values, no conversion is needed.
 
+---
+
+#### Refresh of Sensor Values
+
+Devices which do not support callbacks will be polled with a configurable interval, the default
+ is 60000 milliseconds. This value can be changed in openhab.cfg:
+ 
+```
+tinkerforge.refresh=<value in milliseconds>
+```
 ---
 
 ## Supported Devices
@@ -528,6 +549,98 @@ sitemap tf_weather label="Brick Servo"
 
 ---
 
+### Accelerometer Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Accelerometer.html)
+
+#### Binding properties:
+
+The bricklet returns the acceleration in x, y and z direction. The values are given in g/1000 (1g = 9.80665m/s²).  
+Bricklet temperature can be measured in degrees Celsius, LED can be turned on to indicate a specific acceleration was reached.  
+Decreasing data rate or full scale range will also decrease the noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_accelerometer |
+| dataRate | sets the data rate, default=6 (100Hz) |0: off, 1: 3hz, 2: 6hz, 3: 12hz, 4: 25hz, 5: 50hz, 6: 100hz, 7: 400hz, 8: 800hz, 9: 1600hz|
+| fullScale | sets the scale rate, default=1 (-4g to +4g) |0: 2g, 1: 4g, 2: 6g, 3: 8g, 4: 16g|
+| filterBandwidth | sets the filter bandwidth, default=2 (200Hz) | 0: 800hz, 1: 400hz, 2: 200hz, 3: 50hz|
+
+##### Accelerometer Bricklet sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| subid | openHAB subid of the device | x, y, z, temperature, led |
+| type | openHAB type name | accelerometer_direction, accelerometer_temperature, accelerometer_led|
+| callbackPeriod | | see "Callback and Threshold" |
+
+Note: Subdevices accelerometer_temperature and accelerometer_led don't support callbackPeriod!
+
+
+##### openhab.cfg:
+```
+tinkerforge:accelerometer.uid=<your_uid>
+tinkerforge:accelerometer.type=bricklet_accelerometer
+tinkerforge:accelerometer.dataRate=6
+tinkerforge:accelerometer.fullScale=1
+tinkerforge:accelerometer.filterBandwidth=2
+
+tinkerforge:ax.uid=<your_uid>
+tinkerforge:ax.subid=x
+tinkerforge:ax.type=accelerometer_direction
+tinkerforge:ax.callbackPeriod=10
+tinkerforge:ax.threshold=0
+
+tinkerforge:ay.uid=<your_uid>
+tinkerforge:ay.subid=y
+tinkerforge:ay.type=accelerometer_direction
+tinkerforge:ay.callbackPeriod=10
+tinkerforge:ay.threshold=0
+
+tinkerforge:az.uid=<your_uid>
+tinkerforge:az.subid=z
+tinkerforge:az.type=accelerometer_direction
+tinkerforge:az.callbackPeriod=10
+tinkerforge:az.threshold=0
+
+tinkerforge:a_temperature.uid=<your_uid>
+tinkerforge:a_temperature.subid=temperature
+tinkerforge:a_temperature.type=accelerometer_temperature
+
+tinkerforge:a_led.uid=<your_uid>
+tinkerforge:a_led.subid=led
+tinkerforge:a_led.type=accelerometer_led
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number X "X [%.3f]" {tinkerforge="uid=<your_uid>, subid=x"}
+Number Y "Y [%.3f]" {tinkerforge="uid=<your_uid>, subid=y"}
+Number Z "Z [%.3f]" {tinkerforge="uid=<your_uid>, subid=z"}
+Number temperature "Temperature [%.2f °C]" {tinkerforge="uid=<your_uid>, subid=temperature"}
+Switch led "Led"  {tinkerforge="uid=<your_uid>, subid=led"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Accelerometer"
+{
+    Frame label="Accelerometer" {
+        Text item=X
+        Text item=Y
+        Text item=Z
+        Text item=temperature
+        Switch item=led
+    }
+}
+
+```
+---
+
 ### Ambient Light Bricklet V2
 
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Ambient_Light_V2.html)
@@ -568,6 +681,94 @@ sitemap led label="TinkerForge AmbientLightV2"
 
 ```
 
+---
+
+### Analog In Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Analog_In.html)
+
+#### Binding properties:
+
+If property $range is set to 0, the device switches between the measurement ranges automatically. Set $range to 1-5 to manually switch between measurement ranges.
+
+#### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_analogin |
+| range | sets the measurement range, default=0 (automatically switched) | 1: 0V - 6.05V, 2: 0V - 10.32V, 3: 0V - 36.30V, 4: 0V - 45.00V, 5: 0V - 3.3V with ~0.81mV resolution |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
+
+
+##### openhab.cfg:
+```
+tinkerforge:ain.uid=<your_uid>
+tinkerforge:ain.type=bricklet_analogin
+tinkerforge:ain.range=0
+tinkerforge:ain.callbackPeriod=1000
+tinkerforge:ain.threshold=0
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number voltage "Voltage [%.0f mV]" {tinkerforge="uid=<your_uid>"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Analog In"
+{
+    Frame label="Analog In" {
+        Text item=voltage
+    }
+}
+```
+---
+
+### Analog In Bricklet 2.0
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Analog_In_V2.html)
+
+#### Binding properties:
+
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
+Property $movingAverage sets the length of a moving averaging for the measured voltage, default is 50, $movingAverage=1 turns averaging off. With less averaging, there is more noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_analoginv2 |
+| movingAverage | sets the length of a moving averaging, default=50 | 1: averaging off, 2-50: averaging is 2-50 |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+```
+tinkerforge:ainv2.uid=<your_uid>
+tinkerforge:ainv2.type=bricklet_analoginv2
+tinkerforge:ainv2.movingAverage=100
+tinkerforge:ainv2.callbackPeriod=1000
+tinkerforge:ainv2.threshold=0
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number voltage "Voltage [%.0f mV]" {tinkerforge="uid=<your_uid>"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Analog In V2"
+{
+    Frame label="Analog In V2" {
+        Text item=voltage
+    }
+}
+```
 ---
 
 ### Barometer Bricklet
@@ -755,8 +956,6 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-Dual Button Bricklet
-====================
 The Dual Button Bricklet has four sub devices: two leds and two buttons.
 The subids are:
  * dualbutton_leftled
@@ -1148,6 +1347,67 @@ sitemap led label="TinkerForge 020"
 ```
 ---
 
+### Industrial Dual Analog In Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Industrial_Dual_Analog_In.html)
+
+#### Binding properties:
+
+The property $sampleRate can be between 1 sample per second (SPS) and 976 samples per second. Decreasing the sample rate will also decrease the noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_industrial_dual_analogin |
+| sampleRate | sets the sample rate, default=6 (2 samples per second) | 0=976 SPS, 1=488 SPS, 2=244 SPS, 3=122 SPS, 4=61 SPS, 5=4 SPS, 6=2 SPS, 7=1 SPS |
+
+##### Sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | channel0, channel1 |
+| type | openHAB type name | industrial_dual_analogin_channel |
+
+##### openhab.cfg:
+```
+tinkerforge:diai.uid=<your_uid>
+tinkerforge:diai.type=bricklet_industrial_dual_analogin
+tinkerforge:diai.sampleRate=6
+
+tinkerforge:channel0.uid=<your_uid>
+tinkerforge:channel0.subid=channel0
+tinkerforge:channel0.type=industrial_dual_analogin_channel
+tinkerforge:channel0.callbackPeriod=1000
+tinkerforge:channel0.threshold=0
+
+tinkerforge:channel1.uid=<your_uid>
+tinkerforge:channel1.subid=channel1
+tinkerforge:channel1.type=industrial_dual_analogin_channel
+tinkerforge:channel1.callbackPeriod=1000
+tinkerforge:channel1.threshold=0
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number channel0 "Channel0 [%.0f mV]" {tinkerforge="uid=<your_uid>, subid=channel0"}
+Number channel1 "Channel1 [%.0f mV]" {tinkerforge="uid=<your_uid>, subid=channel1"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Industrial Dual Analog In"
+{
+    Frame label="Industrial Dual Analog In" {
+        Text item=channel0
+        Text item=channel1
+    }
+}
+```
+---
+
 ### Industrial Quad Relay Bricklet
 
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Industrial_Quad_Relay.html)
@@ -1442,6 +1702,98 @@ sitemap tf_weather label="Joystick"
 	Text item=YPostion
 	Text item=JoystickButton
 	}
+}
+```
+---
+
+### Laser Range Finder Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Laser_Range_Finder.html)
+
+#### Binding properties:
+
+The laser will be enabled by default on system start. This can be changed by 
+setting enableLaserOnStartup to false on the bricklet_laser_range_finder type in openhab.cfg.
+If the laser is already enabled it will never be disabled on openHAB startup.
+
+```
+tinkerforge:lrf.uid=<your_uid>
+tinkerforge:lrf.type=bricklet_laser_range_finder
+tinkerforge:lrf.enableLaserOnStartup=false
+```
+
+Properties $distanceAverageLength and $velocityAverageLength set the length of a moving averaging for the distance and velocity. Setting the property to 0 will turn the averaging completely off. With less averaging, there is more noise on the data. The range for the averaging is 0-30, default value is 10.
+
+Property $mode sets the mode for measurements, five modes are available, one mode for distance measurements and four modes for velocity measurements with different ranges and resolutions. 
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_laser_range_finder |
+| distanceAverageLength | sets the length of a moving averaging for the distance, default=10 | 0-30 |
+| velocityAverageLength | sets the length of a moving averaging for the velocity, default=10 | 0-30 |
+| mode | sets the mode for measurements, default=0 | 0: Distance is measured with resolution 1.0 cm and range 0-400 cm |
+| mode | sets the mode for measurements, default=0 | 1: Velocity is measured with resolution 0.1 m/s and range is 0-12.7 m/s |
+| mode | sets the mode for measurements, default=0 | 2: Velocity is measured with resolution 0.25 m/s and range is 0-31.75 m/s |
+| mode | sets the mode for measurements, default=0 | 3: Velocity is measured with resolution 0.5 m/s and range is 0-63.5 m/s |
+| mode | sets the mode for measurements, default=0 | 4: Velocity is measured with resolution 1.0 m/s and range is 0-127 m/s |
+| enableLaserOnStartup | enables or disables laser on startup, default=true | true, false |
+
+##### Laser Range Finder sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | distance, velocity, laser |
+| type | openHAB type name | laser_range_finder_distance, laser_range_finder_velocity, laser_range_finder_laser |
+| callbackPeriod | | see "Callback and Threshold" |
+| threshold | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+```
+tinkerforge:lrf.uid=<your_uid>
+tinkerforge:lrf.type=bricklet_laser_range_finder
+tinkerforge:lrf.distanceAverageLength=10
+tinkerforge:lrf.velocityAverageLength=10
+tinkerforge:lrf.mode=1
+tinkerforge:lrf.enableLaserOnStartup=True
+
+tinkerforge:distance.uid=<your_uid>
+tinkerforge:distance.subid=distance
+tinkerforge:distance.type=laser_range_finder_distance
+tinkerforge:distance.callbackPeriod=10
+tinkerforge:distance.threshold=0
+
+tinkerforge:velocity.uid=<your_uid>
+tinkerforge:velocity.subid=velocity
+tinkerforge:velocity.type=laser_range_finder_velocity
+tinkerforge:velocity.callbackPeriod=10
+tinkerforge:velocity.threshold=0
+
+tinkerforge:laser.uid=<your_uid>
+tinkerforge:laser.subid=laser
+tinkerforge:laser.type=laser_range_finder_laser
+
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number distance "Distance [%.0f]" {tinkerforge="uid=<your_uid>, subid=distance"}
+Number velocity "Velocity [%.4f]" {tinkerforge="uid=<your_uid>, subid=velocity"}
+Switch laser "Enable Laser" {tinkerforge="uid=<your_uid>, subid=laser"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Laser Range Finder"
+{
+    Frame label="Laser Range Finder" {
+        Text item=distance
+        Text item=velocity
+        Switch item=laser
+    }
 }
 ```
 ---
