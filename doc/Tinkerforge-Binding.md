@@ -21,6 +21,7 @@ Documentation of the TinkerForge binding bundle
     - [Accelerometer Bricklet](#accelerometer-bricklet)
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
     - [Analog In Bricklet](#analog-in-bricklet)
+    - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
     - [Color Bricklet](#color-bricklet)
     - [Distance IR Bricklet](#distance-ir-bricklet)
@@ -196,6 +197,7 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Accelerometer Bricklet subdevice|accelerometer_led|led||
 |Ambient Light Bricklet|bricklet_ambient_light||x|
 |Analog In Bricklet|bricklet_analogin||x|
+|Analog In Bricklet 2.0|bricklet_analoginv2||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
 |Color Bricklet|bricklet_color|||
@@ -711,6 +713,50 @@ Number voltage "Voltage [%.0f mV]" {tinkerforge="uid=<your_uid>"}
 sitemap led label="Analog In"
 {
     Frame label="Analog In" {
+        Text item=voltage
+    }
+}
+```
+---
+
+### Analog In Bricklet 2.0
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Analog_In_V2.html)
+
+#### Binding properties:
+
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
+Property $movingAverage sets the length of a moving averaging for the measured voltage, default is 50, $movingAverage=1 turns averaging off. With less averaging, there is more noise on the data.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_analoginv2 |
+| movingAverage | sets the length of a moving averaging, default=50 | 1: averaging off, 2-50: averaging is 2-50 |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+```
+tinkerforge:ainv2.uid=<your_uid>
+tinkerforge:ainv2.type=bricklet_analoginv2
+tinkerforge:ainv2.movingAverage=100
+tinkerforge:ainv2.callbackPeriod=1000
+tinkerforge:ainv2.threshold=0
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number voltage "Voltage [%.0f mV]" {tinkerforge="uid=<your_uid>"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Analog In V2"
+{
+    Frame label="Analog In V2" {
         Text item=voltage
     }
 }
