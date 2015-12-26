@@ -38,6 +38,7 @@ Documentation of the TinkerForge binding bundle
     - [Industrial Quad Relay Bricklet](#industrial-quad-relay-bricklet)
     - [IO 16 Bricklet](#io-16-bricklet)
     - [Joystick Bricklet](#joystick-bricklet)
+    - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
     - [LCD 20×4 Display Bricklet](#lcd-20x4-display-bricklet)
     - [LED Strip Bricklet](#led-strip-bricklet)
     - [Linear Poti Bricklet](#linear-poti-bricklet)
@@ -232,6 +233,10 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Joystick Bricklet subdevice||joystick_xposition|x|
 |Joystick Bricklet subdevice||joystick_yposition|x|
 |Joystick Bricklet subdevice||joystick_button|x|
+|Laser Range Finder Bricklet||bricklet_laser_range_finder||
+|Laser Range Finder Bricklet subdevice|laser_range_finder_distance|distance|x|
+|Laser Range Finder Bricklet subdevice|laser_range_finder_velocity|velocity|x|
+|Laser Range Finder Bricklet subdevice|laser_range_finder_laser|laser||
 |LCD20x4 Bricklet|bricklet_LCD20x4|||
 |LCD20x4 backlight|backlight|backlight||
 |LCD20x4 Bricklet button sub devices|lcd_button|button[0-3]|interrupt|
@@ -1376,13 +1381,13 @@ tinkerforge:channel0.uid=<your_uid>
 tinkerforge:channel0.subid=channel0
 tinkerforge:channel0.type=industrial_dual_analogin_channel
 tinkerforge:channel0.callbackPeriod=1000
-tinkerforge:channel0.threshold=10
+tinkerforge:channel0.threshold=0
 
 tinkerforge:channel1.uid=<your_uid>
 tinkerforge:channel1.subid=channel1
 tinkerforge:channel1.type=industrial_dual_analogin_channel
 tinkerforge:channel1.callbackPeriod=1000
-tinkerforge:channel1.threshold=10
+tinkerforge:channel1.threshold=0
 ```
 
 ##### Items file entry (e.g. tinkerforge.items):
@@ -1697,6 +1702,98 @@ sitemap tf_weather label="Joystick"
 	Text item=YPostion
 	Text item=JoystickButton
 	}
+}
+```
+---
+
+### Laser Range Finder Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Laser_Range_Finder.html)
+
+#### Binding properties:
+
+The laser will be enabled by default on system start. This can be changed by 
+setting enableLaserOnStartup to false on the bricklet_laser_range_finder type in openhab.cfg.
+If the laser is already enabled it will never be disabled on openHAB startup.
+
+```
+tinkerforge:lrf.uid=<your_uid>
+tinkerforge:lrf.type=bricklet_laser_range_finder
+tinkerforge:lrf.enableLaserOnStartup=false
+```
+
+Properties $distanceAverageLength and $velocityAverageLength set the length of a moving averaging for the distance and velocity. Setting the property to 0 will turn the averaging completely off. With less averaging, there is more noise on the data. The range for the averaging is 0-30, default value is 10.
+
+Property $mode sets the mode for measurements, five modes are available, one mode for distance measurements and four modes for velocity measurements with different ranges and resolutions. 
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_laser_range_finder |
+| distanceAverageLength | sets the length of a moving averaging for the distance, default=10 | 0-30 |
+| velocityAverageLength | sets the length of a moving averaging for the velocity, default=10 | 0-30 |
+| mode | sets the mode for measurements, default=0 | 0: Distance is measured with resolution 1.0 cm and range 0-400 cm |
+| mode | sets the mode for measurements, default=0 | 1: Velocity is measured with resolution 0.1 m/s and range is 0-12.7 m/s |
+| mode | sets the mode for measurements, default=0 | 2: Velocity is measured with resolution 0.25 m/s and range is 0-31.75 m/s |
+| mode | sets the mode for measurements, default=0 | 3: Velocity is measured with resolution 0.5 m/s and range is 0-63.5 m/s |
+| mode | sets the mode for measurements, default=0 | 4: Velocity is measured with resolution 1.0 m/s and range is 0-127 m/s |
+| enableLaserOnStartup | enables or disables laser on startup, default=true | true, false |
+
+##### Laser Range Finder sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | distance, velocity, laser |
+| type | openHAB type name | laser_range_finder_distance, laser_range_finder_velocity, laser_range_finder_laser |
+| callbackPeriod | | see "Callback and Threshold" |
+| threshold | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+```
+tinkerforge:lrf.uid=<your_uid>
+tinkerforge:lrf.type=bricklet_laser_range_finder
+tinkerforge:lrf.distanceAverageLength=10
+tinkerforge:lrf.velocityAverageLength=10
+tinkerforge:lrf.mode=1
+tinkerforge:lrf.enableLaserOnStartup=True
+
+tinkerforge:distance.uid=<your_uid>
+tinkerforge:distance.subid=distance
+tinkerforge:distance.type=laser_range_finder_distance
+tinkerforge:distance.callbackPeriod=10
+tinkerforge:distance.threshold=0
+
+tinkerforge:velocity.uid=<your_uid>
+tinkerforge:velocity.subid=velocity
+tinkerforge:velocity.type=laser_range_finder_velocity
+tinkerforge:velocity.callbackPeriod=10
+tinkerforge:velocity.threshold=0
+
+tinkerforge:laser.uid=<your_uid>
+tinkerforge:laser.subid=laser
+tinkerforge:laser.type=laser_range_finder_laser
+
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number distance "Distance [%.0f]" {tinkerforge="uid=<your_uid>, subid=distance"}
+Number velocity "Velocity [%.4f]" {tinkerforge="uid=<your_uid>, subid=velocity"}
+Switch laser "Enable Laser" {tinkerforge="uid=<your_uid>, subid=laser"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Laser Range Finder"
+{
+    Frame label="Laser Range Finder" {
+        Text item=distance
+        Text item=velocity
+        Switch item=laser
+    }
 }
 ```
 ---
