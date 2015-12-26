@@ -20,6 +20,7 @@ Documentation of the TinkerForge binding bundle
   - Bricklets
     - [Accelerometer Bricklet](#accelerometer-bricklet)
     - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+    - [Analog In Bricklet](#analog-in-bricklet)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
     - [Color Bricklet](#color-bricklet)
     - [Distance IR Bricklet](#distance-ir-bricklet)
@@ -202,6 +203,7 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Accelerometer Bricklet subdevice|accelerometer_temperature|temperature||
 |Accelerometer Bricklet subdevice|accelerometer_led|led||
 |Ambient Light Bricklet|bricklet_ambient_light||x|
+|Analog In Bricklet|bricklet_analogin||x|
 |Barometer Bricklet|bricklet_barometer||x|
 |Barometer Bricklet temperature sensor sub device|barometer_temperature|temperature||
 |Color Bricklet|bricklet_color|||
@@ -564,6 +566,8 @@ Decreasing data rate or full scale range will also decrease the noise on the dat
 | type | openHAB type name | accelerometer_direction, accelerometer_temperature, accelerometer_led|
 | callbackPeriod | | see "Callback and Threshold" |
 
+Note: Subdevices accelerometer_temperature and accelerometer_led don't support callbackPeriod!
+
 
 ##### openhab.cfg:
 ```
@@ -577,16 +581,19 @@ tinkerforge:ax.uid=<your_uid>
 tinkerforge:ax.subid=x
 tinkerforge:ax.type=accelerometer_direction
 tinkerforge:ax.callbackPeriod=10
+tinkerforge:ax.threshold=0
 
 tinkerforge:ay.uid=<your_uid>
 tinkerforge:ay.subid=y
 tinkerforge:ay.type=accelerometer_direction
 tinkerforge:ay.callbackPeriod=10
+tinkerforge:ay.threshold=0
 
 tinkerforge:az.uid=<your_uid>
 tinkerforge:az.subid=z
 tinkerforge:az.type=accelerometer_direction
 tinkerforge:az.callbackPeriod=10
+tinkerforge:az.threshold=0
 
 tinkerforge:a_temperature.uid=<your_uid>
 tinkerforge:a_temperature.subid=temperature
@@ -662,6 +669,50 @@ sitemap led label="TinkerForge AmbientLightV2"
 
 ```
 
+---
+
+### Analog In Bricklet
+
+Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Analog_In.html)
+
+#### Binding properties:
+
+If property $range is set to 0, the device switches between the measurement ranges automatically. Set $range to 1-5 to manually switch between measurement ranges.
+
+#### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_analogin |
+| range | sets the measurement range, default=0 (automatically switched) | 1: 0V - 6.05V, 2: 0V - 10.32V, 3: 0V - 36.30V, 4: 0V - 45.00V, 5: 0V - 3.3V with ~0.81mV resolution |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
+
+
+##### openhab.cfg:
+```
+tinkerforge:ain.uid=<your_uid>
+tinkerforge:ain.type=bricklet_analogin
+tinkerforge:ain.range=0
+tinkerforge:ain.callbackPeriod=1000
+tinkerforge:ain.threshold=0
+```
+
+##### Items file entry (e.g. tinkerforge.items):
+```
+Number voltage "Voltage [%.0f mV]" {tinkerforge="uid=<your_uid>"}
+```
+
+##### Sitemap file entry (e.g tinkerforge.sitemap):
+```
+sitemap led label="Analog In"
+{
+    Frame label="Analog In" {
+        Text item=voltage
+    }
+}
+```
 ---
 
 ### Barometer Bricklet
