@@ -1,6 +1,3 @@
-(Work in progress ...)
-======================
-
 Documentation of the TinkerForge binding bundle
 
 ## Table of Contents
@@ -893,10 +890,6 @@ sitemap led label="Color"
         Switch item=led
     }
 }
-```
-##### Rules (e.g tinkerforge.rules):
-```
-
 ```
 ---
 
@@ -2047,7 +2040,7 @@ The colormapping of the LED chip types are not standardized, therefore the seque
 |----------|--------------|--------|
 | uid | tinkerforge uid | same as bricklet |
 | subid | openHAB subid of the device | ledgroup1 |
-| leds | configures a group of led's | depends on led strip used, f.e. 0|1-6 |
+| leds | configures a group of led's | depends on the number of led's used |
 
 ##### openhab.cfg:
 ```
@@ -2142,7 +2135,7 @@ Moving average is a calculation to analyze data points by creating series of ave
 | type | openHAB type name | bricklet_loadcell |
 
 
-##### xxx sub device:
+##### Load Cell sub device:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -2475,9 +2468,9 @@ on the device type.
 |----------|--------------|--------|
 | uid | tinkerforge uid | get value from brickv |
 | type | openHAB type name | bricklet_remote_switch |
-| typeADevices | sub device names of type A devices | choose a resonable string, e.g. "kitchen bathroom" |
-| typeBDevices | sub device names of type B devices  | true or false |
-| typeCDevices | sub device names of type C devices  |
+| typeADevices | sub device names of type A devices | choose a reasonable string, e.g. "kitchen" or "floor" |
+| typeBDevices | sub device names of type B devices  | choose a reasonable string |
+| typeCDevices | sub device names of type C devices  |choose a reasonable string |
 
 ```
 tinkerforge:rs1.uid=<your_uid>
@@ -2901,9 +2894,9 @@ tinkerforge:tilt.type=bricklet_tilt
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Contact tiltContact     "tilt [MAP(en.map):%s]" { tinkerforge="uid=<your_uid>" }
-Number tiltSensor       "tilt [MAP(en.map):%s]"  { tinkerforge="uid=<your_uid>" }
-Switch tiltSwitch         "tilt" { tinkerforge="uid=<your_uid>" }
+Contact tiltContact  "tilt [MAP(en.map):%s]" { tinkerforge="uid=<your_uid>" }
+Number tiltSensor    "tilt [MAP(en.map):%s]"  { tinkerforge="uid=<your_uid>" }
+Switch tiltSwitch    "tilt" { tinkerforge="uid=<your_uid>" }
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
