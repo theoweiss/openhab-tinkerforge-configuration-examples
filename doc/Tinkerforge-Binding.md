@@ -5,11 +5,11 @@ Documentation of the TinkerForge binding bundle
 - [Generic Item Binding Configuration](#generic-item-binding-configuration)
   - [Basic Configuration](#basic-configuration)
     - [Item Binding Configuration](#item-binding-configuration)
-    - [Item Types](#item-types)
     - [Example Configuration](#example-configuration)
 - [Advanced Configuration](#advanced-configuration)
     - [Overview](#overview)
     - [Callback and threshold](#callback-and-threshold)
+    - [Refresh of Sensor Values](#refresh-of-sensor-values)
 - [Supported Devices](#supported-devices)
   - Bricks
     - [DC Brick](#dc-brick)
@@ -113,7 +113,7 @@ by square brackets are optional.
 | port | The listening port of of the brickd (optional, default 4223) |
 | secret | password used for authentication |
 
-Examples:
+#### Example configuration
 
 Authenticate with password 1234 and default port
 ```
