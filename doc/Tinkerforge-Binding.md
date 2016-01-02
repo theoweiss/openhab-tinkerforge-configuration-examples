@@ -1,6 +1,3 @@
-(Work in progress ...)
-======================
-
 Documentation of the TinkerForge binding bundle
 
 ## Table of Contents
@@ -8,18 +5,18 @@ Documentation of the TinkerForge binding bundle
 - [Generic Item Binding Configuration](#generic-item-binding-configuration)
   - [Basic Configuration](#basic-configuration)
     - [Item Binding Configuration](#item-binding-configuration)
-    - [Item Types](#item-types)
     - [Example Configuration](#example-configuration)
 - [Advanced Configuration](#advanced-configuration)
     - [Overview](#overview)
     - [Callback and threshold](#callback-and-threshold)
+    - [Refresh of Sensor Values](#refresh-of-sensor-values)
 - [Supported Devices](#supported-devices)
   - Bricks
     - [DC Brick](#dc-brick)
     - [Servo Brick](#servo-brick)
   - Bricklets
     - [Accelerometer Bricklet](#accelerometer-bricklet)
-    - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+    - [Ambient Light Bricklet 2.0](#ambient-light-bricklet-v2)
     - [Analog In Bricklet](#analog-in-bricklet)
     - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
     - [Barometer Bricklet, barometer and temperature device](#barometer-bricklet)
@@ -116,7 +113,7 @@ by square brackets are optional.
 | port | The listening port of of the brickd (optional, default 4223) |
 | secret | password used for authentication |
 
-Examples:
+#### Example configuration
 
 Authenticate with password 1234 and default port
 ```
@@ -197,7 +194,7 @@ The following table shows the TinkerForge device, its device type, its subid and
 |Accelerometer Bricklet subdevice|accelerometer_direction|z|x|
 |Accelerometer Bricklet subdevice|accelerometer_temperature|temperature||
 |Accelerometer Bricklet subdevice|accelerometer_led|led||
-|Ambient Light Bricklet|bricklet_ambient_light||x|
+|Ambient Light Bricklet 2.0|bricklet_ambient_lightv2||x|
 |Analog In Bricklet|bricklet_analogin||x|
 |Analog In Bricklet 2.0|bricklet_analoginv2||x|
 |Barometer Bricklet|bricklet_barometer||x|
@@ -653,7 +650,9 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 | property | descripition | values |
 |----------|--------------|--------|
 | uid | tinkerforge uid | get value from brickv |
-| type | openHAB type name | bricklet_ambient_light |
+| type | openHAB type name | bricklet_ambient_lightv2 |
+| illuminanceRange | sets the illuminance range, default=8000lux | 0=64000lux, 1=32000lux, 2=16000lux, 3=8000lux, 4=1300lux, 5=600lux, 6=unlimited range |
+| integrationTime | sets the integration time, default=200ms | 0=50ms, 1=100ms, 2=150ms, 3=200ms, 4=250ms, 5=300ms, 6=350ms, 7=400ms|
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
 
@@ -661,8 +660,8 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 ```
 tinkerforge:ambientlightv2.uid=<your_uid>
 tinkerforge:ambientlightv2.type=bricklet_ambient_lightv2
-tinkerforge:ambientlightv2.illuminanceRange=10
-tinkerforge:ambientlightv2.integrationTime=10
+tinkerforge:ambientlightv2.illuminanceRange=3
+tinkerforge:ambientlightv2.integrationTime=3
 tinkerforge:ambientlightv2.callbackPeriod=10
 tinkerforge:ambientlightv2.threshold=0
 ```
@@ -750,7 +749,7 @@ Property $movingAverage sets the length of a moving averaging for the measured v
 ```
 tinkerforge:ainv2.uid=<your_uid>
 tinkerforge:ainv2.type=bricklet_analoginv2
-tinkerforge:ainv2.movingAverage=100
+tinkerforge:ainv2.movingAverage=50
 tinkerforge:ainv2.callbackPeriod=1000
 tinkerforge:ainv2.threshold=0
 ```
@@ -777,10 +776,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
+Bricklet measures air pressure in range of 10 to 1200mbar with a resolution of 0.012mbar.  
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
-
-The temperature sub device does not support callbackPeriod, it will be polled. The polling interval
-can be configured using tinkerforge:refresh property.
 
 ##### Bricklet:
 
@@ -792,6 +789,9 @@ can be configured using tinkerforge:refresh property.
 | callbackPeriod | | see "Callback and Threshold" |
 
 ##### Temperature sub device:
+
+Subdevice property $barometer_temperature returns the temperature of the air pressure sensor which is internally used for temperature compensation of the air pressure measurement.
+The temperature sub device does not support callbackPeriod, it will be polled. The polling interval can be configured using tinkerforge:refresh property.
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -825,9 +825,28 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
+Increasing the gain enables the sensor to detect a color from a higher distance.
+The integration time provides a trade-off between conversion time and accuracy. With a longer integration time the values read will be more accurate but it will take longer time to get the conversion results.
 
 ##### Bricklet:
 
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_color |
+| gain | sets the gain, derault=60x | 0: 1x gain, 1: 4x gain, 2: 16x gain, 3: 60x gain  |
+| integrationTime | sets the integration time, default=154ms | 0: 2.4ms, 1: 24ms, 2: 101ms, 3: 154ms, 4: 700ms |
+
+##### Color Bricklet sub device:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | color, temperature, illuminance |
+| type | openHAB type name | color_color, color_temperature, color_illuminance |
+| callbackPeriod | |see "Callback and Threshold" |
+
+Note: It is not possible to set the property $threshold for the Color Bricklet subdevices! 
 
 ##### openhab.cfg:
 ```
@@ -872,10 +891,6 @@ sitemap led label="Color"
     }
 }
 ```
-##### Rules (e.g tinkerforge.rules):
-```
-
-```
 ---
 
 ### Distance IR Bricklet
@@ -886,7 +901,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
 
-##### openhab.cfg:
+##### Bricklet:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -894,6 +909,9 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 | type | openHAB type name | bricklet_distance_ir |
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+
 ```
 tinkerforge:distance_door.uid=<your_uid>
 tinkerforge:distance_door.type=bricklet_distance_ir
@@ -919,6 +937,10 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
 
+Distance is reported as unitless value, not in mm.
+
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
+
 ##### Bricklet:
 
 | property | descripition | values |
@@ -927,7 +949,7 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 | type | openHAB type name | bricklet_distanceUS |
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
-| movingAverage | | default 100 |
+| movingAverage | sets the moving average, default=20 | 0-100 |
 
 ##### openhab.cfg:
 ```
@@ -935,7 +957,7 @@ tinkerforge:distanceUS.uid=<your_uid>
 tinkerforge:distanceUS.type=bricklet_distanceUS
 tinkerforge:distanceUS.threshold=0
 tinkerforge:distanceUS.callbackPeriod=100
-tinkerforge:distanceUS.movingAverage=100
+tinkerforge:distanceUS.movingAverage=20
 ```
 
 ##### Items file entry (e.g. tinkerforge.items):
@@ -979,6 +1001,16 @@ change anything, only the next button press will change the state.
 * Tactile switch mode
 Pressing the button changes the switch state to ON and releasing the button changes the
 state back to OFF again.
+
+##### Dual Button Bricklet sub devices:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | dualbutton_leftled, dualbutton_rightled, dualbutton_leftbutton, dualbutton_rightbutton |
+| type | openHAB type name | dualbutton_led, dualbutton_button |
+| autotoggle | sets button autotoggle mode | True, False |
+| tactile | sets switch mode | True, False |
 
 ##### openhab.cfg:
 ```
@@ -1046,6 +1078,7 @@ sitemap tf label="DualButton"
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Dual_Relay.html)
 
 #### Binding properties:
+
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
 
 ##### Bricklet:
@@ -1120,6 +1153,17 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
+The measured dust density can be read out in µg/m³
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_dustdetector |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
+
 ##### openhab.cfg:
 ```
 tinkerforge:dust.uid=<your_uid>
@@ -1150,6 +1194,16 @@ sitemap tf label="Dust Detector"
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Hall_Effect.html)
 
 #### Binding properties:
+
+Bricklet can detect the presence of magnetic fields. It counts the (dis-)appearances of magnetic fields.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_halleffect |
+| callbackPeriod | | see "Callback and Threshold" |
 
 ##### openhab.cfg:
 ```
@@ -1184,7 +1238,9 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 #### Binding properties:
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
 
-##### openhab.cfg:
+The measured humidity can be read out directly in percent, no conversions are necessary.
+
+##### Bricklet:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -1192,6 +1248,9 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 | type | openHAB type name | bricklet_humidity |
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
+
+##### openhab.cfg:
+
 ```
 tinkerforge:humidity_balcony.uid=<your_uid>
 tinkerforge:humidity_balcony.type=bricklet_humidity
@@ -1215,6 +1274,8 @@ Text item=Humidity
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Industrial_Quad_Relay.html)
 
 #### Binding properties:
+
+ If you set the property $debouncePeriod to 100, you will get the interrupt maximal every 100ms. This is necessary if something that bounces is connected to the Digital In 4 Bricklet, such as a button.
 
 ##### Bricklet:
 
@@ -1241,10 +1302,10 @@ tinkerforge:inddi4.debouncePeriod=100
 ```
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Contact ID1                     "ID1 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in0"}
-Contact ID2                     "ID2 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in1"}
-Contact ID3                     "ID3 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in2"}
-Contact ID4                     "ID4 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in3"}
+Contact ID1 "ID1 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in0"}
+Contact ID2 "ID2 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in1"}
+Contact ID3 "ID3 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in2"}
+Contact ID4 "ID4 [MAP(en.map):%s]" {tinkerforge="uid=<your_uid>, subid=in3"}
 ```
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
 ```
@@ -1270,6 +1331,7 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 | type | openHAB type name |  |
 
 ##### openhab.cfg:
+
 no configuration needed
 
 ##### Items file entry (e.g. tinkerforge.items):
@@ -1311,7 +1373,6 @@ it defaults to 3 (4 samples per second).
 
 ##### openhab.cfg configuration options for the sensors
 callbackPeriod: Setting the callback period is optional, the default is 1000 milli seconds.
-threshold:
 
 ##### openhab.cfg
 ```
@@ -1363,13 +1424,15 @@ The property $sampleRate can be between 1 sample per second (SPS) and 976 sample
 | type | openHAB type name | bricklet_industrial_dual_analogin |
 | sampleRate | sets the sample rate, default=6 (2 samples per second) | 0=976 SPS, 1=488 SPS, 2=244 SPS, 3=122 SPS, 4=61 SPS, 5=4 SPS, 6=2 SPS, 7=1 SPS |
 
-##### Sub devices:
+##### Dual Analog In sub devices:
 
 | property | descripition | values |
 |----------|--------------|--------|
 | uid | tinkerforge uid | same as bricklet |
 | subid | openHAB subid of the device | channel0, channel1 |
 | type | openHAB type name | industrial_dual_analogin_channel |
+| threshold | | see "Callback and Threshold" |
+| callbackPeriod | | see "Callback and Threshold" |
 
 ##### openhab.cfg:
 ```
@@ -1483,6 +1546,8 @@ sitemap tf label="QuadRelay"
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/IO16.html)
 
 #### Binding properties:
+
+If you set the property $debouncePeriod to 100, you will get the interrupt maximal every 100ms. This is necessary if something that bounces is connected to the IO-16 Bricklet, such as a button.
 
 ##### Bricklet:
 
@@ -1715,6 +1780,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 The laser will be enabled by default on system start. This can be changed by 
 setting enableLaserOnStartup to false on the bricklet_laser_range_finder type in openhab.cfg.
 If the laser is already enabled it will never be disabled on openHAB startup.
+
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
 
 ```
 tinkerforge:lrf.uid=<your_uid>
@@ -1955,6 +2022,26 @@ An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clock
 All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.  
 The colormapping of the LED chip types are not standardized, therefore the sequence of the letters "rgb" can be changed individually to match the the color of your LED Stripswitch. 
 
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_ledstrip |
+| framduration | sets the frame duration in ms, default: 100ms (10 fps) |  |
+| chiptype | sets the strip chip type |  ws2801, ws2811, ws2812 |
+| clockfrequency | sets the frequency of the clock in Hz | 10000Hz (10kHz) up to 2000000Hz (2MHz) |
+| colorMapping | sets the colormapping | rbg or any other letter sequence|
+| subDevices | configures a group of led | f.e. ledgroup1 |
+
+##### LED Strip sub device (optional):
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | ledgroup1 |
+| leds | configures a group of led's | depends on the number of led's used |
+
 ##### openhab.cfg:
 ```
 tinkerforge:ledstrip.uid=<your_uid>
@@ -1996,8 +2083,16 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
-There is one device called bricklet_linear_poti. You can expect values from 0 - 100.
+You can expect values from 0 - 100 %.
 The default callback period is 10 millis, you can change this within openhab.cfg.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_linear_poti |
+| callbackPeriod | | see "Callback and Threshold" |
 
 ##### openhab.cfg:
 ```
@@ -2008,7 +2103,7 @@ tinkerforge:linearpoti.callbackPeriod=1000
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Number Poti              "Poti [%.0f]" { tinkerforge="uid=<your_uid>"}
+Number Poti   "Poti [%.0f]" { tinkerforge="uid=<your_uid>"}
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -2027,6 +2122,28 @@ sitemap tflabel="Linear Poti"
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Load_Cell.html)
 
 #### Binding properties:
+
+Returns the currently measured weight in grams. An LED can be turned on to inidicate that a weight measurement is in range.
+
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_loadcell |
+
+
+##### Load Cell sub device:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | weight, led |
+| type | openHAB type name | loadcell_weight, loadcell_led |
+| movingAverage | sets the value for moving average, default=4 | 1-40 |
+| callbackPeriod | | see "Callback and Threshold" |
 
 ##### openhab.cfg:
 ```
@@ -2085,6 +2202,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 #### Binding properties:
 
+Senses movement of people and animals with a detection range of 3m to 7m and a sensing angle of 100°.
+
 An entry in openhab.cfg is only needed if you want to use a [_symbolic name_](#sym_name).
 
 ##### Bricklet:
@@ -2134,7 +2253,7 @@ electrodes or use a [_symbolic name_](#sym_name).
 |----------|--------------|--------|
 | uid | tinkerforge uid | get value from brickv |
 | type | openHAB type name | bricklet_multitouch |
-| sensitivity | | value between 5-201 |
+| sensitivity | sets the electrodes sensitivity, default=181 | 5-201 |
 | recalibrate | recalibrate the sensor | true or false |
 
 ```
@@ -2151,6 +2270,9 @@ tinkerforge:touch.recalibrate=true
 | uid | tinkerforge uid | get value from brickv |
 | subid | openHAB subid of the device|electrode0 electrode1 electrode2 electrode3 electrode4 electrode5 electrode6 electrode7 electrode8 electrode9 electrode10 electrode11|
 | disableElectrode | disables the electrode | true or false|
+
+##### openhab.cfg for electrodes:
+
 ```
 tinkerforge:e1.uid=<your_uid>
 tinkerforge:e1.type=electrode
@@ -2166,7 +2288,8 @@ tinkerforge:e1.disableElectrode=true
 | subid | openHAB subid of the device|proximity|
 | disableElectrode | disables the proximity detection | true or false|
 
-##### openhab.cfg:
+##### openhab.cfg for proximity:
+
 ```
 tinkerforge:prox.uid=<your_uid>
 tinkerforge:prox.type=proximity
@@ -2217,6 +2340,8 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 
 An entry in openhab.cfg is only needed if you want to adjust [threshold and / or callbackPeriod](#call_thresh) or if you want to use a [_symbolic name_](#sym_name).
 
+Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
+
 ##### openhab.cfg:
 
 | property | descripition | values |
@@ -2225,6 +2350,8 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 | type | openHAB type name | bricklet_moisture |
 | threshold | | see "Callback and Threshold" |
 | callbackPeriod | | see "Callback and Threshold" |
+| movingAverage | sets the value for moving average, default=100 | 0-100 |
+
 ```
 tinkerforge:moisture.uid=<your_uid>
 tinkerforge:moisture.type=bricklet_moisture
@@ -2270,6 +2397,25 @@ With the *repeat* statement the tone sequence is repeated with the given number.
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/PTC.html)
 
 #### Binding properties:
+
+Wire mode of the sensor has to be set. Possible values are 2, 3 and 4 which correspond to 2-, 3- and 4-wire sensors. The value has to match the jumper configuration on the Bricklet.
+
+##### Bricklet:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | get value from brickv |
+| type | openHAB type name | bricklet_ptc |
+| wiremode | sets the wire mode of the sensor, default=2 | 2, 3, 4 |
+
+##### PTC sub device:
+
+| property | descripition | values |
+|----------|--------------|--------|
+| uid | tinkerforge uid | same as bricklet |
+| subid | openHAB subid of the device | ptc_temperature |
+| type | openHAB type name | ptc_temperature |
+| callbackPeriod | | see "Callback and Threshold" |
 
 ##### openhab.cfg:
 ```
@@ -2322,9 +2468,9 @@ on the device type.
 |----------|--------------|--------|
 | uid | tinkerforge uid | get value from brickv |
 | type | openHAB type name | bricklet_remote_switch |
-| typeADevices | sub device names of type A devices | choose a resonable string, e.g. "kitchen bathroom" |
-| typeBDevices | sub device names of type B devices  | true or false |
-| typeCDevices | sub device names of type C devices  |
+| typeADevices | sub device names of type A devices | choose a reasonable string, e.g. "kitchen" or "floor" |
+| typeBDevices | sub device names of type B devices  | choose a reasonable string |
+| typeCDevices | sub device names of type C devices  |choose a reasonable string |
 
 ```
 tinkerforge:rs1.uid=<your_uid>
@@ -2623,8 +2769,9 @@ An entry in openhab.cfg is only needed if you want to adjust [threshold and / or
 
 Since OH 1.8 there is a new option slowI2C which could be set to "True" or "False",
 the default value is "False". More information on this setting can be found here:
-http://www.tinkerforge.com/en/doc/Software/Bricklets/Temperature_Bricklet_Java.html#advanced-functions
+http://www.tinkerforge.com/en/doc/Software/Bricklets/Temperature_Bricklet_Java.html#BrickletTemperature::setI2CMode__short-
 
+##### Bricklet:
 
 | property | descripition | values |
 |----------|--------------|--------|
@@ -2669,7 +2816,7 @@ if you want to use a [_symbolic name_](#sym_name) or adjust the emissivity of th
 | property | descripition | values |
 |----------|--------------|--------|
 | uid | tinkerforge uid | get value from brickv |
-| type | openHAB type name | bricklet_barometer |
+| type | openHAB type name | bricklet_temperatureIR |
 
 ##### Object temperature sub device:
 
@@ -2747,9 +2894,9 @@ tinkerforge:tilt.type=bricklet_tilt
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Contact tiltContact     "tilt [MAP(en.map):%s]" { tinkerforge="uid=<your_uid>" }
-Number tiltSensor       "tilt [MAP(en.map):%s]"  { tinkerforge="uid=<your_uid>" }
-Switch tiltSwitch         "tilt" { tinkerforge="uid=<your_uid>" }
+Contact tiltContact  "tilt [MAP(en.map):%s]" { tinkerforge="uid=<your_uid>" }
+Number tiltSensor    "tilt [MAP(en.map):%s]"  { tinkerforge="uid=<your_uid>" }
+Switch tiltSwitch    "tilt" { tinkerforge="uid=<your_uid>" }
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
