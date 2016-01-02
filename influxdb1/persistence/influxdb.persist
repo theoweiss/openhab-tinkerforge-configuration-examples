@@ -6,7 +6,10 @@ Strategies {
 
 Items {
 	DemoSwitch,NoOfLights,Window_GF_Toilet,Heating* : strategy = everyChange, everyMinute, restoreOnStartup
-	
+	RGBLight : strategy = everyUpdate, everyMinute, restoreOnStartup
+	DimmedLight: strategy = everyUpdate, everyMinute, restoreOnStartup
+	DemoLocation: strategy = everyUpdate, everyMinute, restoreOnStartup
+	TestValue: strategy = everyUpdate, everyMinute, restoreOnStartup
 	// let's only store temperature values in rrd
 	Temperature*,Weather_Chart*,Weather_LastUpdate,ATestString,ATestTime : strategy = everyMinute, restoreOnStartup
 }

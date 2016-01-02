@@ -35,7 +35,7 @@
 
 	<!-- this class gives an irrelevant warning at startup -->
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
-    <logger name="org.openhab.persistence.influxdb" level="TRACE" />
+    <logger name="org.openhab.persistence.influxdb08" level="TRACE" />
     <logger name="org.openhab.core.persistence.internal" level="TRACE" />
     <!-- logger name="org.openhab.core.persistence.internal" level="TRACE" / -->
         <logger name="org.openhab.model.script" level="INFO" />
