@@ -93,19 +93,15 @@ the binding, please see Wiki page [[Bindings]].
 
 ### Basic Configuration
 In order to connect openHAB to TinkerForge devices you need to define all the brickd hosts and ports in the openhab.cfg file.
-<!-- @theo-->
-The following properties must be configured to define a brickd connection **without** authentication:
+The following properties must be configured to define a brickd connection:
 ```
-tinkerforge:hosts=<IP address>[:port]
-```
-
-The following properties must be configured to define a brickd connection **with authentication**:  (see also [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Software/Brickd.html#brickd-authentication))
-
-```
-tinkerforge:hosts="<IP address>[:port][<:secret>]"
+tinkerforge:hosts=<IP address>[:port][:<secret>] ...
 ```
 The properties indicated by '<...>' need to be replaced with an actual value. Properties surrounded
-by square brackets are optional.
+by square brackets are optional. Several brickd configurations are delimited by a space.
+
+*port* and secret are optional values. You must specify the port if your brickd doesn't use the default port 4223.
+*secret* must be specified if you use a brickd connection **with authentication**:  (see also [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Software/Brickd.html#brickd-authentication))
 
 | <b>Property</b> | <b>Description</b> |
 | --------------- | ------------------ |
@@ -125,11 +121,11 @@ Authenticate with password 1234 and individual port 4224
 tinkerforge:hosts=127.0.0.1:4224:1234
 ```
 
-You may also configure several different hosts:
+You may also configure several different hosts.
+For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 ```
 tinkerforge:hosts=127.0.0.1:4224:1234 192.168.1.100::secret
 ```
-For connecting several brickds, use multiple &lt;IP address&gt; statements delimited by a space.
 
 
 #### Item Binding Configuration
@@ -151,7 +147,6 @@ subid of the device, or - if the device is configured in openhab.cfg - the "symb
 | subid    | optional subid of the device|
 | name     | _symbolic name_ of the device. The name is only available if there is some configuration for the device in openhab.cfg. |
 
-<!--@theo-->
 For additional configuration options see the appropriate device section.
 
 ---
@@ -182,7 +177,6 @@ The following table lists the general available properties.
 
 The following table shows the TinkerForge device, its device type, its subid and if callback is supported.
 
-<!--@theo-->
 
 |<b>device</b>|<b>type name</b>|<b>subid(s)</b>|<b>Callback</b>|
 |-------------|----------------|---------------|---------------|
@@ -285,7 +279,6 @@ difference between the last value and the current value is bigger than the thres
 think of it as a kind of hysteresis, it dampens the oscillation of openHAB item values.
 
 The threshold controls the amount of  traffic from the binding to the openHAB eventbus.
-<!--@theo-->  
 Threshold values have the same unit as sensor values, no conversion is needed.
 
 ---
@@ -307,8 +300,6 @@ tinkerforge.refresh=<value in milliseconds>
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/DC_Brick.html#dc-brick)
 
 #### Binding properties:
-<!--@theo
-Bitte noch mal max/min checken ob noch relevant oder nicht-->
 The device supports Dimmer, Rollershutter and Number items.  Besides that the speed
 can be set using a percent value.
 The number items show the current velocity. The values are reported using the VelocityListener.
@@ -406,8 +397,6 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricks/Servo_Brick.html#servo-brick)
 
 #### Binding properties:
-<!--@theo
-Bitte noch mal anschauen, ich habe kein Servo Brick und die Beschreibung klingt irgendwie fast identisch zum DC Brick-->
 The device supports Dimmer, Rollershuter and Number items. Besides that the speed
 can be set using a percent value.
 
@@ -820,7 +809,6 @@ Text item=Barometer
 ---
 
 ### Color Bricklet
-<!-- @theo-->
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Color.html)
 
 #### Binding properties:
@@ -2016,7 +2004,6 @@ end
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/LED_Strip.html)
 
 #### Binding properties:
-<!---@theo-->
 Supported chip types are WS2801, WS2811 and WS2812 (also called "NeoPixel").
 An entry in openhab.cfg is *mandatory*. $type, $frameduration, $chiptype, $clockfrequency and $colorMapping have to be set. The available configuration variables depend on the chip type of the LED strip.  
 All LEDs can be switched independently. A subdevice $ledgroup can be set to group LED's together.  
@@ -2031,8 +2018,8 @@ The colormapping of the LED chip types are not standardized, therefore the seque
 | framduration | sets the frame duration in ms, default: 100ms (10 fps) |  |
 | chiptype | sets the strip chip type |  ws2801, ws2811, ws2812 |
 | clockfrequency | sets the frequency of the clock in Hz | 10000Hz (10kHz) up to 2000000Hz (2MHz) |
-| colorMapping | sets the colormapping | rbg or any other letter sequence|
-| subDevices | configures a group of led | f.e. ledgroup1 |
+| colorMapping | sets the colormapping | rbg or any other letter sequence of "r", "g" and "b"|
+| subDevices | configures a group of led | f.e. ledgroup1 ledgroup2 |
 
 ##### LED Strip sub device (optional):
 
@@ -2050,18 +2037,24 @@ tinkerforge:ledstrip.frameduration=100
 tinkerforge:ledstrip.chiptype=ws2801
 tinkerforge:ledstrip.clockfrequency=1000000
 tinkerforge:ledstrip.colorMapping=rbg
-tinkerforge:ledstrip.subDevices=ledgroup1
+tinkerforge:ledstrip.subDevices=ledgroup1 ledgroup2
 
 tinkerforge:ledgroup1.uid=<your_uid>
 tinkerforge:ledgroup1.subid=ledgroup1
 tinkerforge:ledgroup1.type=ledgroup
 tinkerforge:ledgroup1.leds=0|1-6
+
+tinkerforge:ledgroup1.uid=<your_uid>
+tinkerforge:ledgroup1.subid=ledgroup2
+tinkerforge:ledgroup1.type=ledgroup
+tinkerforge:ledgroup1.leds=0|7-14
+
 ```
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
 Color  tfled1   <slider> {tinkerforge="uid=<your_uid>, subid=ledgroup1"}
-Color  tfled2   <slider> {tinkerforge="uid=<your_uid>, leds=7-14, colorMapping=rbg"}
+Color  tfled2   <slider> {tinkerforge="uid=<your_uid>, subid=ledgroup2"}
 ```
 
 ##### Sitemap file entry (e.g tinkerforge.sitemap):
@@ -2118,7 +2111,6 @@ sitemap tflabel="Linear Poti"
 ---
 
 ### Load Cell Bricklet
-<!-- @theo-->
 Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/doc/Hardware/Bricklets/Load_Cell.html)
 
 #### Binding properties:
