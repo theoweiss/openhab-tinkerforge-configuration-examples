@@ -353,7 +353,32 @@ These action functions are available:
        tfDCMotorSetspeed("62Zduj", speed, acceleration, "break")
 	end
   ```
+1. `tfRotaryEncoderClear(String uid)`
 
+	Clears the rotary encoder counter with the given uid.
+
+  Example:
+  ```
+    rule "Clear"
+        when Item Clear changed
+    then 
+	   tfRotaryEncoderClear("kHv")
+    end
+  ```
+ 
+ 1. ``tfLoadCellTare(String uid)`
+ 	Sets tare on the load cell bricklet with the given uid.
+  Example:
+  ```
+    rule "Tare"
+        when 
+                Item Tare changed to ON
+        then
+                postUpdate(TareValue, Weight.state)
+                tfLoadCellTare("v8V")
+    end
+  ```    
+ 
 [Table of Contents](#table-of-contents)
 
 ### Twitter Actions

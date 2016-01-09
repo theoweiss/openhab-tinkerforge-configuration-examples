@@ -64,8 +64,9 @@ Documentation of the TinkerForge binding bundle
 - [Upgrading](#upgrading)
   - [from Version 1.3](#upgrading-from-13)
   - [from Version 1.4](#upgrading-from-14)
-  - [from Version 1.7](#upgrading-from-17)
-  - [from Version 1.8](#upgrading-from-18)
+  - [from Version 1.7.0](#upgrading-from-170)
+  - [from Version 1.7.1](#upgrading-from-171)
+  - [from Version 1.8.0](#upgrading-from-180)
 
 ---
 
@@ -3304,7 +3305,7 @@ These action functions are available:
 
 ---
 
-### Upgrading from 1.7
+### Upgrading from 1.7.0
 - New Devices
  - Joystick Bricklet
  - Linear Poti Bricklet
@@ -3331,7 +3332,10 @@ These action functions are available:
 
  ---
 
-### Upgrading from 1.8
+### Upgrading from 1.7.1
+ - New Devices
+
+### Upgrading from 1.8.0
 
 more to come ...
 
