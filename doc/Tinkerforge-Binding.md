@@ -3334,6 +3334,19 @@ These action functions are available:
 
 ### Upgrading from 1.7.1
  - New Devices
+  - Accelerometer Bricklet
+  - Ambient Light Bricklet 2.0
+  - Analog In Bricklet
+  - Analog In V2 Bricklet
+  - Color Bricklet
+  - Dust Detector Bricklet
+  - Hall Effect Bricklet
+  - Industrial Dual Analog In Bricklet
+  - Laser Range Finder Bricklet
+  - Load Cell Bricklet
+  - Pieco Speaker Bricklet
+  - Rotary Encoder Bricklet
+  - Temperature IR Bricklet
 
 ### Upgrading from 1.8.0
 
