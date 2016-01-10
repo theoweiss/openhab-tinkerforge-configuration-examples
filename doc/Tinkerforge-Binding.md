@@ -413,7 +413,7 @@ The item configuration options are:
 * acceleration: the acceleration
 
 ##### TinkerForge Action
-The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfServoSetposition.
+The openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 
 ###### Example
@@ -2121,7 +2121,7 @@ Returns the currently measured weight in grams. An LED can be turned on to inidi
 Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
 
 ##### TinkerForge Action
-The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfLoadCellTare.
+The openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfLoadCellTare.
 tfLoadCellTare(String uid) sets tare on the load cell bricklet with the given uid.
 
 Example:
@@ -2592,7 +2592,7 @@ Callback period for encoder defaults to 10 milli seconds. CallbackPeriod can be 
 for the encoder sub device.
 
 ##### TinkerForge Action
-The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfRotaryEncoderClear.
+The openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfRotaryEncoderClear.
 tfRotaryEncoderClear(String uid) clears the rotary encoder counter with the given uid.
 
 Example:
@@ -3399,7 +3399,7 @@ These action functions are available:
   - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
   - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
   - [Load Cell Bricklet](#load-cell-bricklet)
-  - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
+  - [Piezo Speaker Bricklet](#piezo-speaker-bricklet)
   - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
   - [Temperature IR Bricklet](#temperature-ir-bricklet)
   
