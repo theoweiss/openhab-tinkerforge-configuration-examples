@@ -3,7 +3,7 @@ Documentation of the TinkerForge binding bundle
 ## Table of Contents
 - [Introduction](#introduction)
 - [Generic Item Binding Configuration](#generic-item-binding-configuration)
- - [Basic Configuration](#basic-configuration)
+   - [Basic Configuration](#basic-configuration)
    - [Item Binding Configuration](#item-binding-configuration)
    - [Example Configuration](#example-configuration)
 - [Advanced Configuration](#advanced-configuration)
@@ -413,7 +413,7 @@ The item configuration options are:
 * acceleration: the acceleration
 
 ##### TinkerForge Action
-The new openHAB action TinkerForgeAction comes up with the action tfServoSetposition.
+The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfServoSetposition.
 tfServoSetposition(uid, num, position, velocity, acceleration) can be used to control the servo.
 
 ###### Example
@@ -2121,7 +2121,7 @@ Returns the currently measured weight in grams. An LED can be turned on to inidi
 Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
 
 ##### TinkerForge Action
-The new openHAB action TinkerForgeAction comes up with the action tfLoadCellTare.
+The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfLoadCellTare.
 tfLoadCellTare(String uid) sets tare on the load cell bricklet with the given uid.
 
 Example:
@@ -2592,7 +2592,7 @@ Callback period for encoder defaults to 10 milli seconds. CallbackPeriod can be 
 for the encoder sub device.
 
 ##### TinkerForge Action
-The new openHAB action TinkerForgeAction comes up with the action tfRotaryEncoderClear.
+The new openHAB action [TinkerforgeAction](#tinkerforge-actions) comes up with the action tfRotaryEncoderClear.
 tfRotaryEncoderClear(String uid) clears the rotary encoder counter with the given uid.
 
 Example:
@@ -3314,8 +3314,10 @@ These action functions are available:
     end
     ```
  
- 6. ``tfLoadCellTare(String uid)`
- 	Sets tare on the load cell bricklet with the given uid.
+6. `tfLoadCellTare(String uid)`
+ 	
+    Sets tare on the load cell bricklet with the given uid.
+    
     Example:
     ```
     rule "Tare"
@@ -3323,16 +3325,16 @@ These action functions are available:
                 Item Tare changed to ON
         then
                 postUpdate(TareValue, Weight.state)
-                tfLoadCellTare("v8V")
+                tfLoadCellTare("<your_uid>")
     end
     ```    
 ---
 
 ## Upgrading
 ### Upgrading from 1.3
-- LCDBacklight now is a sub device of LCD20x4 Bricklet (items file has to be changed)
-- LCD20x4Button now posts an update not a command anymore (rules has to be changed)
-- IndustrialQuadRelay sub id numbering now starts from zero (items file has to be changed)
+- LCDBacklight now is a sub device of [LCD 20×4 Bricklet](#lcd-20x4-display-bricklet) (items file has to be changed)
+- [LCD20×4Button](#lcd-20x4-display-bricklet) now posts an update not a command anymore (rules has to be changed)
+- [IndustrialQuadRelay](#industrial-quad-relay-bricklet) sub id numbering now starts from zero (items file has to be changed)
 
 ---
 
@@ -3340,19 +3342,19 @@ These action functions are available:
 - Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
    - Background:
      Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal.
-    - Humidity Bricklet
+    - [Humidity Bricklet](#humidity-bricklet)
         - calculate new threshold values from values of your current configuration: divide by 10
         - unity: relative humidity in percent
-    - Distance IR Bricklet
+    - [Distance IR Bricklet](#distance-ir-bricklet)
        - calculate new threshold values from values of your current configuration: nothing changed
        -  unity: millimeter
-    - Temperature Bricklet
+    - [Temperature Bricklet](#temperature-bricklet)
        - calculate new threshold values from values of your current configuration: divide by 100
        - unity: degree Celsius
-    - Barometer Bricklet
+    - [Barometer Bricklet](#barometer-bricklet)
        - calculate new threshold values from values of your current configuration: divide by 1000
        - unity: mbar
-    - Ambient Light Bricklet
+    - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
        - calculate new threshold values from values of your current configuration: divide 10
        - unity: Lux
 
@@ -3360,21 +3362,21 @@ These action functions are available:
 
 ### Upgrading from 1.7.0
 - New Devices
- - Joystick Bricklet
- - Linear Poti Bricklet
- - Dual Button Bricklet
- - PTC
- - Industrial Dual 0-20mA
- - Solid State Relay
+ - [Joystick Bricklet](#joystick-bricklet)
+ - [Linear Poti Bricklet](#linear-poti-bricklet)
+ - [Dual Button Bricklet](#dual-button-bricklet)
+ - [PTC Bricklet](#ptc-bricklet)
+ - [Industrial Dual 0-20mA Bricklet](#industrial-dual-0-20ma-bricklet)
+ - [Solid State Relay Bricklet](#solid-state-relay-bricklet)
 
 - New Features
- - Tinkerforge Action Addon
- - Brick DC fully supported
- - Brick Servo fully supported
+ - [Tinkerforge Action](#tinkerforge-actions) Addon
+ - [Brick DC](#dc-brick) fully supported
+ - [Brick Servo](#servo-brick) fully supported
  - Authentication support for brickd
- - Tactile feature for Dualbutton, LCD Buttons, Joystick Button.
- - LED Strip: sub devices and switching capabilities, configurable Frameduration, ChipType and Clockfrequency
- - Remote Switch dimmer support
+ - Tactile feature for [Dualbutton](#dual-button-bricklet), [LCD Buttons](#lcd-20x4-display-bricklet), [Joystick Button](#joystick-bricklet).
+ - [LED Strip](#led-strip-bricklet): sub devices and switching capabilities, configurable Frameduration, ChipType and Clockfrequency
+ - [Remote Switch dimmer](#remote-switch-bricklet)
 
 - Bugfixes
  - Fix for configuration handling of device aliases
@@ -3387,20 +3389,20 @@ These action functions are available:
 
 ### Upgrading from 1.7.1
  - New Devices
-  - Accelerometer Bricklet
-  - Ambient Light Bricklet 2.0
-  - Analog In Bricklet
-  - Analog In V2 Bricklet
-  - Color Bricklet
-  - Dust Detector Bricklet
-  - Hall Effect Bricklet
-  - Industrial Dual Analog In Bricklet
-  - Laser Range Finder Bricklet
-  - Load Cell Bricklet
-  - Pieco Speaker Bricklet
-  - Rotary Encoder Bricklet
-  - Temperature IR Bricklet
-
+  - [Accelerometer Bricklet](#accelerometer-bricklet)
+  - [Ambient Light Bricklet 2.0](#ambient-light-bricklet-v2)
+  - [Analog In Bricklet](#analog-in-bricklet)
+  - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
+  - [Color Bricklet](#color-bricklet)
+  - [Dust Detector Bricklet](#dust-detector-bricklet)
+  - [Hall Effect Bricklet](#hall-effect-bricklet)
+  - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
+  - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
+  - [Load Cell Bricklet](#load-cell-bricklet)
+  - [Pieco Speaker Bricklet](#piezo-speaker-bricklet)
+  - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
+  - [Temperature IR Bricklet](#temperature-ir-bricklet)
+  
 ### Upgrading from 1.8.0
 
 more to come ...
