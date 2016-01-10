@@ -2120,6 +2120,21 @@ Returns the currently measured weight in grams. An LED can be turned on to inidi
 
 Moving average is a calculation to analyze data points by creating series of averages of different subsets of the full data set.
 
+##### TinkerForge Action
+The new openHAB action TinkerForgeAction comes up with the action tfLoadCellTare.
+tfLoadCellTare(String uid) sets tare on the load cell bricklet with the given uid.
+
+Example:
+```
+rule "Tare"
+   when 
+           Item Tare changed to ON
+   then
+           postUpdate(TareValue, Weight.state)
+           tfLoadCellTare("<your_uid>")
+end
+```    
+
 ##### Bricklet:
 
 | property | descripition | values |
@@ -2575,6 +2590,19 @@ Technical description see [Tinkerforge Website](http://www.tinkerforge.com/en/do
 There are two sub devices: encoder and button.
 Callback period for encoder defaults to 10 milli seconds. CallbackPeriod can be configured
 for the encoder sub device.
+
+##### TinkerForge Action
+The new openHAB action TinkerForgeAction comes up with the action tfRotaryEncoderClear.
+tfRotaryEncoderClear(String uid) clears the rotary encoder counter with the given uid.
+
+Example:
+```
+rule "Clear"
+   when Item Clear changed
+then 
+   tfRotaryEncoderClear("<your_uid>")
+end
+```    
 
 ##### Button
 Two operating modes for the button. The button can behave like a switch or
@@ -3273,6 +3301,31 @@ These action functions are available:
          tfDCMotorSetspeed("<your_uid>", speed, acceleration, "break")
     end
     ```
+5. `tfRotaryEncoderClear(String uid)`
+
+	Clears the rotary encoder counter with the given uid.
+
+    Example:
+    ```
+    rule "Clear"
+        when Item Clear changed
+    then 
+	   tfRotaryEncoderClear("kHv")
+    end
+    ```
+ 
+ 6. ``tfLoadCellTare(String uid)`
+ 	Sets tare on the load cell bricklet with the given uid.
+    Example:
+    ```
+    rule "Tare"
+        when 
+                Item Tare changed to ON
+        then
+                postUpdate(TareValue, Weight.state)
+                tfLoadCellTare("v8V")
+    end
+    ```    
 ---
 
 ## Upgrading
