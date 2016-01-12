@@ -2045,10 +2045,10 @@ tinkerforge:ledgroup1.subid=ledgroup1
 tinkerforge:ledgroup1.type=ledgroup
 tinkerforge:ledgroup1.leds=0|1-6
 
-tinkerforge:ledgroup1.uid=<your_uid>
-tinkerforge:ledgroup1.subid=ledgroup2
-tinkerforge:ledgroup1.type=ledgroup
-tinkerforge:ledgroup1.leds=0|7-14
+tinkerforge:ledgroup2.uid=<your_uid>
+tinkerforge:ledgroup2.subid=ledgroup2
+tinkerforge:ledgroup2.type=ledgroup
+tinkerforge:ledgroup2.leds=0|7-14
 
 ```
 
