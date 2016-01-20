@@ -1103,23 +1103,22 @@ tinkerforge:relay_garage_door.subid=relay2
 
 ##### Items file entry (e.g. tinkerforge.items):
 ```
-Switch DualRelay1          "DualRelay1" { tinkerforge="name=relay_coffee_machine" }
-Switch DualRelay2          "DualRelay2" { tinkerforge="uid=<your_uid>, subid=relay2" }
+Switch DualRelay1   "DualRelay1" { tinkerforge="name=relay_coffee_machine" }
+Switch DualRelay2   "DualRelay2" { tinkerforge="uid=<your_uid>, subid=relay2" }
+Switch Garage       "Garage"    <garagedoor>    // creates a virtual switch with no bonded hardware
 ```
 
 ##### Rules (e.g. tinkerforge.rules):
 ```
 import org.openhab.core.library.types.*
 
-rule "toggleright"
+rule "open or close garage door"
     when
-        Item RightButton changed
+        Item Garage received command ON     // rule is triggered when virtual switch Garage receives ON command
     then
-        logDebug("dualbutton", "{}", RightButton.state)
-        if (RightButton.state == OPEN)
-            sendCommand(RightLed, ON)
-        else
-            sendCommand(RightLed, OFF)
+        DualRelay2.sendCommand(ON)          // contacts of subdevice relay2 are closed
+        Thread::sleep(500)                  // delays execution of next command for 500 ms
+        DualRelay2.sendCommand(OFF)         // contacts of subdevice relay2 are opened
 end
 ```
 
@@ -1129,7 +1128,7 @@ sitemap tf label="DualRelay"
 {
   Frame {
         Switch item=DualRelay1
-        Switch item=DualRelay2
+        Switch item=Garage mappings=[ON="Garage open/close"]    // displays the virtual switch with the given text
     }
 }
 
@@ -3340,23 +3339,23 @@ These action functions are available:
 
 ### Upgrading from 1.4
 - Threshold values now have the same unit as the sensor value (incompatible change, you may have to update your openhab.cfg).
-   - Background:
-     Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal.
-    - [Humidity Bricklet](#humidity-bricklet)
-        - calculate new threshold values from values of your current configuration: divide by 10
-        - unity: relative humidity in percent
-    - [Distance IR Bricklet](#distance-ir-bricklet)
-       - calculate new threshold values from values of your current configuration: nothing changed
-       -  unity: millimeter
-    - [Temperature Bricklet](#temperature-bricklet)
-       - calculate new threshold values from values of your current configuration: divide by 100
-       - unity: degree Celsius
-    - [Barometer Bricklet](#barometer-bricklet)
-       - calculate new threshold values from values of your current configuration: divide by 1000
-       - unity: mbar
-    - [Ambient Light Bricklet](#ambient-light-bricklet-v2)
-       - calculate new threshold values from values of your current configuration: divide 10
-       - unity: Lux
+ - Background:
+   Some getters for sensor values of the TinkerForge API return higher precision values by using short values with fractions of the common units, e.g. the Temperature Bricklet returns hundredths of a celsius degree. The binding converts these values to common units using a BigDecimal. Until now the threshold values were applied to the sensor value before this conversion. Because of that the threshold values had to be given as the appropriate fraction. With the drawback that the openHAB users need some knowledge about the behavior of the TinkerForge API. Now the threshold is applied after converting the original values. Therefore the units used for the sensor values and the threshold values are equal.
+- [Humidity Bricklet](#humidity-bricklet)
+ - calculate new threshold values from values of your current configuration: divide by 10
+ - unity: relative humidity in percent
+- [Distance IR Bricklet](#distance-ir-bricklet)
+ - calculate new threshold values from values of your current configuration: nothing changed
+ -  unity: millimeter
+- [Temperature Bricklet](#temperature-bricklet)
+ - calculate new threshold values from values of your current configuration: divide by 100
+ - unity: degree Celsius
+- [Barometer Bricklet](#barometer-bricklet)
+ - calculate new threshold values from values of your current configuration: divide by 1000
+ - unity: mbar
+- [Ambient Light Bricklet](#ambient-light-bricklet-v2)
+ - calculate new threshold values from values of your current configuration: divide 10
+ - unity: Lux
 
 ---
 
@@ -3385,23 +3384,23 @@ These action functions are available:
  - Updated Tinkerforge API to 2.1.4
  - [Example configurations](https://github.com/theoweiss/openhab-tinkerforge-configuration-examples) available on github
 
- ---
+---
 
 ### Upgrading from 1.7.1
- - New Devices
-  - [Accelerometer Bricklet](#accelerometer-bricklet)
-  - [Ambient Light Bricklet 2.0](#ambient-light-bricklet-v2)
-  - [Analog In Bricklet](#analog-in-bricklet)
-  - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
-  - [Color Bricklet](#color-bricklet)
-  - [Dust Detector Bricklet](#dust-detector-bricklet)
-  - [Hall Effect Bricklet](#hall-effect-bricklet)
-  - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
-  - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
-  - [Load Cell Bricklet](#load-cell-bricklet)
-  - [Piezo Speaker Bricklet](#piezo-speaker-bricklet)
-  - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
-  - [Temperature IR Bricklet](#temperature-ir-bricklet)
+- New Devices
+ - [Accelerometer Bricklet](#accelerometer-bricklet)
+ - [Ambient Light Bricklet 2.0](#ambient-light-bricklet-v2)
+ - [Analog In Bricklet](#analog-in-bricklet)
+ - [Analog In Bricklet 2.0](#analog-in-bricklet-20)
+ - [Color Bricklet](#color-bricklet)
+ - [Dust Detector Bricklet](#dust-detector-bricklet)
+ - [Hall Effect Bricklet](#hall-effect-bricklet)
+ - [Industrial Dual Analog In Bricklet](#industrial-dual-analog-in-bricklet)
+ - [Laser Range Finder Bricklet](#laser-range-finder-bricklet)
+ - [Load Cell Bricklet](#load-cell-bricklet)
+ - [Piezo Speaker Bricklet](#piezo-speaker-bricklet)
+ - [Rotary Encoder Bricklet](#rotary-encoder-bricklet)
+ - [Temperature IR Bricklet](#temperature-ir-bricklet)
   
 ### Upgrading from 1.8.0
 
