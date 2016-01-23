@@ -1,2 +1,3 @@
-Switch DualRelay1          "DualRelay1" { tinkerforge="name=relay_coffee_machine" }
-Switch DualRelay2          "DualRelay2" { tinkerforge="uid=c21, subid=relay2" }
+Switch DualRelay1   "DualRelay1" { tinkerforge="name=relay_coffee_machine" }
+Switch DualRelay2   "DualRelay2" { tinkerforge="uid=c21, subid=relay2" }
+Switch Garage       "Garage"    <garagedoor>    // creates a virtual switch with no bonded hardware

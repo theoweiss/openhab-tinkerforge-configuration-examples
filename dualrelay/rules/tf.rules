@@ -1,12 +1,10 @@
 import org.openhab.core.library.types.*
 
-rule "toggleright"
-    when 
-        Item RightButton changed
+rule "open or close garage door"
+    when
+        Item Garage received command ON     // rule is triggered when virtual switch Garage receives ON command
     then
-        logDebug("dualbutton", "{}", RightButton.state)
-        if (RightButton.state == OPEN)
-            sendCommand(RightLed, ON)
-        else
-            sendCommand(RightLed, OFF)
+        DualRelay2.sendCommand(ON)          // contacts of subdevice relay2 are closed
+        Thread::sleep(500)                  // delays execution of next command for 500 ms
+        DualRelay2.sendCommand(OFF)         // contacts of subdevice relay2 are opened
 end

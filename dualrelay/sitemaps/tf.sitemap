@@ -2,6 +2,6 @@ sitemap tf label="DualRelay"
 {
   Frame {
         Switch item=DualRelay1
-        Switch item=DualRelay2
+        Switch item=Garage mappings=[ON="Garage open/close"]    // displays the virtual switch with the given text
     }
 }
