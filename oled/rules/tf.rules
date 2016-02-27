@@ -1,0 +1,66 @@
+import org.openhab.core.library.types.*
+
+var Integer initialSleepTime = 60
+
+rule "Weatherstation OLED init"
+when
+    System started
+then
+    createTimer(now.plusSeconds(initialSleepTime)) [|
+        sendCommand(OLED, "TFNUM<00>Temperature:")
+        sendCommand(OLED, "TFNUM<019>C")
+        sendCommand(OLED, "TFNUM<10>Humidity   :")
+        sendCommand(OLED, "TFNUM<119>%")
+        sendCommand(OLED, "TFNUM<20>Pressure   :")
+        sendCommand(OLED, "TFNUM<217>hPa")
+        sendCommand(OLED, "TFNUM<30>Luminance  :")
+        sendCommand(OLED, "TFNUM<317>Lux")
+        sendCommand(OLED, String::format("TFNUM<013>%4s", 
+                                TF_Barometer_Temperature.state.format("%.1f")
+                        ))
+        sendCommand(OLED, String::format("TFNUM<113>%4s", 
+                                TF_Humdity.state.format("%.1f")
+                            ))
+        sendCommand(OLED, String::format("TFNUM<213>%4s",
+                                  TF_Barometer.state.format("%.0f")
+                                  ))
+        sendCommand(OLED, String::format("TFNUM<313>%4s", 
+                                TF_AmbientLight.state.format("%.0f")
+                                ))
+    ]
+ 
+end
+
+rule "Weatherstation LCD update temperature"
+        when 
+                Item TF_Barometer_Temperature received update 
+        then
+                sendCommand(OLED, String::format("TFNUM<013>%4s", 
+                                TF_Barometer_Temperature.state.format("%.1f")
+                        ))
+end
+
+rule "Weatherstation LCD update humidity"
+        when 
+                Item TF_Humdity received update
+        then
+                sendCommand(OLED, String::format("TFNUM<113>%4s", 
+                                TF_Humdity.state.format("%.1f")
+                            ))
+end
+rule "Weatherstation LCD update airpressure"
+        when 
+                Item TF_Barometer received update
+        then
+                sendCommand(OLED, String::format("TFNUM<213>%4s",
+                                  TF_Barometer.state.format("%.0f")
+                                  ))
+end
+rule "Weatherstation LCD update ambientLight"
+        when 
+                Item TF_AmbientLight received update
+        then
+                sendCommand(OLED, String::format("TFNUM<313>%4s", 
+                                TF_AmbientLight.state.format("%.0f")
+                                ))
+end

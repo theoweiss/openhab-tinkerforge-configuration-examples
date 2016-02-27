@@ -366,7 +366,7 @@ These action functions are available:
     end
   ```
  
- 1. ``tfLoadCellTare(String uid)`
+1. `tfLoadCellTare(String uid)`
  	Sets tare on the load cell bricklet with the given uid.
   Example:
   ```
