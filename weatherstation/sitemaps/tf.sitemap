@@ -10,5 +10,8 @@ sitemap tf_weather label="Tinkerforge Weather Station"
 				Switch item=TF_Button1
 				Switch item=TF_Button2
 				Switch item=TF_Button3
+
+				Text item=ConnectionStatus
+				Text item=Reconnects
 			}
 }

@@ -10,3 +10,6 @@ Switch TF_Button1         "Button1" { tinkerforge="uid=d4j, subid=button1"}
 Switch TF_Button2         "Button2" { tinkerforge="uid=d4j, subid=button2"}
 Switch TF_Button3         "Button3" { tinkerforge="uid=d4j, subid=button3"}
 
+Contact ConnectionStatus "ConnectionStatus" {tinkerforge="uid=192.168.178.34:4223, subid=isconnected"}
+Number Reconnects "Reconnects %" {tinkerforge="uid=192.168.178.34:4223, subid=connected_counter"}
+
